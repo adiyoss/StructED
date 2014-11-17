@@ -1,0 +1,197 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Structed by adiyoss</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/respond.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="stylesheets/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  </head>
+  <body>
+      <div id="header">
+        <nav>
+          <li class="fork"><a href="https://github.com/adiyoss/StructED">View On GitHub</a></li>
+          <li class="downloads"><a href="https://github.com/adiyoss/StructED/zipball/master">ZIP</a></li>
+          <li class="downloads"><a href="https://github.com/adiyoss/StructED/tarball/master">TAR</a></li>
+          <li class="title">DOWNLOADS</li>
+        </nav>
+      </div><!-- end header -->
+
+    <div class="wrapper">
+
+      <section>
+        <div id="title">
+          <h1>Structed</h1>
+          <p>Structured Prediction Package written in Java</p>
+          <hr>
+          <span class="credits left">Project maintained by <a href="https://github.com/adiyoss">adiyoss</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
+        </div>
+
+        <h1></h1>
+
+<h1>
+<a id="readme" class="anchor" href="#readme" aria-hidden="true"><span class="octicon octicon-link"></span></a>README</h1>
+
+<p>StructED 1.0.0</p>
+
+<p>Copyright (C) Bar-Ilan  University</p>
+
+<p>This is a README file for the Structure Prediction Package</p>
+
+<pre><code>==========How to use===========
+
+==========TRAIN FILE===========
+
+=====Config file parmeters=====
+</code></pre>
+
+<p>all the parameters should be as: parameter type then colon ( : ) and then the value of the parameter </p>
+
+<pre><code>===============GENERAL================
+</code></pre>
+
+<p>Here we present the configuration file which loads all the relevant parameters
+first we present the general parameters for every algorithm
+Few parameters are mandatory and the others are optional, we state for every parameter his condition</p>
+
+<ul>
+<li>train_path:                           the path to the training set data - Mandatory </li>
+<li><p>w_output:                             output file of the weights vector (model)  </p></li>
+<li><p>type:                             the algorithm type - Mandatory
+                             0 - Passive Aggressive
+                             1 - SVM
+                             2 - Direct Loss
+                             3 - CRF
+                             4 - Ramp Loss
+                             5 - Probit Loss
+                             6 - RankSVM </p></li>
+<li><p>task:                             the cost/loss function number - Mandatory</p></li>
+<li><p>epoch:                            the number of epochs on the data - Mandatory</p></li>
+<li><p>task_param:                           cost/loss parameters if needed - Optional</p></li>
+<li><p>kernel:                           kernel type, and parameters(i.e sigma) - Optional
+                             0 - poly 2 degree
+                             1 - RBF 2nd taylor approximation
+                             2 - RBF 3nd taylor approximation   </p></li>
+<li><p>init_w:                           the path for the initial weights - Optional</p></li>
+<li><p>phi:                              feature function type - Mandatory</p></li>
+<li><p>prediction:                           prediction function, should implement also the loss-augmented function - Mandatory</p></li>
+<li><p>reader:                           reader type - Mandatory</p></li>
+<li><p>writer:                           writer type - Mandatory
+                             for both reader and writer
+                             use 0 for standard form
+                             use 1 for standard rank form (as Letor 3.0)</p></li>
+<li>
+<p>size_of_vector:                       size of vector after the feature mapping functions - Mandatory</p>
+
+<p>RELEVANT FILES: taskLoss, phiConverter and prediction interfaces and the Factory class</p>
+
+<p>for the task, phi and prediction the user should implement the taskLoss, phiConverter and prediction interfaces
+after implementing those interfaces the Factory class should be updated by to support the new classes that we've just implement
+we do this by adding another case to the switch-case statement at the getClassifier function</p>
+
+<pre><code> =======================================
+ ===============SPECIFIC================
+</code></pre>
+
+<p>parameters for the algorithm, will be different for each algorithm - Mandatory</p>
+
+<p>===PA===                                       </p>
+</li>
+<li>
+<p>c:                C parameter for the PA algorithm               </p>
+
+<p>===SVM===                             </p>
+</li>
+<li>lambda:               lambda parameter for the SVM<br>
+</li>
+<li>
+<p>eta:              eta - learning rate</p>
+
+<p>===DL===                                       </p>
+</li>
+<li>eta:              eta - learning rate</li>
+<li>
+<p>epsilon:          epsilon parameter for the DL      </p>
+
+<p>===CRF===   </p>
+</li>
+<li>eta:              eta - learning rate</li>
+<li>
+<p>lambda:               lambda parameter for the CRF                           </p>
+
+<p>===RL===    </p>
+</li>
+<li>eta:              eta - learning rate</li>
+<li>
+<p>lambda:               lambda parameter for the RL                            </p>
+
+<p>===PL===    </p>
+</li>
+<li>eta:              eta - learning rate</li>
+<li>lambda:               lambda parameter for the PL<br>
+</li>
+<li>
+<p>num_of_iteration:         number of iteration for generation noise             </p>
+
+<p>===RankSVM===                         </p>
+</li>
+<li>lambda:               lambda parameter for the RankSVM<br>
+</li>
+<li>eta               eta - learning rate<br>
+</li>
+</ul>
+
+<h1></h1>
+
+<pre><code>==========TEST FILE===========
+</code></pre>
+
+<ul>
+<li><p>test_path:                            the path to the test set data - Mandatory </p></li>
+<li><p>output_file:                          the output file for the scores - Mandatory </p></li>
+<li><p>w_path:                               the weights vector(model) - Mandatory </p></li>
+<li><p>examples_2_display:                       how many examples to display in the scores file - Mandatory</p></li>
+<li><p>task:                                 the loss(cost) function, the same as the train - Mandatory</p></li>
+<li><p>kernel:                               kernel type, and parameters(i.e sigma) - Optional
+                             0 - poly 2 degree
+                             1 - RBF 2nd taylor approximation
+                             2 - RBF 3nd taylor approximation</p></li>
+<li><p>phi:                              feature function type - Mandatory</p></li>
+<li><p>prediction:                           prediction function, should implement also the loss-augmented function - Mandatory</p></li>
+<li><p>reader:                               reader type - Mandatory</p></li>
+<li><p>writer:                               writer type - Mandatory
+                             for both reader and writer
+                             use 0 for standard form
+                             use 1 for standard rank form (as Letor 3.0)</p></li>
+<li><p>size_of_vector:                           size of vector after the feature mapping functions - Mandatory</p></li>
+</ul>
+
+<p>==========================Examples===========================</p>
+
+<p>We provided three examples of implementation of all the interferes that was mentioned above</p>
+
+<p>The first one is dummy data
+ The second one is the MNIST dataset
+ The third one is the letor 3.0 dataset</p>
+
+<p>All the examples can be found on our website</p>
+
+<h1></h1>
+      </section>
+
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
+  </body>
+</html>
