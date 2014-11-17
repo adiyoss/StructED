@@ -1,0 +1,9 @@
+Processing example number: 1, Real Label = 6-11, Prediction: 6-11
+Processing example number: 2, Real Label = 4-6, Prediction: 4-6
+Processing example number: 3, Real Label = 19-22, Prediction: 19-22
+Processing example number: 4, Real Label = 3-15, Prediction: 3-15
+Processing example number: 5, Real Label = 5-10, Prediction: 5-10
+Processing example number: 6, Real Label = 8-16, Prediction: 8-16
+==============================================================
+Total files predicted: 6
+Cumulative task loss: 0.0

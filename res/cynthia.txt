@@ -1,0 +1,2 @@
+/Users/adiyoss/Documents/projects/VowelDuration/VowelDurationDB/DB_Cynthia/Session_12/features/F05B1.data 165-248:436.55829954023125 
+/Users/adiyoss/Documents/projects/VowelDuration/VowelDurationDB/DB_Cynthia/Session_12/features/F05B10.data 164-211:377.36321420319524 
