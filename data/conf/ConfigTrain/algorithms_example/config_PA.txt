@@ -1,0 +1,7 @@
+type:0
+task:1
+epoch:100
+task_param:0.8
+chunk_size:300
+c:10
+

@@ -1,0 +1,16 @@
+train_path:data/train/files/mutual/train.mutual
+#validation_path:data/train/files/validation.mutual
+w_output:data/weights/w.weights
+type:2
+task:0
+epoch:1
+task_param:5
+init_w:data/weights/w_init.weights
+phi:0
+prediction:0
+reader:2
+writer:0
+#isAvg:1
+size_of_vector:15
+eta:0.5
+epsilon:-1.6

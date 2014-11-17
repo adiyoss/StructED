@@ -1,0 +1,6 @@
+type:4
+task:1
+epoch:1
+task_param:0.01
+eta:0.1
+lambda:0.8

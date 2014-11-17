@@ -1,0 +1,10 @@
+test_path:data/db/MNIST/test.data.txt
+output_file:res/mnist_scores.txt
+w_path:data/weights/mnist.weights
+examples_2_display:3
+task:1
+phi:1
+prediction:1
+reader:0
+writer:0
+size_of_vector:7800

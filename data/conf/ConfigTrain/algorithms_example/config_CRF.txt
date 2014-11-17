@@ -1,0 +1,8 @@
+type:3
+task:1
+epoch:1
+task_param:0.01
+phi:1
+prediction:1
+eta:0.1
+lambda: 0.3

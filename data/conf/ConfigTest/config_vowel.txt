@@ -1,0 +1,11 @@
+test_path:data/db/files/cynthias_data/test12.out
+output_file:res/cynthia.txt
+w_path:data/weights/w_new.weights
+examples_2_display:-1
+task:0
+task_param:5;5
+phi:0
+prediction:0
+reader:2
+writer:0
+size_of_vector:42

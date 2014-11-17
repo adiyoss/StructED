@@ -1,0 +1,16 @@
+train_path:data/train/letor/train_letor_fold_1.txt	#train path
+type:1							#the algorithm type - mandatory
+task:1							#the task loss function - mandatory
+epoch:10						#the number of epochs on the data - mandatory
+task_param:0.01						#task loss parameters if needed - optional
+kernel:1:19						#kernel type, and parameters(i.e sigma) - optional
+init_w:data/weights/w_init.txt				#the path for the initial weights - optional
+phi:2							#phi function type - mandatory
+prediction:2						#prediction function(should implement argmax for train and test) - mandatory
+reader:0						#reader type: standard,rank etc. - mandatory
+writer:0						#writer type: standard,rank etc. - mandatory
+size_of_vector:7800					#size of vector after the feature mapping function - mandatory
+
+#parameters for the algorithm, will be different for each algorithm - mandatory
+lambda:0.2
+eta:0.1
