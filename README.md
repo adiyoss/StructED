@@ -2,9 +2,7 @@
 README
 ======
 
-LaStrada 1.0.0
-
-26 April 2014
+StructED 1.0.0
 
 Copyright (C) Bar-Ilan  University
 
