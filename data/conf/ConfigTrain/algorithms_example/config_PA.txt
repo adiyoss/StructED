@@ -1,7 +1,13 @@
+train_path:data/db/dummy/train.txt
+w_output:data/weights/dummy.weights
 type:0
-task:1
-epoch:100
-task_param:0.8
-chunk_size:300
-c:10
+task:3
+epoch:5
+task_param:1
+phi:3
+prediction:3
+reader:0
+writer:0
+size_of_vector:4
+c:1
 
