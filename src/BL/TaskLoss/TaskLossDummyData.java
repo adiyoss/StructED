@@ -14,7 +14,6 @@ public class TaskLossDummyData implements TaskLoss {
 		String predictValues[] = predictClass.split(Consts.CLASSIFICATION_SPLITTER);
 		String actualClassValues[] = actualClass.split(Consts.CLASSIFICATION_SPLITTER);
 	
-		//TODO VALIDATION FOR THE CLASSIFICATION PARSER
 		//calculate difference of each classification
 		double predictRes = Double.parseDouble(predictValues[0]) - Double.parseDouble(predictValues[1]);
 		double actualRes = Double.parseDouble(actualClassValues[0]) - Double.parseDouble(actualClassValues[1]);
