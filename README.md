@@ -18,7 +18,7 @@ You can find very detaild tutorial about adding new task to StructED under the d
 
 ======
 CONFIG FILE - TRAIN
-======
+
 All the parameters in the config file should be as follows: 
 
 parameter type, colon(:), parameter value
