@@ -20,15 +20,11 @@ You can find very detaild tutorial about adding new task to StructED under the d
 CONFIG FILE - TRAIN
 ======
 All the parameters in the config file should be as follows: 
-	parameter type, colon(:), parameter value
 
-	GENERAL
+parameter type, colon(:), parameter value
+
+	GENERAL PARAMETERS
 	
-Here we present the configuration file which loads all the relevant parameters
-first we present the general parameters for every algorithm
-Few parameters are mandatory and the others are optional, we state for every parameter his condition
-
-
  - train_path:							 the path to the training set data - Mandatory 
  - w_output:							 output file of the weights vector (model)	
 
@@ -65,54 +61,45 @@ Few parameters are mandatory and the others are optional, we state for every par
 								 use 1 for standard rank form (as Letor 3.0)
  
  - size_of_vector:						 size of vector after the feature mapping functions - Mandatory
-  
-	RELEVANT FILES: taskLoss, phiConverter and prediction interfaces and the Factory class
-
-  for the task, phi and prediction the user should implement the taskLoss, phiConverter and prediction interfaces
-  after implementing those interfaces the Factory class should be updated by to support the new classes that we've just implement
-  we do this by adding another case to the switch-case statement at the getClassifier function
  
-	   SPECIFIC
+ 	   SPECIFIC - Algorithm dependent
 
- parameters for the algorithm, will be different for each algorithm - Mandatory
-
-	===PA===									   
+	Passive Aggressive
  - c: 				 C parameter for the PA algorithm				
 
 
-	===SVM===							  
+	SVM
  - lambda:				 lambda parameter for the SVM						
- - eta:				 eta - learning rate
+ - eta:				 	eta - learning rate
 			    
 						  
-	===DL===									   
+	Direct Loss									   
  - eta:				 eta - learning rate
  - epsilon:			 epsilon parameter for the DL	   
 						  
 
-	===CRF===	
- - eta:				 eta - learning rate
+	CRF	
+ - eta:				 	eta - learning rate
  - lambda:				 lambda parameter for the CRF				  			
 			
 						 						  						  
-	===RL===	
+	Ramp Loss	
  - eta:				 eta - learning rate
  - lambda:				 lambda parameter for the RL				  			
 						  
 						  
-	===PL===	
+	Probit Loss	
  - eta:				 eta - learning rate
  - lambda:				 lambda parameter for the PL	
  - num_of_iteration:		 number of iteration for generation noise			  
 
-						  						  
-	===RankSVM===						  
- - lambda:				 lambda parameter for the RankSVM					
- - eta				 eta - learning rate			    
 
 ==============================================================
 
-	==========TEST FILE===========
+======
+CONFIG FILE - TEST
+======
+
  - test_path:							 the path to the test set data - Mandatory 
 
  - output_file:							 the output file for the scores - Mandatory 
