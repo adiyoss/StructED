@@ -62,7 +62,9 @@ parameter type, colon(:), parameter value
  
  - size_of_vector:						 size of vector after the feature mapping functions - Mandatory
  	
+
 	SPECIFIC - Algorithm dependent
+
 
 	Passive Aggressive
  - c: 				 C parameter for the PA algorithm				
@@ -93,8 +95,6 @@ parameter type, colon(:), parameter value
  - lambda:				 lambda parameter for the PL	
  - num_of_iteration:		 number of iteration for generation noise			  
 
-
-==============================================================
 
 ======
 CONFIG FILE - TEST
