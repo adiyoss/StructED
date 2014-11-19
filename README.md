@@ -4,20 +4,18 @@ README
 
 StructED 1.0.0
 
-Copyright (C) Bar-Ilan  University
+Copyright (C) Adiyoss
 
-This is a README file for the Structure Prediction Package
+StructED is a collection of machine learning algorithms for structured prediction prob- lems. In structured prediction each task is distinctive and has its own set of feature functions, unique measure of performance and in many cases a non-standard inference. StructED package was designed to handle this inherent implementation complexity by having an easy interface to user-defined feature functions, decoder and evaluation function. The package is a general framework for implementation structured prediction problems and algorithms, and it is highly customizable. All algorithms are implemented by the same inter- faces, so adding new algorithms or comparing them is straightforward. The library is writ- ten in Java, hence platform independent, and is available at http://slpl.github.io/StructED/ Keywords: Machine Learning, Structured Prediction, SVM, Direct Loss, CRF, Ramp Loss, Probit Loss, Passive Aggressive, RankSVM
 
-	==========How to use===========
-
-	==========TRAIN FILE===========
-
-	=====Config file parmeters=====
+	How to use
+	TRAIN FILE
+	Config file parmeters
 
 all the parameters should be as: parameter type then colon ( : ) and then the value of the parameter 
 
-	===============GENERAL================
-
+	GENERAL
+	
 Here we present the configuration file which loads all the relevant parameters
 first we present the general parameters for every algorithm
 Few parameters are mandatory and the others are optional, we state for every parameter his condition
@@ -66,9 +64,7 @@ Few parameters are mandatory and the others are optional, we state for every par
   after implementing those interfaces the Factory class should be updated by to support the new classes that we've just implement
   we do this by adding another case to the switch-case statement at the getClassifier function
  
-
-	   =======================================
-	   ===============SPECIFIC================
+	   SPECIFIC
 
  parameters for the algorithm, will be different for each algorithm - Mandatory
 
