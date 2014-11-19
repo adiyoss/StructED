@@ -1,0 +1,11 @@
+data/train/features/tbtw-1v2-s003-boot_Target.data data/train/labels/tbtw-1v2-s003-boot_Target_to_fe.labels
+data/train/features/tbtw-1v2-sw-s004-Hat_VerbRelated.data data/train/labels/tbtw-1v2-sw-s004-Hat_VerbRelated_to_fe.labels
+data/train/features/tbtw-2v1-s010-nose_Target.data data/train/labels/tbtw-2v1-s010-nose_Target_to_fe.labels
+data/train/features/tbtw-2v2-s072-Beak_NounUnrelated.data data/train/labels/tbtw-2v2-s072-Beak_NounUnrelated_to_fe.labels
+data/train/features/tbtw-2v2-sw-s076-boot_Target.data data/train/labels/tbtw-2v2-sw-s076-boot_Target_to_fe.labels
+data/train/features/tbtw-3v1-s035-head_Target.data data/train/labels/tbtw-3v1-s035-head_Target_to_fe.labels
+data/train/features/tbtw-3v1-sw-s037-Pen_VerbUnrelated.data data/train/labels/tbtw-3v1-sw-s037-Pen_VerbUnrelated_to_fe.labels
+data/train/features/tbtw-3v2-sw-s044-bell_Target.data data/train/labels/tbtw-3v2-sw-s044-bell_Target_to_fe.labels
+data/train/features/tbtw-4v1-s063-doll_Target.data data/train/labels/tbtw-4v1-s063-doll_Target_to_fe.labels
+data/train/features/tbtw-4v1-sw-s048-Lock_VerbRelated.data data/train/labels/tbtw-4v1-sw-s048-Lock_VerbRelated_to_fe.labels
+data/train/features/tbtw-4v2-s068-Rat_VerbRelated.data data/train/labels/tbtw-4v2-s068-Rat_VerbRelated_to_fe.labels

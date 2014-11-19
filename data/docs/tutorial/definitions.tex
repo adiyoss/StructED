@@ -1,0 +1,222 @@
+% for proper bold math, including bold greek letters; typesets in math-mode
+% and not in \mathrm font
+\usepackage{bm}
+
+\usepackage{amsopn}
+
+% \va, \vb etc. type bold letters; notice exception at \vech -- coz. \vh is a
+% predefined thing in latex; 
+% additional commands include \vah -- read as vector a hat, 
+% or \ah -- a hat and so on
+\newcommand{\va}{\bm{a}}       \newcommand{\vah}{\hat{\bm{a}}}        \newcommand{\ah}{\hat{a}}
+\newcommand{\vb}{\bm{b}}       \newcommand{\vbh}{\hat{\bm{b}}}        \newcommand{\bh}{\hat{b}}
+\newcommand{\vc}{\bm{c}}       \newcommand{\vch}{\hat{\bm{c}}}        \newcommand{\ch}{\hat{c}}
+\newcommand{\vd}{\bm{d}}       \newcommand{\vdh}{\hat{\bm{d}}}        \newcommand{\dhat}{\hat{d}}
+\newcommand{\ve}{\bm{e}}       \newcommand{\veh}{\hat{\bm{e}}}        \newcommand{\eh}{\hat{e}}
+\newcommand{\vf}{\bm{f}}       \newcommand{\vfh}{\hat{\bm{f}}}        \newcommand{\fh}{\hat{f}}
+\newcommand{\vg}{\bm{g}}       \newcommand{\vgh}{\hat{\bm{g}}}        \newcommand{\gh}{\hat{g}}
+\newcommand{\vech}{\bm{h}}     \newcommand{\vhh}{\hat{\bm{h}}}        \newcommand{\hh}{\hat{h}}
+\newcommand{\vi}{\bm{i}}       \newcommand{\vih}{\hat{\bm{i}}}        \newcommand{\ih}{\hat{i}}
+\newcommand{\vj}{\bm{j}}       \newcommand{\vjh}{\hat{\bm{j}}}        \newcommand{\jh}{\hat{j}}
+\newcommand{\vk}{\bm{k}}       \newcommand{\vkh}{\hat{\bm{k}}}        \newcommand{\kh}{\hat{k}}
+\newcommand{\vl}{\bm{l}}       \newcommand{\vlh}{\hat{\bm{l}}}        \newcommand{\lh}{\hat{l}}
+\newcommand{\vm}{\bm{m}}       \newcommand{\vmh}{\hat{\bm{m}}}        \newcommand{\mh}{\hat{m}}
+\newcommand{\vn}{\bm{n}}       \newcommand{\vnh}{\hat{\bm{n}}}        \newcommand{\nh}{\hat{n}}
+\newcommand{\vo}{\bm{o}}       \newcommand{\voh}{\hat{\bm{o}}}        \newcommand{\oh}{\hat{o}}
+\newcommand{\vp}{\bm{p}}       \newcommand{\vph}{\hat{\bm{p}}}        \newcommand{\ph}{\hat{p}}
+\newcommand{\vq}{\bm{q}}       \newcommand{\vqh}{\hat{\bm{q}}}        \newcommand{\qh}{\hat{q}}
+\newcommand{\vr}{\bm{r}}       \newcommand{\vrh}{\hat{\bm{r}}}        \newcommand{\rh}{\hat{r}}
+\newcommand{\vs}{\bm{s}}       \newcommand{\vsh}{\hat{\bm{s}}}        \newcommand{\sh}{\hat{s}}
+\newcommand{\vt}{\bm{t}}       \newcommand{\vth}{\hat{\bm{t}}}        \newcommand{\that}{\hat{t}}
+\newcommand{\vu}{\bm{u}}       \newcommand{\vuh}{\hat{\bm{u}}}        \newcommand{\uh}{\hat{u}}
+\newcommand{\vv}{\bm{v}}       \newcommand{\vvh}{\hat{\bm{v}}}        \newcommand{\vh}{\hat{v}}
+\newcommand{\vw}{\bm{w}}       \newcommand{\vwh}{\hat{\bm{w}}}        \newcommand{\wh}{\hat{w}}
+\newcommand{\vx}{\bm{x}}       \newcommand{\vxh}{\hat{\bm{x}}}        \newcommand{\xh}{\hat{x}}
+\newcommand{\vy}{\bm{y}}       \newcommand{\vyh}{\hat{\bm{y}}}        \newcommand{\yh}{\hat{y}}
+\newcommand{\vz}{\bm{z}}       \newcommand{\vzh}{\hat{\bm{z}}}        \newcommand{\zh}{\hat{z}}
+
+% %%%%%%%%%%%%%%%%%%%% BOLD GREEK %%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+% Same convention as for ordinary roman letters above
+\newcommand{\valpha}  {\bm{\alpha}}      \newcommand{\valphah}  {\hat{\bm{\alpha}}}   
+\newcommand{\vbeta}   {\bm{\beta}}       \newcommand{\vbetah}   {\hat{\bm{\beta}}}    
+\newcommand{\vdelta}  {\bm{\delta}}      \newcommand{\vdeltah}  {\hat{\bm{\delta}}}   
+\newcommand{\vepsilon}{\bm{\epsilon}}    \newcommand{\vepsilonh}{\hat{\bm{\epsilon}}} 
+\newcommand{\vphi}    {\bm{\phi}}        \newcommand{\vphih}    {\hat{\bm{\phi}}}     
+\newcommand{\vgamma}  {\bm{\gamma}}      \newcommand{\vgammah}  {\hat{\bm{\gamma}}}   
+\newcommand{\veta}    {\bm{\eta}}        \newcommand{\vetah}    {\hat{\bm{\eta}}}     
+\newcommand{\vtheta}  {\bm{\theta}}      \newcommand{\vthetah}  {\hat{\bm{\theta}}}   
+\newcommand{\vkappa}  {\bm{\kappa}}      \newcommand{\vkappah}  {\hat{\bm{\kappa}}}   
+\newcommand{\vlambda} {\bm{\lambda}}     \newcommand{\vlambdah} {\hat{\bm{\lambda}}}  
+\newcommand{\vmu}     {\bm{\mu}}         \newcommand{\vmuh}     {\hat{\bm{\mu}}}      
+\newcommand{\vnu}     {\bm{\nu}}         \newcommand{\vnuh}     {\hat{\bm{\nu}}}      
+\newcommand{\vpi}     {\bm{\pi}}         \newcommand{\vpih}     {\hat{\bm{\pi}}}      
+\newcommand{\vchi}    {\bm{\chi}}        \newcommand{\vchih}    {\hat{\bm{\chi}}}     
+\newcommand{\vrho}    {\bm{\rho}}        \newcommand{\vrhoh}    {\hat{\bm{\rho}}}     
+\newcommand{\vsigma}  {\bm{\sigma}}      \newcommand{\vsigmah}  {\hat{\bm{\sigma}}}   
+\newcommand{\vtau}    {\bm{\tau}}        \newcommand{\vtauh}    {\hat{\bm{\tau}}}     
+\newcommand{\vupsilon}{\bm{\upsilon}}    \newcommand{\vupsilonh}{\hat{\bm{\upsilon}}} 
+\newcommand{\vomega}  {\bm{\omega}}      \newcommand{\vomegah}  {\hat{\bm{\omega}}}   
+\newcommand{\vxi}     {\bm{\xi}}         \newcommand{\vxih}     {\hat{\bm{\xi}}}      
+\newcommand{\vpsi}    {\bm{\psi}}        \newcommand{\vpsih}    {\hat{\bm{\psi}}}     
+\newcommand{\vzeta}   {\bm{\zeta}}       \newcommand{\vzetah}   {\hat{\bm{\zeta}}}
+
+% %%%%%%%%%%%%%  MATRICES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%  
+\newcommand{\ma}{\bm{A}}       \newcommand{\mah}{\hat{\bm{A}}}   
+\newcommand{\mb}{\bm{B}}       \newcommand{\mbh}{\hat{\bm{B}}}   
+\newcommand{\mc}{\bm{C}}       \newcommand{\mch}{\hat{\bm{C}}}   
+\newcommand{\md}{\bm{D}}       \newcommand{\mdh}{\hat{\bm{D}}}   
+\newcommand{\me}{\bm{E}}       \newcommand{\meh}{\hat{\bm{E}}}   
+\newcommand{\mf}{\bm{F}}       \newcommand{\mfh}{\hat{\bm{F}}}   
+\newcommand{\mg}{\bm{G}}       \newcommand{\mgh}{\hat{\bm{G}}}   
+\newcommand{\mH}{\bm{H}}       \newcommand{\mhh}{\hat{\bm{H}}}   
+\newcommand{\mi}{\bm{I}}       \newcommand{\mih}{\hat{\bm{I}}}   
+\newcommand{\mj}{\bm{J}}       \newcommand{\mjh}{\hat{\bm{J}}}   
+\newcommand{\mk}{\bm{K}}       \newcommand{\mkh}{\hat{\bm{K}}}   
+\newcommand{\ml}{\bm{L}}       \newcommand{\mlh}{\hat{\bm{L}}}   
+\newcommand{\mm}{\bm{M}}       \newcommand{\mmh}{\hat{\bm{M}}}   
+\newcommand{\mn}{\bm{N}}       \newcommand{\mnh}{\hat{\bm{N}}}   
+\newcommand{\mo}{\bm{O}}       \newcommand{\moh}{\hat{\bm{O}}}   
+\newcommand{\mP}{\bm{P}}       \newcommand{\mph}{\hat{\bm{P}}}   
+\newcommand{\mq}{\bm{Q}}       \newcommand{\mqh}{\hat{\bm{Q}}}   
+\newcommand{\mr}{\bm{R}}       \newcommand{\mrh}{\hat{\bm{R}}}   
+\newcommand{\ms}{\bm{S}}       \newcommand{\msh}{\hat{\bm{S}}}   
+\newcommand{\mT}{\bm{T}}       \newcommand{\mth}{\hat{\bm{T}}}   
+\newcommand{\mU}{\bm{U}}       \newcommand{\muh}{\hat{\bm{U}}}   
+\newcommand{\mv}{\bm{V}}       \newcommand{\mvh}{\hat{\bm{V}}}   
+\newcommand{\mw}{\bm{W}}       \newcommand{\mwh}{\hat{\bm{W}}}   
+\newcommand{\mx}{\bm{X}}       \newcommand{\mxh}{\hat{\bm{X}}}   
+\newcommand{\my}{\bm{Y}}       \newcommand{\myh}{\hat{\bm{Y}}}   
+\newcommand{\mz}{\bm{Z}}       \newcommand{\mzh}{\hat{\bm{Z}}}   
+
+%%%%%%%%%%%%%%%%%%%%%%%%% CALLIGRAPHIC LETTERS %%%%%%%%%%%%%%%%%%%%%
+\newcommand{\ac}{\mathcal{a}}    \newcommand{\Ac}{\mathcal{A}}  
+\newcommand{\bc}{\mathcal{b}}    \newcommand{\Bc}{\mathcal{B}}  
+\newcommand{\cc}{\mathcal{c}}    \newcommand{\Cc}{\mathcal{C}}  
+\newcommand{\dc}{\mathcal{d}}    \newcommand{\Dc}{\mathcal{D}}  
+\newcommand{\ec}{\mathcal{e}}    \newcommand{\Ec}{\mathcal{E}}  
+\newcommand{\fc}{\mathcal{f}}    \newcommand{\Fc}{\mathcal{F}}  
+\newcommand{\gc}{\mathcal{g}}    \newcommand{\Gc}{\mathcal{G}}  
+\newcommand{\hc}{\mathcal{h}}    \newcommand{\Hc}{\mathcal{H}}  
+\newcommand{\ic}{\mathcal{i}}    \newcommand{\Ic}{\mathcal{I}}  
+\newcommand{\jc}{\mathcal{j}}    \newcommand{\Jc}{\mathcal{J}}  
+\newcommand{\kc}{\mathcal{k}}    \newcommand{\Kc}{\mathcal{K}}  
+\newcommand{\lc}{\mathcal{l}}    \newcommand{\Lc}{\mathcal{L}}  
+\newcommand{\mcal}{\mathcal{m}}  \newcommand{\Mc}{\mathcal{M}}  
+\newcommand{\nc}{\mathcal{n}}    \newcommand{\Nc}{\mathcal{N}}  
+\newcommand{\oc}{\mathcal{o}}    \newcommand{\Oc}{\mathcal{O}}  
+\newcommand{\pc}{\mathcal{p}}    \newcommand{\Pc}{\mathcal{P}}  
+\newcommand{\qc}{\mathcal{q}}    \newcommand{\Qc}{\mathcal{Q}}  
+\newcommand{\rc}{\mathcal{r}}    \newcommand{\Rc}{\mathcal{R}}  
+\newcommand{\scal}{\mathcal{s}}  \newcommand{\Sc}{\mathcal{S}}  
+\newcommand{\tc}{\mathcal{t}}    \newcommand{\Tc}{\mathcal{T}}  
+\newcommand{\uc}{\mathcal{u}}    \newcommand{\Uc}{\mathcal{U}}  
+\newcommand{\vcal}{\mathcal{v}}  \newcommand{\Vc}{\mathcal{V}}  
+\newcommand{\wc}{\mathcal{w}}    \newcommand{\Wc}{\mathcal{W}}  
+\newcommand{\xc}{\mathcal{x}}    \newcommand{\Xc}{\mathcal{X}}  
+\newcommand{\yc}{\mathcal{y}}    \newcommand{\Yc}{\mathcal{Y}}  
+\newcommand{\zc}{\mathcal{z}}    \newcommand{\Zc}{\mathcal{Z}}  
+
+% ================= NORMS ===========================
+\newcommand{\mynorm}[2]{\| {#1} \|_{#2}}
+\newcommand{\norm}[2]{\mynorm{#1}{#2}}
+
+\newcommand{\onenorm}[1]{\mynorm{#1}{1}}
+\newcommand{\bigonenorm}[1]{\bignorm{#1}{1}}
+
+\newcommand{\infnorm}[1]{\mynorm{#1}{\infty}}
+\newcommand{\biginfnorm}[1]{\bignorm{#1}{\infty}}
+
+\newcommand{\oneinf}{\ell_{1,\infty}}
+\newcommand{\onetwo}{\ell_{1,2}}
+\newcommand{\oneinfnorm}[1]{\mynorm{#1}{1,\infty}}
+\newcommand{\bigoneinfnorm}[1]{\bignorm{#1}{1,\infty}}
+
+\newcommand{\onetwonorm}[1]{\mynorm{#1}{1,2}}
+\newcommand{\bigonetwonorm}[1]{\bignorm{#1}{1,2}}
+
+\newcommand{\twonorm}[1]{\mynorm{#1}{2}}
+\newcommand{\bigtwonorm}[1]{\bignorm{#1}{2}}
+
+\newcommand{\znorm}[1]{\mynorm{#1}{0}}
+\newcommand{\bigznorm}[1]{\bignorm{#1}{0}}
+
+\newcommand{\frob}[1]{\|{#1}\|_{\text{F}}}
+\newcommand{\bigfrob}[1]{\bignorm{#1}{\text{F}}}
+
+
+% ================ SUMs, INTEGRALS, WITHOUT LIMITS ================
+\newcommand{\nlsum}{\sum\nolimits}
+\newcommand{\nlprod}{\prod\nolimits}
+\newcommand{\nlint}{\int\nolimits}
+\newcommand{\nlmin}{\min\nolimits}
+\newcommand{\indicator}[1]{\mathbbm{1}\!\left[#1\right]}
+
+% =============== USEFUL SETS, FIELDS, ETC. ===========================
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\reals}{\mathbb{R}}
+\newcommand{\complex}{\matbb{C}}
+\newcommand{\integers}{\mathbb{Z}}
+\newcommand{\posdef}[1]{S_{++}^{#1}}
+\newcommand{\semidef}[1]{S_+^{#1}}
+
+% =============== MISC CONSTANTS ============================
+\newcommand{\half}{\tfrac{1}{2}}
+\newcommand{\third}{\tfrac{1}{3}}
+\newcommand{\fourth}{\tfrac{1}{4}}
+\newcommand{\onehalf}{\tfrac{3}{2}}
+
+% %%%%%%%%%%% MATH KEYWORDS %%%%%%%%%%%%%%%%%%%%%%%%%%
+\DeclareMathOperator*{\argmin}{argmin}
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator{\dom}{dom}
+\DeclareMathOperator{\interior}{int}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\ri}{ri}
+\DeclareMathOperator{\sgn}{sgn}
+\DeclareMathOperator{\trace}{Tr}
+\DeclareMathOperator{\Diag}{Diag}
+\DeclareMathOperator{\range}{range}
+\DeclareMathOperator{\vect}{vec}
+\DeclareMathOperator{\prox}{prox}
+\DeclareMathOperator{\intr}{int}
+\DeclareMathOperator{\relint}{ri}
+
+% === References to figures, theorems, etc. ===
+\newcommand{\prop}[1]{Proposition~\protect\ref{#1}}
+\newcommand{\coro}[1]{Corollary~\protect\ref{#1}}
+\newcommand{\rema}[1]{Remark~\protect\ref{#1}}
+\newcommand{\exam}[1]{Example~\protect\ref{#1}}
+\newcommand{\appl}[1]{Application~\protect\ref{#1}}
+% [SN]: lowercase \algo, uppercase \Algo
+\newcommand{\Algo}[1]{Algorithm~\protect\ref{#1}}
+\newcommand{\algo}[1]{Algorithm~\protect\ref{#1}}
+\newcommand{\opti}[1]{Optimization Problem~\protect\ref{#1}}
+\newcommand{\defi}[1]{Definition~\protect\ref{#1}}
+\newcommand{\prob}[1]{Problem~\protect\ref{#1}}
+% [SN]: lowercase \theo, uppercase \Theo
+\newcommand{\Theo}[1]{Theorem~\protect\ref{#1}}
+\newcommand{\theo}[1]{Theorem~\protect\ref{#1}}
+% [SN]: lowercase \fig, uppcase \Fig
+\newcommand{\Fig}[1]{Figure~\protect\ref{#1}}
+\newcommand{\fig}[1]{Figure~\protect\ref{#1}}
+\newcommand{\tab}[1]{Table~\protect\ref{#1}}
+\newcommand{\chap}[1]{Chapter~\protect\ref{#1}}
+% [SN]: lowercase \sec, uppcase \Sec
+% TODO: check all occurences of \sec at the beginning of a sentence
+\newcommand{\Sec}[1]{Section~\protect\ref{#1}}
+\renewcommand{\sec}[1]{Section~\protect\ref{#1}} % SS: but why?????? it shd always be uppercase!
+\newcommand{\app}[1]{Appendix~\protect\ref{#1}}
+\newcommand{\eq}[1]{(\protect\ref{#1})}
+\newcommand{\pag}[1]{page \protect\pageref{#1}}
+
+% === Marginal notes ===
+% To use marginal notes, type in \margin{this goes into the margin}
+\newcommand{\margin}[1]{\marginpar[\flushleft{#1}]{right}}
+
+
+%%% our settings %%%
+\newcommand{\expectation}{\mathbb{E}}
+\newcommand{\ex}[1]{e^{#1}}
+\newcommand{\stred}{\textsc{StructED}~}
+\newcommand{\comment}[1]{\noindent{\textcolor{red}{#1}}}
