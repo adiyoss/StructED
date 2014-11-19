@@ -62,9 +62,7 @@ parameter type, colon(:), parameter value
  
  - size_of_vector:						 size of vector after the feature mapping functions - Mandatory
  	
-
-	SPECIFIC - ALGORITHM DEPENDENT
-
+	===SPECIFIC - ALGORITHM DEPENDENT===
 
 	Passive Aggressive
  - c: 				 C parameter for the PA algorithm				
