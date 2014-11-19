@@ -66,30 +66,32 @@ parameter type, colon(:), parameter value
 	SPECIFIC - ALGORITHM DEPENDENT
 ===
 	Passive Aggressive
+	===
  - c: 				 C parameter for the PA algorithm				
 
 
 	SVM
+	===
  - lambda:				 lambda parameter for the SVM						
  - eta:				 	eta - learning rate
 			    
 						  
-	Direct Loss									   
+	Direct Loss
+	===
  - eta:				 eta - learning rate
  - epsilon:			 epsilon parameter for the DL	   
 						  
 
 	CRF	
+	===
  - eta:				 	eta - learning rate
  - lambda:				 lambda parameter for the CRF				  			
-			
-						 						  						  
 	Ramp Loss	
+	===
  - eta:				 eta - learning rate
  - lambda:				 lambda parameter for the RL				  			
-						  
-						  
-	Probit Loss	
+	Probit Loss
+	===
  - eta:				 eta - learning rate
  - lambda:				 lambda parameter for the PL	
  - num_of_iteration:		 number of iteration for generation noise			  
