@@ -45,8 +45,8 @@ GENERAL PARAMETERS
  
  - kernel:							 kernel type, and parameters(i.e sigma) - Optional
  								 0 - poly 2 degree
-								 1 - RBF 2nd taylor approximation
-								 2 - RBF 3nd taylor approximation	
+								 1 - 2nd taylor approximation for RBF
+								 2 - 3nd taylor approximation for RBF
 								
  - init_w:							 the path for the initial weights - Optional
  
@@ -80,25 +80,26 @@ SVM
 Direct Loss
 ===
 
- - eta:				 eta - learning rate
+ - eta:				 learning rate
  - epsilon:			 epsilon parameter for the DL	   
 						  
 
 CRF	
 ===
 
- - eta:				 	eta - learning rate
- - lambda:				 lambda parameter for the CRF				  			
+ - eta:				 	learning rate
+ - lambda:				lambda parameter for the CRF
+
 Ramp Loss	
 ===
 
- - eta:				 eta - learning rate
+ - eta:				 	learning rate
  - lambda:				 lambda parameter for the RL				  			
 
 Probit Loss
 ===
 
- - eta:				 eta - learning rate
+ - eta:				 learning rate
  - lambda:				 lambda parameter for the PL	
  - num_of_iteration:		 number of iteration for generation noise			  
 
