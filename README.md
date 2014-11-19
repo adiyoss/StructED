@@ -12,15 +12,16 @@ Keywords: Machine Learning, Structured Prediction, SVM, Direct Loss, CRF, Ramp L
 
 HOW TO USE
 ======
-All the source code for StructED is availabe to download from this reposetory. To use StructED in your own project you should download the code and implement three interfaces that are task dependent to your problem, the TaskLoss interface with is responsiable for the loss/cost function, the Prediction interface which is responsiable for the inferences (argmax, argmax+loss) and the PhiConvertor interface which is responsiable for the feature functions/feature maps.
+All the source code for StructED is available to download StructED repository. To use StructED in your own project you should download the code and implement three interfaces that are task dependent to your problem, the TaskLoss interface with is responsible for the loss/cost function, the Prediction interface which is responsible for the inferences (argmax, argmax+loss) and the PhiConvertor interface which is responsible for the feature functions/feature maps.
 
-Very detaild tutorial about adding new task to StructED can be found under the docs/ directory.
+Very detailed tutorial about adding new task to StructED can be found under the docs/ directory.
 
 CONFIG FILE - TRAIN
 ======
 
-To run StructED (Train or Predict), one should supply a congfig file. The file should be from the following format: 
+To run StructED (Train or Predict), one should supply a config file. The file should be from the following format: 
 (All the parameters in the config file should be as follows: parameter type, colon(:), parameter value)
+Examples of config files can be found under data/conf/algorithms_example directory
 
 GENERAL PARAMETERS
 =====
@@ -40,7 +41,7 @@ GENERAL PARAMETERS
  - kernel: kernel type, and parameters(i.e sigma) - Optional
  	- 0 - poly 2 degree
 	- 1 - 2nd taylor approximation for RBF - setting the sigma value can be done like that: kernel:1:19
-	- 2 - 3nd taylor approximation for RBF - setting the sigma value can be done like that: kernel:2:19
+	- 2 - 3rd taylor approximation for RBF - setting the sigma value can be done like that: kernel:2:19
  - init_w: the path for the initial weights - Optional
  - phi: feature function type - Mandatory
  - prediction: prediction function, should implement also the loss-augmented function - Mandatory
@@ -105,7 +106,7 @@ CONFIG FILE - PREDICT
  - kernel: kernel type, and parameters(i.e sigma) - Optional
  	- 0 - poly 2 degree
 	- 1 - RBF 2nd taylor approximation - setting the sigma value can be done like that: kernel:1:19
-	- 2 - RBF 3nd taylor approximation - setting the sigma value can be done like that: kernel:2:19
+	- 2 - RBF 3rd taylor approximation - setting the sigma value can be done like that: kernel:2:19
  - phi: feature function type - Mandatory
  - prediction: prediction function, should implement the inferences - Mandatory
  - reader: reader type - Mandatory
@@ -121,4 +122,4 @@ Inside StructED package you can find implementations to three tasks:
  - MNIST dataset (multi-class problem)
  - Vowel Duration Measurement
 
-For each task we supplied all the relevent classes, task-loss, prediction and feature functions, all of them can be found under the src/ directory.
+For each task we supplied all the relevant classes, task-loss, prediction and feature functions, all of them can be found under the src/ directory.
