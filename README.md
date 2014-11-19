@@ -63,7 +63,7 @@ parameter type, colon(:), parameter value
  - size_of_vector:						 size of vector after the feature mapping functions - Mandatory
  	
 
-	SPECIFIC - Algorithm dependent
+	SPECIFIC - ALGORITHM DEPENDENT
 
 
 	Passive Aggressive
