@@ -3,13 +3,11 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <meta name="keywords" content="machine leanging,structured prediction,structured learning, StructED, SVM, Direct Loss, CRF, Ramp Loss, Probit Loss, Passive Aggressive">
-
     <title>StructED by adiyoss</title>
 
     <link rel="stylesheet" href="stylesheets/styles.css">
     <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
@@ -17,10 +15,11 @@
   <body>
     <div class="wrapper">
       <header>
-        <h1><img src="images/STRUCTED-LOGO.png"></h1>
+        <h1>StructED</h1>
+        <p>Structured Prediction Package written in Java</p>
 
-        <p class="view"><a href="https://github.com/adiyoss/StructED">View the Project on GitHub</a></p>
-        <small>adiyoss/StructED</small>
+        <p class="view"><a href="https://github.com/adiyoss/StructED">View the Project on GitHub <small>adiyoss/StructED</small></a></p>
+
 
         <ul>
           <li><a href="https://github.com/adiyoss/StructED/zipball/master">Download <strong>ZIP File</strong></a></li>
@@ -38,18 +37,21 @@
 
 <p>StructED is a collection of machine learning algorithms for structured prediction problems. In structured prediction each task is distinctive and has its own set of feature functions, unique measure of performance and in many cases a non-standard inference. StructED package was designed to handle this inherent implementation complexity by having an easy interface to user-defined feature functions, decoder and evaluation function. The package is a general framework for implementation structured prediction problems and algorithms, and it is highly customizable. All algorithms are implemented by the same interfaces, so adding new algorithms or comparing them is straightforward. The library is written in Java, hence platform independent, and is available at <a href="http://adiyoss.github.io/StructED/">http://adiyoss.github.io/StructED/</a> </p>
 
+<p>Keywords: Machine Learning, Structured Prediction, SVM, Direct Loss, CRF, Ramp Loss, Probit Loss, Passive Aggressive, RankSVM</p>
+
 <h1>
 <a id="how-to-use" class="anchor" href="#how-to-use" aria-hidden="true"><span class="octicon octicon-link"></span></a>HOW TO USE</h1>
 
-<p>All the source code for StructED is availabe to download from this reposetory. To use StructED in your own project you should download the code and implement three interfaces that are task dependent to your problem, the TaskLoss interface with is responsiable for the loss/cost function, the Prediction interface which is responsiable for the inferences (argmax, argmax+loss) and the PhiConvertor interface which is responsiable for the feature functions/feature maps.</p>
+<p>All the source code for StructED is available to download StructED repository. To use StructED in your own project you should download the code and implement three interfaces that are task dependent to your problem, the TaskLoss interface with is responsible for the loss/cost function, the Prediction interface which is responsible for the inferences (argmax, argmax+loss) and the PhiConvertor interface which is responsible for the feature functions/feature maps.</p>
 
-<p>Very detaild tutorial about adding new task to StructED can be found under the docs/ directory.</p>
+<p>Very detailed tutorial about adding new task to StructED can be found under the docs/ directory.</p>
 
 <h1>
 <a id="config-file---train" class="anchor" href="#config-file---train" aria-hidden="true"><span class="octicon octicon-link"></span></a>CONFIG FILE - TRAIN</h1>
 
-<p>To run StructED (Train or Predict), one should supply a congfig file. The file should be from the following format: 
-(All the parameters in the config file should be as follows: parameter type, colon(:), parameter value)</p>
+<p>To run StructED (Train or Predict), one should supply a config file. The file should be from the following format: 
+(All the parameters in the config file should be as follows: parameter type, colon(:), parameter value)
+Examples of config files can be found under data/conf/algorithms_example directory</p>
 
 <h1>
 <a id="general-parameters" class="anchor" href="#general-parameters" aria-hidden="true"><span class="octicon octicon-link"></span></a>GENERAL PARAMETERS</h1>
@@ -77,7 +79,7 @@
 <ul>
 <li>0 - poly 2 degree</li>
 <li>1 - 2nd taylor approximation for RBF - setting the sigma value can be done like that: kernel:1:19</li>
-<li>2 - 3nd taylor approximation for RBF - setting the sigma value can be done like that: kernel:2:19</li>
+<li>2 - 3rd taylor approximation for RBF - setting the sigma value can be done like that: kernel:2:19</li>
 </ul>
 </li>
 <li>init_w: the path for the initial weights - Optional</li>
@@ -170,7 +172,7 @@
 <ul>
 <li>0 - poly 2 degree</li>
 <li>1 - RBF 2nd taylor approximation - setting the sigma value can be done like that: kernel:1:19</li>
-<li>2 - RBF 3nd taylor approximation - setting the sigma value can be done like that: kernel:2:19</li>
+<li>2 - RBF 3rd taylor approximation - setting the sigma value can be done like that: kernel:2:19</li>
 </ul>
 </li>
 <li>phi: feature function type - Mandatory</li>
@@ -201,7 +203,7 @@
 <li>Vowel Duration Measurement</li>
 </ul>
 
-<p>For each task we supplied all the relevent classes, task-loss, prediction and feature functions, all of them can be found under the src/ directory.</p>
+<p>For each task we supplied all the relevant classes, task-loss, prediction and feature functions, all of them can be found under the src/ directory.</p>
       </section>
       <footer>
         <p>This project is maintained by <a href="https://github.com/adiyoss">adiyoss</a></p>
