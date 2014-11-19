@@ -62,46 +62,49 @@ GENERAL PARAMETERS
  
  - size_of_vector:						 size of vector after the feature mapping functions - Mandatory
 
-	=== 	
-	SPECIFIC - ALGORITHM DEPENDENT
-	===
-	
-	===
-	Passive Aggressive
-	===
+SPECIFIC - ALGORITHM DEPENDENT
+===
+
+Passive Aggressive
+===
+
  - c: 				 C parameter for the PA algorithm				
 
-	===
-	SVM
-	===
+SVM
+===
+
  - lambda:				 lambda parameter for the SVM						
  - eta:				 	eta - learning rate
 			    
-	===					  
-	Direct Loss
-	===
+
+Direct Loss
+===
+
  - eta:				 eta - learning rate
  - epsilon:			 epsilon parameter for the DL	   
 						  
-	===
-	CRF	
-	===
+
+CRF	
+===
+
  - eta:				 	eta - learning rate
  - lambda:				 lambda parameter for the CRF				  			
- 	===
-	Ramp Loss	
-	===
+Ramp Loss	
+===
+
  - eta:				 eta - learning rate
  - lambda:				 lambda parameter for the RL				  			
- 	===
-	Probit Loss
-	===
+
+Probit Loss
+===
+
  - eta:				 eta - learning rate
  - lambda:				 lambda parameter for the PL	
  - num_of_iteration:		 number of iteration for generation noise			  
 
 
-======
+
+
 CONFIG FILE - TEST
 ======
 
@@ -132,7 +135,7 @@ CONFIG FILE - TEST
 
  - size_of_vector:							 size of vector after the feature mapping functions - Mandatory
 
-========
+
 Examples
 ========
 Inside StructED package you can find implementations to three tasks:
