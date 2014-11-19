@@ -26,7 +26,7 @@ GENERAL PARAMETERS
 =====
 	
  - train_path: the path to the training set data - Mandatory 
- - w_output: output file of the weights vector (model)	
+ - w_output: the path to save the weights vector (model)	
  - type: the algorithm type - Mandatory
  	- 0 - Passive Aggressive
  	- 1 - SVM
@@ -47,7 +47,7 @@ GENERAL PARAMETERS
  - reader: db reader type - Mandatory
  - writer: db writer type - Mandatory
 	- for both reader and writer
-		- use 0 for standard form
+		- use 0 for standard reader(like mnist db or the dummy data)
  - isAvg: boolean that indicates whether to average the weights vector - optional, default is 0
  - size_of_vector: size of vector after the feature mapping functions - Mandatory
 
@@ -57,74 +57,62 @@ SPECIFIC - ALGORITHM DEPENDENT
 Passive Aggressive
 ===
 
- - c: 				 C parameter for the PA algorithm				
+ - c: parameter for the PA algorithm				
 
 SVM
 ===
 
- - lambda:				 lambda parameter for the SVM						
- - eta:				 	eta - learning rate
+ - lambda: lambda parameter for the SVM						
+ - eta: learning rate
 			    
 
 Direct Loss
 ===
 
- - eta:				 learning rate
- - epsilon:			 epsilon parameter for the DL	   
+ - eta: learning rate
+ - epsilon: epsilon parameter for the DL	   
 						  
 
 CRF	
 ===
 
- - eta:				 	learning rate
- - lambda:				lambda parameter for the CRF
+ - eta: learning rate
+ - lambda: lambda parameter for the CRF
 
 Ramp Loss	
 ===
 
- - eta:				 	learning rate
- - lambda:				 lambda parameter for the RL				  			
+ - eta:	learning rate
+ - lambda: lambda parameter for the RL				  			
 
 Probit Loss
 ===
 
- - eta:				 learning rate
- - lambda:				 lambda parameter for the PL	
- - num_of_iteration:		 number of iteration for generation noise			  
-
-
+ - eta:	learning rate
+ - lambda: lambda parameter for the PL	
+ - num_of_iteration: the number of times to generation noise for the weights vector
 
 
 CONFIG FILE - TEST
 ======
 
- - test_path:							 the path to the test set data - Mandatory 
-
- - output_file:							 the output file for the scores - Mandatory 
-
- - w_path:								 the weights vector(model) - Mandatory 
-
- - examples_2_display:						 how many examples to display in the scores file - Mandatory
-
- - task:								 the loss(cost) function, the same as the train - Mandatory
-
- - kernel:								 kernel type, and parameters(i.e sigma) - Optional
- 								 0 - poly 2 degree
-								 1 - RBF 2nd taylor approximation
-								 2 - RBF 3nd taylor approximation
-	
- - phi:								 feature function type - Mandatory
-
- - prediction:							 prediction function, should implement also the loss-augmented function - Mandatory
-
- - reader:								 reader type - Mandatory
- - writer:								 writer type - Mandatory
- 								 for both reader and writer
-								 use 0 for standard form
-								 use 1 for standard rank form (as Letor 3.0)
-
- - size_of_vector:							 size of vector after the feature mapping functions - Mandatory
-
+ - test_path: the path to the test set data - Mandatory 
+ - output_file: the path to output the scores file - Mandatory
+ - w_path: the path to the weights vector (model) - Mandatory 
+ - examples_2_display: how many examples to display in the scores file - Mandatory
+ - task: the loss(cost) function, the same as the train - Mandatory
+ - task_param: task loss parameters if needed
+ - kernel: kernel type, and parameters(i.e sigma) - Optional
+ 	- 0 - poly 2 degree
+	- 1 - RBF 2nd taylor approximation - setting the sigma value can be done like that: kernel:1:19
+	- 2 - RBF 3nd taylor approximation - setting the sigma value can be done like that: kernel:2:19
+ - phi: feature function type - Mandatory
+ - prediction: prediction function, should implement the inferences - Mandatory
+ - reader: reader type - Mandatory
+ - writer: writer type - Mandatory
+	- for both reader and writer
+		- use 0 for standard reader(like mnist db or the dummy data)
+ - size_of_vector: size of vector after the feature mapping functions - Mandatory
 
 Examples
 ========
