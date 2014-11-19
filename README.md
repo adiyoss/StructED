@@ -21,9 +21,10 @@ CONFIG FILE - TRAIN
 All the parameters in the config file should be as follows: 
 
 parameter type, colon(:), parameter value
-===
+
+=====
 GENERAL PARAMETERS
-===
+
 	
  - train_path:							 the path to the training set data - Mandatory 
  - w_output:							 output file of the weights vector (model)	
