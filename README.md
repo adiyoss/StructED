@@ -19,7 +19,8 @@ You can find very detaild tutorial about adding new task to StructED under the d
 ======
 CONFIG FILE - TRAIN
 ======
-all the parameters should be as: parameter type then colon ( : ) and then the value of the parameter 
+All the parameters in the config file should be as follows: 
+	parameter type, colon(:), parameter value
 
 	GENERAL
 	
@@ -146,4 +147,5 @@ Inside StructED package you can find implementations to three tasks:
  - Dummy data
  - MNIST dataset (multi-class problem)
  - Vowel Duration Measurement
+
 For each task we supplied all the relevent classes, task-loss, prediction and feature functions, all of them can be found under the src/ directory.
