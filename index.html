@@ -15,8 +15,12 @@
   <body>
     <div class="wrapper">
       <header>
+        <h1>StructED</h1>
+        <p>Structured Prediction Package written in Java</p>
 
         <p class="view"><a href="https://github.com/adiyoss/StructED">View the Project on GitHub <small>adiyoss/StructED</small></a></p>
+
+
         <ul>
           <li><a href="https://github.com/adiyoss/StructED/zipball/master">Download <strong>ZIP File</strong></a></li>
           <li><a href="https://github.com/adiyoss/StructED/tarball/master">Download <strong>TAR Ball</strong></a></li>
@@ -24,158 +28,181 @@
         </ul>
       </header>
       <section>
-        <h1></h1>
-
-<h1>
-<a id="readme" class="anchor" href="#readme" aria-hidden="true"><span class="octicon octicon-link"></span></a>
-  <img src="images/STRUCTED-LOGO.png">
-</h1>
+        <h1>
+<a id="readme" class="anchor" href="#readme" aria-hidden="true"><span class="octicon octicon-link"></span></a>README</h1>
 
 <p>StructED 1.0.0</p>
 
-<p>Copyright (C) Bar-Ilan  University</p>
+<p>Copyright (C) Adiyoss</p>
 
-<p>This is a README file for the Structure Prediction Package</p>
+<p>StructED is a collection of machine learning algorithms for structured prediction problems. In structured prediction each task is distinctive and has its own set of feature functions, unique measure of performance and in many cases a non-standard inference. StructED package was designed to handle this inherent implementation complexity by having an easy interface to user-defined feature functions, decoder and evaluation function. The package is a general framework for implementation structured prediction problems and algorithms, and it is highly customizable. All algorithms are implemented by the same interfaces, so adding new algorithms or comparing them is straightforward. The library is written in Java, hence platform independent, and is available at <a href="http://adiyoss.github.io/StructED/">http://adiyoss.github.io/StructED/</a> </p>
 
-<pre><code>==========How to use===========
+<p>Keywords: Machine Learning, Structured Prediction, SVM, Direct Loss, CRF, Ramp Loss, Probit Loss, Passive Aggressive, RankSVM</p>
 
-==========TRAIN FILE===========
+<h1>
+<a id="how-to-use" class="anchor" href="#how-to-use" aria-hidden="true"><span class="octicon octicon-link"></span></a>HOW TO USE</h1>
 
-=====Config file parmeters=====
-</code></pre>
+<p>All the source code for StructED is availabe to download from this reposetory. To use StructED in your own project you should download the code and implement three interfaces that are task dependent to your problem, the TaskLoss interface with is responsiable for the loss/cost function, the Prediction interface which is responsiable for the inferences (argmax, argmax+loss) and the PhiConvertor interface which is responsiable for the feature functions/feature maps.</p>
 
-<p>all the parameters should be as: parameter type then colon ( : ) and then the value of the parameter </p>
+<p>Very detaild tutorial about adding new task to StructED can be found under the docs/ directory.</p>
 
-<pre><code>===============GENERAL================
-</code></pre>
+<h1>
+<a id="config-file---train" class="anchor" href="#config-file---train" aria-hidden="true"><span class="octicon octicon-link"></span></a>CONFIG FILE - TRAIN</h1>
 
-<p>Here we present the configuration file which loads all the relevant parameters
-first we present the general parameters for every algorithm
-Few parameters are mandatory and the others are optional, we state for every parameter his condition</p>
+<p>To run StructED (Train or Predict), one should supply a congfig file. The file should be from the following format: 
+(All the parameters in the config file should be as follows: parameter type, colon(:), parameter value)</p>
+
+<h1>
+<a id="general-parameters" class="anchor" href="#general-parameters" aria-hidden="true"><span class="octicon octicon-link"></span></a>GENERAL PARAMETERS</h1>
 
 <ul>
-<li>train_path:                           the path to the training set data - Mandatory </li>
-<li><p>w_output:                             output file of the weights vector (model)  </p></li>
-<li><p>type:                             the algorithm type - Mandatory
-                             0 - Passive Aggressive
-                             1 - SVM
-                             2 - Direct Loss
-                             3 - CRF
-                             4 - Ramp Loss
-                             5 - Probit Loss
-                             6 - RankSVM </p></li>
-<li><p>task:                             the cost/loss function number - Mandatory</p></li>
-<li><p>epoch:                            the number of epochs on the data - Mandatory</p></li>
-<li><p>task_param:                           cost/loss parameters if needed - Optional</p></li>
-<li><p>kernel:                           kernel type, and parameters(i.e sigma) - Optional
-                             0 - poly 2 degree
-                             1 - RBF 2nd taylor approximation
-                             2 - RBF 3nd taylor approximation   </p></li>
-<li><p>init_w:                           the path for the initial weights - Optional</p></li>
-<li><p>phi:                              feature function type - Mandatory</p></li>
-<li><p>prediction:                           prediction function, should implement also the loss-augmented function - Mandatory</p></li>
-<li><p>reader:                           reader type - Mandatory</p></li>
-<li><p>writer:                           writer type - Mandatory
-                             for both reader and writer
-                             use 0 for standard form
-                             use 1 for standard rank form (as Letor 3.0)</p></li>
-<li>
-<p>size_of_vector:                       size of vector after the feature mapping functions - Mandatory</p>
-
-<p>RELEVANT FILES: taskLoss, phiConverter and prediction interfaces and the Factory class</p>
-
-<p>for the task, phi and prediction the user should implement the taskLoss, phiConverter and prediction interfaces
-after implementing those interfaces the Factory class should be updated by to support the new classes that we've just implement
-we do this by adding another case to the switch-case statement at the getClassifier function</p>
-
-<pre><code> =======================================
- ===============SPECIFIC================
-</code></pre>
-
-<p>parameters for the algorithm, will be different for each algorithm - Mandatory</p>
-
-<p>===PA===                                       </p>
+<li>train_path: the path to the training set data - Mandatory </li>
+<li>w_output: the path to save the weights vector (model)<br>
 </li>
-<li>
-<p>c:                C parameter for the PA algorithm               </p>
+<li>type: the algorithm type - Mandatory
 
-<p>===SVM===                             </p>
+<ul>
+<li>0 - Passive Aggressive</li>
+<li>1 - SVM</li>
+<li>2 - Direct Loss</li>
+<li>3 - CRF</li>
+<li>4 - Ramp Loss</li>
+<li>5 - Probit Loss</li>
+</ul>
 </li>
-<li>lambda:               lambda parameter for the SVM<br>
-</li>
-<li>
-<p>eta:              eta - learning rate</p>
+<li>task: the cost/loss function number - Mandatory</li>
+<li>epoch: the number of epochs on the data - Mandatory</li>
+<li>task_param: cost/loss parameters if needed, can store multiple parameters splited by (;) - optional</li>
+<li>kernel: kernel type, and parameters(i.e sigma) - Optional
 
-<p>===DL===                                       </p>
+<ul>
+<li>0 - poly 2 degree</li>
+<li>1 - 2nd taylor approximation for RBF - setting the sigma value can be done like that: kernel:1:19</li>
+<li>2 - 3nd taylor approximation for RBF - setting the sigma value can be done like that: kernel:2:19</li>
+</ul>
 </li>
-<li>eta:              eta - learning rate</li>
-<li>
-<p>epsilon:          epsilon parameter for the DL      </p>
+<li>init_w: the path for the initial weights - Optional</li>
+<li>phi: feature function type - Mandatory</li>
+<li>prediction: prediction function, should implement also the loss-augmented function - Mandatory</li>
+<li>reader: db reader type - Mandatory</li>
+<li>writer: db writer type - Mandatory
 
-<p>===CRF===   </p>
-</li>
-<li>eta:              eta - learning rate</li>
-<li>
-<p>lambda:               lambda parameter for the CRF                           </p>
+<ul>
+<li>for both reader and writer
 
-<p>===RL===    </p>
+<ul>
+<li>use 0 for standard reader(like mnist db or the dummy data)</li>
+</ul>
 </li>
-<li>eta:              eta - learning rate</li>
-<li>
-<p>lambda:               lambda parameter for the RL                            </p>
+</ul>
+</li>
+<li>isAvg: boolean that indicates whether to average the weights vector - optional, default is 0</li>
+<li>size_of_vector: size of vector after the feature mapping functions - Mandatory</li>
+</ul>
 
-<p>===PL===    </p>
-</li>
-<li>eta:              eta - learning rate</li>
-<li>lambda:               lambda parameter for the PL<br>
-</li>
-<li>
-<p>num_of_iteration:         number of iteration for generation noise             </p>
+<h1>
+<a id="specific---algorithm-dependent" class="anchor" href="#specific---algorithm-dependent" aria-hidden="true"><span class="octicon octicon-link"></span></a>SPECIFIC - ALGORITHM DEPENDENT</h1>
 
-<p>===RankSVM===                         </p>
-</li>
-<li>lambda:               lambda parameter for the RankSVM<br>
-</li>
-<li>eta               eta - learning rate<br>
+<h2>
+<a id="passive-aggressive" class="anchor" href="#passive-aggressive" aria-hidden="true"><span class="octicon octicon-link"></span></a>Passive Aggressive</h2>
+
+<ul>
+<li>c: parameter for the PA algorithm<br>
 </li>
 </ul>
 
-<h1></h1>
-
-<pre><code>==========TEST FILE===========
-</code></pre>
+<h2>
+<a id="svm" class="anchor" href="#svm" aria-hidden="true"><span class="octicon octicon-link"></span></a>SVM</h2>
 
 <ul>
-<li><p>test_path:                            the path to the test set data - Mandatory </p></li>
-<li><p>output_file:                          the output file for the scores - Mandatory </p></li>
-<li><p>w_path:                               the weights vector(model) - Mandatory </p></li>
-<li><p>examples_2_display:                       how many examples to display in the scores file - Mandatory</p></li>
-<li><p>task:                                 the loss(cost) function, the same as the train - Mandatory</p></li>
-<li><p>kernel:                               kernel type, and parameters(i.e sigma) - Optional
-                             0 - poly 2 degree
-                             1 - RBF 2nd taylor approximation
-                             2 - RBF 3nd taylor approximation</p></li>
-<li><p>phi:                              feature function type - Mandatory</p></li>
-<li><p>prediction:                           prediction function, should implement also the loss-augmented function - Mandatory</p></li>
-<li><p>reader:                               reader type - Mandatory</p></li>
-<li><p>writer:                               writer type - Mandatory
-                             for both reader and writer
-                             use 0 for standard form
-                             use 1 for standard rank form (as Letor 3.0)</p></li>
-<li><p>size_of_vector:                           size of vector after the feature mapping functions - Mandatory</p></li>
+<li>lambda: lambda parameter for the SVM<br>
+</li>
+<li>eta: learning rate</li>
 </ul>
 
-<p>==========================Examples===========================</p>
+<h2>
+<a id="direct-loss" class="anchor" href="#direct-loss" aria-hidden="true"><span class="octicon octicon-link"></span></a>Direct Loss</h2>
 
-<p>We provided three examples of implementation of all the interferes that was mentioned above</p>
+<ul>
+<li>eta: learning rate</li>
+<li>epsilon: epsilon parameter for the DL<br>
+</li>
+</ul>
 
-<p>The first one is dummy data
- The second one is the MNIST dataset
- The third one is the letor 3.0 dataset</p>
+<h2>
+<a id="crf" class="anchor" href="#crf" aria-hidden="true"><span class="octicon octicon-link"></span></a>CRF</h2>
 
-<p>All the examples can be found on our website</p>
+<ul>
+<li>eta: learning rate</li>
+<li>lambda: lambda parameter for the CRF</li>
+</ul>
 
-<h1></h1>
+<h2>
+<a id="ramp-loss" class="anchor" href="#ramp-loss" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ramp Loss</h2>
+
+<ul>
+<li>eta: learning rate</li>
+<li>lambda: lambda parameter for the RL<br>
+</li>
+</ul>
+
+<h2>
+<a id="probit-loss" class="anchor" href="#probit-loss" aria-hidden="true"><span class="octicon octicon-link"></span></a>Probit Loss</h2>
+
+<ul>
+<li>eta: learning rate</li>
+<li>lambda: lambda parameter for the PL<br>
+</li>
+<li>num_of_iteration: the number of times to generation noise for the weights vector</li>
+</ul>
+
+<h1>
+<a id="config-file---predict" class="anchor" href="#config-file---predict" aria-hidden="true"><span class="octicon octicon-link"></span></a>CONFIG FILE - PREDICT</h1>
+
+<ul>
+<li>test_path: the path to the test set data - Mandatory </li>
+<li>output_file: the path to output the scores file - Mandatory</li>
+<li>w_path: the path to the weights vector (model) - Mandatory </li>
+<li>examples_2_display: how many examples to display in the scores file - Mandatory</li>
+<li>task: the loss(cost) function, the same as the train - Mandatory</li>
+<li>task_param: task loss parameters if needed</li>
+<li>kernel: kernel type, and parameters(i.e sigma) - Optional
+
+<ul>
+<li>0 - poly 2 degree</li>
+<li>1 - RBF 2nd taylor approximation - setting the sigma value can be done like that: kernel:1:19</li>
+<li>2 - RBF 3nd taylor approximation - setting the sigma value can be done like that: kernel:2:19</li>
+</ul>
+</li>
+<li>phi: feature function type - Mandatory</li>
+<li>prediction: prediction function, should implement the inferences - Mandatory</li>
+<li>reader: reader type - Mandatory</li>
+<li>writer: writer type - Mandatory
+
+<ul>
+<li>for both reader and writer
+
+<ul>
+<li>use 0 for standard reader(like mnist db or the dummy data)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>size_of_vector: size of vector after the feature mapping functions - Mandatory</li>
+</ul>
+
+<h1>
+<a id="examples" class="anchor" href="#examples" aria-hidden="true"><span class="octicon octicon-link"></span></a>Examples</h1>
+
+<p>Inside StructED package you can find implementations to three tasks:</p>
+
+<ul>
+<li>Dummy data</li>
+<li>MNIST dataset (multi-class problem)</li>
+<li>Vowel Duration Measurement</li>
+</ul>
+
+<p>For each task we supplied all the relevent classes, task-loss, prediction and feature functions, all of them can be found under the src/ directory.</p>
       </section>
       <footer>
         <p>This project is maintained by <a href="https://github.com/adiyoss">adiyoss</a></p>
