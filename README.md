@@ -11,16 +11,15 @@ Keywords: Machine Learning, Structured Prediction, SVM, Direct Loss, CRF, Ramp L
 
 HOW TO USE
 ======
-All the source code of structed is availabe to dounload from this reposetory. To use StructED in your own project you should down load the code and implement three interfaces that are task dependent to your problem, the TaskLoss interface with is responsiable for the loss/cost function, the Prediction interface which is responsiable for the inferences (argmax, argmax+loss) and the PhiConvertor interface which is responsiable for the feature functions/feature maps.
+All the source code for StructED is availabe to download from this reposetory. To use StructED in your own project you should download the code and implement three interfaces that are task dependent to your problem, the TaskLoss interface with is responsiable for the loss/cost function, the Prediction interface which is responsiable for the inferences (argmax, argmax+loss) and the PhiConvertor interface which is responsiable for the feature functions/feature maps.
 
-You can find very detaild tutorial about adding new task to StructED under the docs/ directory.
+Very detaild tutorial about adding new task to StructED can be found under the docs/ directory.
 
 CONFIG FILE - TRAIN
 ======
 
-All the parameters in the config file should be as follows: 
-
-parameter type, colon(:), parameter value
+To run StructED (Train or Predict), one should supply a congfig file. The file should be from the following format: 
+(All the parameters in the config file should be as follows: parameter type, colon(:), parameter value)
 
 GENERAL PARAMETERS
 =====
@@ -93,7 +92,7 @@ Probit Loss
  - num_of_iteration: the number of times to generation noise for the weights vector
 
 
-CONFIG FILE - TEST
+CONFIG FILE - PREDICT
 ======
 
  - test_path: the path to the test set data - Mandatory 
