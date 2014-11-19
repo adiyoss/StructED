@@ -9,10 +9,10 @@ Copyright (C) Adiyoss
 StructED is a collection of machine learning algorithms for structured prediction problems. In structured prediction each task is distinctive and has its own set of feature functions, unique measure of performance and in many cases a non-standard inference. StructED package was designed to handle this inherent implementation complexity by having an easy interface to user-defined feature functions, decoder and evaluation function. The package is a general framework for implementation structured prediction problems and algorithms, and it is highly customizable. All algorithms are implemented by the same interfaces, so adding new algorithms or comparing them is straightforward. The library is written in Java, hence platform independent, and is available at http://adiyoss.github.io/StructED/ 
 Keywords: Machine Learning, Structured Prediction, SVM, Direct Loss, CRF, Ramp Loss, Probit Loss, Passive Aggressive, RankSVM
 
-	HOW TO USE
+HOW TO USE
 
-	TRAIN FILE
-	Config file parmeters
+TRAIN FILE
+Config file parmeters
 
 all the parameters should be as: parameter type then colon ( : ) and then the value of the parameter 
 
