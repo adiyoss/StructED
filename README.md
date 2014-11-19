@@ -12,10 +12,13 @@ Keywords: Machine Learning, Structured Prediction, SVM, Direct Loss, CRF, Ramp L
 ======
 HOW TO USE
 ======
+All the source code of structed is availabe to dounload from this reposetory. To use StructED in your own project you should down load the code and implement three interfaces that are task dependent to your problem, the TaskLoss interface with is responsiable for the loss/cost function, the Prediction interface which is responsiable for the inferences (argmax, argmax+loss) and the PhiConvertor interface which is responsiable for the feature functions/feature maps.
 
-TRAIN FILE
-Config file parmeters
+You can find very detaild tutorial about adding new task to StructED under the docs/ directory.
 
+======
+CONFIG FILE - TRAIN
+======
 all the parameters should be as: parameter type then colon ( : ) and then the value of the parameter 
 
 	GENERAL
@@ -136,14 +139,11 @@ Few parameters are mandatory and the others are optional, we state for every par
 
  - size_of_vector:							 size of vector after the feature mapping functions - Mandatory
 
-==========================Examples===========================
-
- We provided three examples of implementation of all the interferes that was mentioned above
-
- The first one is dummy data
- The second one is the MNIST dataset
- The third one is the letor 3.0 dataset
-
- All the examples can be found on our website
-
-=============================================================
+========
+Examples
+========
+Inside StructED package you can find implementations to three tasks:
+ - Dummy data
+ - MNIST dataset (multi-class problem)
+ - Vowel Duration Measurement
+For each task we supplied all the relevent classes, task-loss, prediction and feature functions, all of them can be found under the src/ directory.
