@@ -1,149 +1,125 @@
-======
 README
 ======
 
 StructED 1.0.0
 
-Copyright (C) Bar-Ilan  University
+Copyright (C) Adiyoss
 
-This is a README file for the Structure Prediction Package
+StructED is a collection of machine learning algorithms for structured prediction problems. In structured prediction each task is distinctive and has its own set of feature functions, unique measure of performance and in many cases a non-standard inference. StructED package was designed to handle this inherent implementation complexity by having an easy interface to user-defined feature functions, decoder and evaluation function. The package is a general framework for implementation structured prediction problems and algorithms, and it is highly customizable. All algorithms are implemented by the same interfaces, so adding new algorithms or comparing them is straightforward. The library is written in Java, hence platform independent, and is available at http://adiyoss.github.io/StructED/ 
 
-	==========How to use===========
-
-	==========TRAIN FILE===========
-
-	=====Config file parmeters=====
-
-all the parameters should be as: parameter type then colon ( : ) and then the value of the parameter 
-
-	===============GENERAL================
-
-Here we present the configuration file which loads all the relevant parameters
-first we present the general parameters for every algorithm
-Few parameters are mandatory and the others are optional, we state for every parameter his condition
+Keywords: Machine Learning, Structured Prediction, SVM, Direct Loss, CRF, Ramp Loss, Probit Loss, Passive Aggressive, RankSVM
 
 
- - train_path:							 the path to the training set data - Mandatory 
- - w_output:							 output file of the weights vector (model)	
+HOW TO USE
+======
+All the source code for StructED is available to download StructED repository. To use StructED in your own project you should download the code and implement three interfaces that are task dependent to your problem, the TaskLoss interface with is responsible for the loss/cost function, the Prediction interface which is responsible for the inferences (argmax, argmax+loss) and the PhiConvertor interface which is responsible for the feature functions/feature maps.
 
- - type:							 the algorithm type - Mandatory
- 								 0 - Passive Aggressive
-								 1 - SVM
-								 2 - Direct Loss
-								 3 - CRF
-								 4 - Ramp Loss
-								 5 - Probit Loss
-								 6 - RankSVM 
-								
- - task:							 the cost/loss function number - Mandatory
- 
- - epoch:							 the number of epochs on the data - Mandatory
- 
- - task_param:							 cost/loss parameters if needed - Optional
- 
- - kernel:							 kernel type, and parameters(i.e sigma) - Optional
- 								 0 - poly 2 degree
-								 1 - RBF 2nd taylor approximation
-								 2 - RBF 3nd taylor approximation	
-								
- - init_w:							 the path for the initial weights - Optional
- 
- - phi:								 feature function type - Mandatory
- 
- - prediction:							 prediction function, should implement also the loss-augmented function - Mandatory
- 
- - reader:							 reader type - Mandatory
- - writer:							 writer type - Mandatory
- 								 for both reader and writer
-								 use 0 for standard form
-								 use 1 for standard rank form (as Letor 3.0)
- 
- - size_of_vector:						 size of vector after the feature mapping functions - Mandatory
-  
-	RELEVANT FILES: taskLoss, phiConverter and prediction interfaces and the Factory class
+Very detailed tutorial about adding new task to StructED can be found under the docs/ directory.
 
-  for the task, phi and prediction the user should implement the taskLoss, phiConverter and prediction interfaces
-  after implementing those interfaces the Factory class should be updated by to support the new classes that we've just implement
-  we do this by adding another case to the switch-case statement at the getClassifier function
- 
+CONFIG FILE - TRAIN
+======
 
-	   =======================================
-	   ===============SPECIFIC================
+To run StructED (Train or Predict), one should supply a config file. The file should be from the following format: 
+(All the parameters in the config file should be as follows: parameter type, colon(:), parameter value)
+Examples of config files can be found under data/conf/algorithms_example directory
 
- parameters for the algorithm, will be different for each algorithm - Mandatory
-
-	===PA===									   
- - c: 				 C parameter for the PA algorithm				
-
-
-	===SVM===							  
- - lambda:				 lambda parameter for the SVM						
- - eta:				 eta - learning rate
-			    
-						  
-	===DL===									   
- - eta:				 eta - learning rate
- - epsilon:			 epsilon parameter for the DL	   
-						  
-
-	===CRF===	
- - eta:				 eta - learning rate
- - lambda:				 lambda parameter for the CRF				  			
-			
-						 						  						  
-	===RL===	
- - eta:				 eta - learning rate
- - lambda:				 lambda parameter for the RL				  			
-						  
-						  
-	===PL===	
- - eta:				 eta - learning rate
- - lambda:				 lambda parameter for the PL	
- - num_of_iteration:		 number of iteration for generation noise			  
-
-						  						  
-	===RankSVM===						  
- - lambda:				 lambda parameter for the RankSVM					
- - eta				 eta - learning rate			    
-
-==============================================================
-
-	==========TEST FILE===========
- - test_path:							 the path to the test set data - Mandatory 
-
- - output_file:							 the output file for the scores - Mandatory 
-
- - w_path:								 the weights vector(model) - Mandatory 
-
- - examples_2_display:						 how many examples to display in the scores file - Mandatory
-
- - task:								 the loss(cost) function, the same as the train - Mandatory
-
- - kernel:								 kernel type, and parameters(i.e sigma) - Optional
- 								 0 - poly 2 degree
-								 1 - RBF 2nd taylor approximation
-								 2 - RBF 3nd taylor approximation
+GENERAL PARAMETERS
+=====
 	
- - phi:								 feature function type - Mandatory
+ - train_path: the path to the training set data - Mandatory 
+ - w_output: the path to save the weights vector (model)	
+ - type: the algorithm type - Mandatory
+ 	- 0 - Passive Aggressive
+ 	- 1 - SVM
+ 	- 2 - Direct Loss
+ 	- 3 - CRF
+ 	- 4 - Ramp Loss
+ 	- 5 - Probit Loss
+ - task: the cost/loss function number - Mandatory
+ - epoch: the number of epochs on the data - Mandatory
+ - task_param: cost/loss parameters if needed, can store multiple parameters splited by (;) - optional
+ - kernel: kernel type, and parameters(i.e sigma) - Optional
+ 	- 0 - poly 2 degree
+	- 1 - 2nd taylor approximation for RBF - setting the sigma value can be done like that: kernel:1:19
+	- 2 - 3rd taylor approximation for RBF - setting the sigma value can be done like that: kernel:2:19
+ - init_w: the path for the initial weights - Optional
+ - phi: feature function type - Mandatory
+ - prediction: prediction function, should implement also the loss-augmented function - Mandatory
+ - reader: db reader type - Mandatory
+ - writer: db writer type - Mandatory
+	- for both reader and writer
+		- use 0 for standard reader(like mnist db or the dummy data)
+ - isAvg: boolean that indicates whether to average the weights vector - optional, default is 0
+ - size_of_vector: size of vector after the feature mapping functions - Mandatory
 
- - prediction:							 prediction function, should implement also the loss-augmented function - Mandatory
+SPECIFIC - ALGORITHM DEPENDENT
+===
 
- - reader:								 reader type - Mandatory
- - writer:								 writer type - Mandatory
- 								 for both reader and writer
-								 use 0 for standard form
-								 use 1 for standard rank form (as Letor 3.0)
+Passive Aggressive
+===
 
- - size_of_vector:							 size of vector after the feature mapping functions - Mandatory
+ - c: parameter for the PA algorithm				
 
-==========================Examples===========================
+SVM
+===
 
- We provided three examples of implementation of all the interferes that was mentioned above
+ - lambda: lambda parameter for the SVM						
+ - eta: learning rate
+			    
 
- The first one is dummy data
- The second one is the MNIST dataset
- The third one is the letor 3.0 dataset
+Direct Loss
+===
 
- All the examples can be found on our website
+ - eta: learning rate
+ - epsilon: epsilon parameter for the DL	   
+						  
 
-=============================================================
+CRF	
+===
+
+ - eta: learning rate
+ - lambda: lambda parameter for the CRF
+
+Ramp Loss	
+===
+
+ - eta:	learning rate
+ - lambda: lambda parameter for the RL				  			
+
+Probit Loss
+===
+
+ - eta:	learning rate
+ - lambda: lambda parameter for the PL	
+ - num_of_iteration: the number of times to generation noise for the weights vector
+
+
+CONFIG FILE - PREDICT
+======
+
+ - test_path: the path to the test set data - Mandatory 
+ - output_file: the path to output the scores file - Mandatory
+ - w_path: the path to the weights vector (model) - Mandatory 
+ - examples_2_display: how many examples to display in the scores file - Mandatory
+ - task: the loss(cost) function, the same as the train - Mandatory
+ - task_param: task loss parameters if needed
+ - kernel: kernel type, and parameters(i.e sigma) - Optional
+ 	- 0 - poly 2 degree
+	- 1 - RBF 2nd taylor approximation - setting the sigma value can be done like that: kernel:1:19
+	- 2 - RBF 3rd taylor approximation - setting the sigma value can be done like that: kernel:2:19
+ - phi: feature function type - Mandatory
+ - prediction: prediction function, should implement the inferences - Mandatory
+ - reader: reader type - Mandatory
+ - writer: writer type - Mandatory
+	- for both reader and writer
+		- use 0 for standard reader(like mnist db or the dummy data)
+ - size_of_vector: size of vector after the feature mapping functions - Mandatory
+
+Examples
+========
+Inside StructED package you can find implementations to three tasks:
+ - Dummy data
+ - MNIST dataset (multi-class problem)
+ - Vowel Duration Measurement
+
+For each task we supplied all the relevant classes, task-loss, prediction and feature functions, all of them can be found under the src/ directory.
