@@ -22,8 +22,9 @@ CONFIG FILE - TRAIN
 All the parameters in the config file should be as follows: 
 
 parameter type, colon(:), parameter value
-
-	GENERAL PARAMETERS
+===
+GENERAL PARAMETERS
+===
 	
  - train_path:							 the path to the training set data - Mandatory 
  - w_output:							 output file of the weights vector (model)	
@@ -62,34 +63,38 @@ parameter type, colon(:), parameter value
  
  - size_of_vector:						 size of vector after the feature mapping functions - Mandatory
 
-=== 	
+	=== 	
 	SPECIFIC - ALGORITHM DEPENDENT
-===
+	===
+	
+	===
 	Passive Aggressive
 	===
  - c: 				 C parameter for the PA algorithm				
 
-
+	===
 	SVM
 	===
  - lambda:				 lambda parameter for the SVM						
  - eta:				 	eta - learning rate
 			    
-						  
+	===					  
 	Direct Loss
 	===
  - eta:				 eta - learning rate
  - epsilon:			 epsilon parameter for the DL	   
 						  
-
+	===
 	CRF	
 	===
  - eta:				 	eta - learning rate
  - lambda:				 lambda parameter for the CRF				  			
+ 	===
 	Ramp Loss	
 	===
  - eta:				 eta - learning rate
  - lambda:				 lambda parameter for the RL				  			
+ 	===
 	Probit Loss
 	===
  - eta:				 eta - learning rate
