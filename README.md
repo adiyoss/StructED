@@ -25,42 +25,31 @@ parameter type, colon(:), parameter value
 GENERAL PARAMETERS
 =====
 	
- - train_path:							 the path to the training set data - Mandatory 
- - w_output:							 output file of the weights vector (model)	
-
- - type:							 the algorithm type - Mandatory
- 								 0 - Passive Aggressive
-								 1 - SVM
-								 2 - Direct Loss
-								 3 - CRF
-								 4 - Ramp Loss
-								 5 - Probit Loss
-								 6 - RankSVM 
-								
- - task:							 the cost/loss function number - Mandatory
- 
- - epoch:							 the number of epochs on the data - Mandatory
- 
- - task_param:							 cost/loss parameters if needed - Optional
- 
- - kernel:							 kernel type, and parameters(i.e sigma) - Optional
- 								 0 - poly 2 degree
-								 1 - 2nd taylor approximation for RBF
-								 2 - 3nd taylor approximation for RBF
-								
- - init_w:							 the path for the initial weights - Optional
- 
- - phi:								 feature function type - Mandatory
- 
- - prediction:							 prediction function, should implement also the loss-augmented function - Mandatory
- 
- - reader:							 reader type - Mandatory
- - writer:							 writer type - Mandatory
- 								 for both reader and writer
-								 use 0 for standard form
-								 use 1 for standard rank form (as Letor 3.0)
- 
- - size_of_vector:						 size of vector after the feature mapping functions - Mandatory
+ - train_path: the path to the training set data - Mandatory 
+ - w_output: output file of the weights vector (model)	
+ - type: the algorithm type - Mandatory
+ 	- 0 - Passive Aggressive
+ 	- 1 - SVM
+ 	- 2 - Direct Loss
+ 	- 3 - CRF
+ 	- 4 - Ramp Loss
+ 	- 5 - Probit Loss
+ - task: the cost/loss function number - Mandatory
+ - epoch: the number of epochs on the data - Mandatory
+ - task_param: cost/loss parameters if needed, can store multiple parameters splited by (;) - optional
+ - kernel: kernel type, and parameters(i.e sigma) - Optional
+ 	- 0 - poly 2 degree
+	- 1 - 2nd taylor approximation for RBF - setting the sigma value can be done like that: kernel:1:19
+	- 2 - 3nd taylor approximation for RBF - setting the sigma value can be done like that: kernel:2:19
+ - init_w: the path for the initial weights - Optional
+ - phi: feature function type - Mandatory
+ - prediction: prediction function, should implement also the loss-augmented function - Mandatory
+ - reader: db reader type - Mandatory
+ - writer: db writer type - Mandatory
+	- for both reader and writer
+		- use 0 for standard form
+ - isAvg: boolean that indicates whether to average the weights vector - optional, default is 0
+ - size_of_vector: size of vector after the feature mapping functions - Mandatory
 
 SPECIFIC - ALGORITHM DEPENDENT
 ===
