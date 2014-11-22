@@ -10,7 +10,6 @@ public class Consts {
 	public static final String NEW_LINE = "line.separator";
     public static final String SLASH = "/";
     public static final int ERROR_NUMBER = -1;
-    public static final int NUM_OF_IMPROVE_ITERATIONS = 5;
 
     //DUMMY
     public static final int MIN_GAP_START_DUMMY = 3;

@@ -76,7 +76,7 @@ public class PassiveAggressive implements AlgorithmUpdateRule {
 //            Logger.info("Phi_y*W: "+ ModelHandler.printMul(currentWeights,phiRealLabel.getFeatures()));
 //            Logger.info("Phi_y_hat*W: "+ModelHandler.printMul(currentWeights,phiPrediction.getFeatures()));
 //            Logger.info("Norm Delta Phi: "+denominator);
-//            Logger.info("Tau: "+tau);
+            Logger.info("Tau: "+tau);
 //            Logger.info("L - W*Phi_y + W*Phiy_hat: "+(taskLossValue - MathHelpers.multipleVectors(currentWeights,phiRealLabel.getFeatures())+MathHelpers.multipleVectors(currentWeights,phiPrediction.getFeatures())));
 //            Logger.info("L - W_new*Phi_y + W_new*Phiy_hat: "+(taskLossValue - MathHelpers.multipleVectors(result,phiRealLabel.getFeatures())+MathHelpers.multipleVectors(result,phiPrediction.getFeatures())));
 			return result;

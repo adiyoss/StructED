@@ -69,47 +69,6 @@ public class Factory {
         }
 	}
 
-    //type is not supported
-    //Result getter object
-    public static Result getResult(int type){
-        return Result.getInstance();
-    }
-	//=======================================//
-	//============DATA CONVERTERS============//
-	//type == 0 - Dummy
-	//type == 1 - Sparse
-    //type == 2 - Rank
-	//Otherwise - null
-	//data converter getter object
-	public static PhiConverter getPhiConverter(int type){
-		switch (type) {
-			case 0:
-				return new PhiVowelDurationConverter();
-			case 1:
-				return new PhiSparseConverter();
-            case 2:
-                return new PhiRankConverter();
-			default:
-				return null;
-		}
-	}
-
-    //type == 0 - Poly 2 Kernel
-    //type == 1 - RBF2 Kernel
-    //type == 2 - RBF3 Kernel
-    public static Kernel getKernel(int type){
-        switch (type) {
-            case 0:
-                return new Poly2Kernel();
-            case 1:
-                return new RBF2Kernel();
-            case 2:
-                return new RBF3Kernel();
-            default:
-                return new Poly2Kernel();
-        }
-    }
-
     //=======================================//
 	//===============CLASSIFIER==============//
 	//taskLossType = 0 - for Single Difference Task Loss
@@ -228,18 +187,6 @@ public class Factory {
                 return new LazyInstancesContainer();
             default:
                 return new InstancesContainer();
-        }
-    }
-
-    public static Prediction getPrediction(int predictionVal){
-
-        switch (predictionVal) {
-            case 0:
-                return new PredictionVowelDurationData();
-            case 1:
-                return new PredictionMultiClass();
-            default:
-                return null;
         }
     }
 

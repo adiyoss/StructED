@@ -64,9 +64,14 @@ public class Classifier {
             if(avgWeights.size() != 0) {
                 for (Map.Entry<Integer, Double> entry : avgWeights.entrySet())
                     avgWeights.put(entry.getKey(), (entry.getValue() * (classifierData.iteration - 1) + W.get(entry.getKey())) / classifierData.iteration);
+                for(Map.Entry<Integer, Double> entry : W.entrySet()) {
+                    if (!avgWeights.containsKey(entry.getKey()))
+                        avgWeights.put(entry.getKey(), entry.getValue() / classifierData.iteration);
+                }
             } else
                 avgWeights = (Vector)W.clone();
             //############################################################################################################//
+
 
             //############################################################################################################//
             //##############################################  VALIDATION  ################################################//
@@ -86,8 +91,7 @@ public class Classifier {
                     bestCumulativeLoss = cumulative_loss;
                     best_W = (Vector) W.clone();
                 }
-
-                //############################################################################################################//
+                //########################################################################################################//
 
                 //************* PRINTINGS ****************//
                 Logger.info("Cumulative loss on validation set: " + cumulative_loss + ", Best cumulative loss on validation set: " + bestCumulativeLoss);

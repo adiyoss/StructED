@@ -9,7 +9,7 @@ import Data.Factory;
 
 public class PhiDummyConverter implements PhiConverter {
 
-    int sizeOfVector = 4;
+    int sizeOfVector = 6;
 
 	@Override
 	//return null on error

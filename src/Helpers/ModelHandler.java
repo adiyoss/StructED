@@ -62,6 +62,7 @@ public class ModelHandler {
             }
         }
 
+        //random shuffle the instances
         for (int i = instances.getInstances().size()-1 ; i>0 ; i--)
         {
             int index = rnd.nextInt(i + 1);
