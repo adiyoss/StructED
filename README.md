@@ -92,6 +92,9 @@ Probit Loss
  - eta:	learning rate
  - lambda: lambda parameter for the PL	
  - num_of_iteration: the number of times to generation noise for the weights vector
+ - noise_all_vector: boolean(1/0) indicates whether to generate noise through all the weight vector or just in one random place
+ - noise_mean: the mean of the noise to be generated(we draw the noise from a normal distribution)
+ - noise_std: the standard deviation of the noise to be generated(we draw the noise from a normal distribution)
 
 
 CONFIG FILE - PREDICT
