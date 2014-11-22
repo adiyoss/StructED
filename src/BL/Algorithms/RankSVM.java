@@ -44,13 +44,12 @@ public class RankSVM implements AlgorithmUpdateRule{
 
         try{
             double algorithmIteration = classifierData.iteration;
-            double epsilon = classifierData.arguments.get(0);
 
             //get the prediction
             PredictedLabels prediction;
             //if there's a problem with the predict return the previous weights
             try{
-                prediction = classifierData.predict.predictForTrain(vector,currentWeights,vector.getLabel(),classifierData,epsilon,1);
+                prediction = classifierData.predict.predictForTrain(vector,currentWeights,vector.getLabel(),classifierData,1);
             }catch (Exception e){
                 return currentWeights;
             }

@@ -39,10 +39,8 @@ public class PassiveAggressive implements AlgorithmUpdateRule {
 	public Vector update(Vector currentWeights, Example vector, ClassifierData classifierData) {
 		
 		try{
-            double epsilon = classifierData.arguments.get(0);
-
 			//get the prediction
-			String prediction = classifierData.predict.predictForTrain(vector, currentWeights, vector.getLabel(), classifierData, epsilon,1).firstKey();
+			String prediction = classifierData.predict.predictForTrain(vector, currentWeights, vector.getLabel(), classifierData,1).firstKey();
 
             Example phiRealLabel = classifierData.phi.convert(vector, vector.getLabel(), classifierData.kernel);
             Example phiPrediction = classifierData.phi.convert(vector, prediction, classifierData.kernel);
@@ -68,21 +66,19 @@ public class PassiveAggressive implements AlgorithmUpdateRule {
 
             Vector updateVector = MathHelpers.mulScalarWithVectors(phiDifference, tau);
             Vector result = MathHelpers.add2Vectors(currentWeights, updateVector);
-
-            Logger.info("Name: "+vector.path);
-            Logger.info("y: "+vector.getLabel());
-            Logger.info("y hat: "+prediction);
-            Logger.info("Phi y: "+phiRealLabel.getFeatures());
-            Logger.info("Phi y hat: "+phiPrediction.getFeatures());
-            Logger.info("Delta Phi: "+phiDifference);
-            Logger.info("W: "+currentWeights);
-            Logger.info("Phi_y*W: "+ ModelHandler.printMul(currentWeights,phiRealLabel.getFeatures()));
-            Logger.info("Phi_y_hat*W: "+ModelHandler.printMul(currentWeights,phiPrediction.getFeatures()));
-            Logger.info("Norm Delta Phi: "+denominator);
-            Logger.info("Tau: "+tau);
-            Logger.info("L - W*Phi_y + W*Phiy_hat: "+(taskLossValue - MathHelpers.multipleVectors(currentWeights,phiRealLabel.getFeatures())+MathHelpers.multipleVectors(currentWeights,phiPrediction.getFeatures())));
-            Logger.info("L - W_new*Phi_y + W_new*Phiy_hat: "+(taskLossValue - MathHelpers.multipleVectors(result,phiRealLabel.getFeatures())+MathHelpers.multipleVectors(result,phiPrediction.getFeatures())));
-
+//            Logger.info("Name: "+vector.path);
+//            Logger.info("y: "+vector.getLabel());
+//            Logger.info("y hat: "+prediction);
+//            Logger.info("Phi y: "+phiRealLabel.getFeatures());
+//            Logger.info("Phi y hat: "+phiPrediction.getFeatures());
+//            Logger.info("Delta Phi: "+phiDifference);
+//            Logger.info("W: "+currentWeights);
+//            Logger.info("Phi_y*W: "+ ModelHandler.printMul(currentWeights,phiRealLabel.getFeatures()));
+//            Logger.info("Phi_y_hat*W: "+ModelHandler.printMul(currentWeights,phiPrediction.getFeatures()));
+//            Logger.info("Norm Delta Phi: "+denominator);
+//            Logger.info("Tau: "+tau);
+//            Logger.info("L - W*Phi_y + W*Phiy_hat: "+(taskLossValue - MathHelpers.multipleVectors(currentWeights,phiRealLabel.getFeatures())+MathHelpers.multipleVectors(currentWeights,phiPrediction.getFeatures())));
+//            Logger.info("L - W_new*Phi_y + W_new*Phiy_hat: "+(taskLossValue - MathHelpers.multipleVectors(result,phiRealLabel.getFeatures())+MathHelpers.multipleVectors(result,phiPrediction.getFeatures())));
 			return result;
 
 		} catch (Exception e) {

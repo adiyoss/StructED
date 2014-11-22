@@ -19,7 +19,7 @@ public class PredictionVowelDurationData implements Prediction{
     //argmax(yS,yE) (W*Phi(Xi,yS,yE)) + Task Loss
     //this function assumes that the argument vector has already been converted to phi vector
     //return null on error
-    public PredictedLabels predictForTrain(Example vector, Vector W, String realClass, ClassifierData classifierData, double epsilon, double epsilonArgMax)
+    public PredictedLabels predictForTrain(Example vector, Vector W, String realClass, ClassifierData classifierData, double epsilonArgMax)
     {
         try{
             double maxVal = 0;
@@ -122,6 +122,6 @@ public class PredictionVowelDurationData implements Prediction{
 //                return null;
 //            }
 //        } else
-            return predictForTrain(vector, W, realClass, classifierData ,0 ,0);
+            return predictForTrain(vector, W, realClass, classifierData ,0);
     }
 }

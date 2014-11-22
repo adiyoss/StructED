@@ -128,21 +128,21 @@ public class Train {
             //loop over the training set epoch time
             for(int size = 0 ; size<epoch ; size++)
             {
+                //===================================//
+                //print the start time of the program//
+                Logger.info("");
+                Logger.info("==================================");
+                Logger.timeExample("Epoch: ", (size+1));
+                Logger.info("==================================");
+                Logger.info("");
+                //===================================//
+
                 //preform random shuffle for the next epoch
                 instances = ModelHandler.randomShuffle(instances);
                 //train the algorithm
                 W = classifier.train(W, instances, task_param, reader);
                 if(W == null)
                     return;
-
-                //===================================//
-                //print the start time of the program//
-                Logger.info("");
-                Logger.info("==================================");
-                Logger.timeExample("Epoch: ", size);
-                Logger.info("==================================");
-                Logger.info("");
-                //===================================//
             }
 
             //===================================//

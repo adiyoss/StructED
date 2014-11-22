@@ -34,6 +34,9 @@ public class ConfigParameters {
     public static final String TRAIN_SIZE = "train_size"; //USED 4 SVM
     public static final String EPSILON = "epsilon"; //USED 4 Direct Loss
     public static final String NUM_OF_ITERATION = "num_of_iteration"; //USED 4 Probit Loss
+    public static final String NOISE_ALL_VECTOR = "noise_all_vector"; //USED 4 Probit Loss
+    public static final String MEAN = "noise_mean"; //USED 4 Probit Loss
+    public static final String STD_DEV = "noise_std"; //USED 4 Probit Loss
 
     //GENERAL PARAMETERS SIZES TRAIN
     public static final int GENERAL_PARAMS_SIZE_TRAIN = 15; //The number of general parameters in the train config file
@@ -43,7 +46,7 @@ public class ConfigParameters {
     public static final int DL_PARAMS_SIZE = 2; //The number params 4 Direct Loss
     public static final int CRF_PARAMS_SIZE = 2; //The number params 4 CRF
     public static final int RL_PARAMS_SIZE = 2; //The number params 4 Ramp Loss
-    public static final int PL_PARAMS_SIZE = 3; //The number params 4 Probit Loss
+    public static final int PL_PARAMS_SIZE = 6; //The number params 4 Probit Loss
 
     //GENERAL PARAMETERS SIZES TEST
     public static final int GENERAL_PARAMS_SIZE_TEST = 11; //The number of must have params in the test config file

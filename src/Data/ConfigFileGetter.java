@@ -144,10 +144,6 @@ public class ConfigFileGetter {
                 //support more then one parameter in line, for future use
                 for(int j=1 ; j<data.get(index).size() ; j++)
                 {
-//                    if(!ConverterHelplers.tryParseDouble(data.get(index).get(j))){
-//                        Logger.error(ErrorConstants.CONFIG_ERROR);
-//                        return null;
-//                    }
                     if(data.get(index).get(0).equalsIgnoreCase(ConfigParameters.KERNEL) && (j!=1)){
                         ConfigParameters.getInstance().SIGMA = Double.parseDouble(data.get(index).get(j));
                         continue;
@@ -385,7 +381,11 @@ public class ConfigFileGetter {
     {
         if(!data.get(index).get(0).equalsIgnoreCase(ConfigParameters.ETA)
                 || !data.get(index + 1).get(0).equalsIgnoreCase(ConfigParameters.LAMBDA)
-                || !data.get(index + 2).get(0).equalsIgnoreCase(ConfigParameters.NUM_OF_ITERATION)){
+                || !data.get(index + 2).get(0).equalsIgnoreCase(ConfigParameters.NUM_OF_ITERATION)
+                || !data.get(index + 3).get(0).equalsIgnoreCase(ConfigParameters.NOISE_ALL_VECTOR)
+                || !data.get(index + 4).get(0).equalsIgnoreCase(ConfigParameters.MEAN)
+                || !data.get(index + 5).get(0).equalsIgnoreCase(ConfigParameters.STD_DEV))
+        {
             Logger.error(ErrorConstants.CONFIG_ARGUMENTS_TYPE_ERROR);
             return false;
         }

@@ -1,6 +1,6 @@
 test_path:data/db/MNIST/test.data.txt
-output_file:res/mnist_scores.txt
-w_path:data/weights/mnist.weights
+output_file:res/mnist_scores_DL_avg.txt
+w_path:data/weights/mnist.weights.DL_avg
 examples_2_display:3
 task:1
 phi:1

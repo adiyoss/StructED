@@ -48,7 +48,7 @@ public class Classifier {
             if(x_train.path != null)
                 Logger.timeExample("Processing example: "+x_train.path+", Number: ",(i+1));
             else
-                Logger.timeExample("Processing example number: ",(classifierData.iteration%data.getSize())+1);
+                Logger.timeExample("Processing example number: ",(i+1));
             Logger.info("**********************************");
             //****************************************//
 

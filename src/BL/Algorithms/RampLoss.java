@@ -26,8 +26,7 @@ public class RampLoss implements AlgorithmUpdateRule {
 
         return ourInstance;
     }
-    private RampLoss() {
-    }
+    private RampLoss(){}
 
     //Data members
     double lambda;
@@ -40,14 +39,12 @@ public class RampLoss implements AlgorithmUpdateRule {
 		
 		try{
             double algorithmIteration = classifierData.iteration;
-            double epsilon = classifierData.arguments.get(0);
-
             double newEta = eta/Math.sqrt(algorithmIteration);
 
 			//get the prediction
-			String prediction = classifierData.predict.predictForTrain(vector, currentWeights, vector.getLabel(), classifierData, 0, 0).firstKey();
+			String prediction = classifierData.predict.predictForTrain(vector, currentWeights, vector.getLabel(), classifierData, 0).firstKey();
 			//get the prediction with the task loss
-			String predictionLoss = classifierData.predict.predictForTrain(vector, currentWeights, vector.getLabel(), classifierData, epsilon, 1).firstKey();
+			String predictionLoss = classifierData.predict.predictForTrain(vector, currentWeights, vector.getLabel(), classifierData, 1).firstKey();
 
             Example phiPredictionNoLoss = classifierData.phi.convert(vector,prediction,classifierData.kernel);
             Example phiPredictionWithLoss= classifierData.phi.convert(vector,predictionLoss,classifierData.kernel);
@@ -56,33 +53,14 @@ public class RampLoss implements AlgorithmUpdateRule {
 			//compute the ramp loss
             Vector rampLoss = MathHelpers.subtract2Vectors(phiPredictionNoLoss.getFeatures(), phiPredictionWithLoss.getFeatures());
 
-            int iteration = 0;
-            //loop few times until we improve with the task value
-            do{
-                //perform the update
-                Vector lossArg = MathHelpers.mulScalarWithVectors(rampLoss, newEta);
-                Vector newWeights = MathHelpers.mulScalarWithVectors(currentWeights, 1-lambda*newEta);
-                Vector W_Next = MathHelpers.add2Vectors(newWeights, lossArg);
-
-                //get the new prediction
-                String newPrediction = classifierData.predict.predictForTrain(vector, W_Next, vector.getLabel(), classifierData, 0, 0).firstKey();
-
-                //check if we've improved
-                double t1 = classifierData.taskLoss.computeTaskLoss(prediction, vector.getLabel(), classifierData.arguments);
-                double t2 = classifierData.taskLoss.computeTaskLoss(newPrediction, vector.getLabel(), classifierData.arguments);
-
-                if(t2<t1 || t2 == 1) //TODO remove this, only for multi class classifications
-                    return W_Next;
-
-                //decrease the eta for the next iteration
-                newEta = newEta/2;
-                iteration++;
-
-            }while(iteration< Consts.NUM_OF_IMPROVE_ITERATIONS);
+            //perform the update
+            Vector lossArg = MathHelpers.mulScalarWithVectors(rampLoss, newEta);
+            Vector newWeights = MathHelpers.mulScalarWithVectors(currentWeights, 1-lambda*newEta);
+            Vector W_Next = MathHelpers.add2Vectors(newWeights, lossArg);
 			
-			return currentWeights;
+			return W_Next;
 			
-		}catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}

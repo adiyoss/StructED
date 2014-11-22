@@ -13,7 +13,7 @@ import java.util.TreeMap;
 
 public class PredictionRanking implements Prediction{
 
-    public PredictedLabels predictForTrain(Example vector, Vector W, String realClass, ClassifierData classifierData, double epsilon, double epsilonArgMax)
+    public PredictedLabels predictForTrain(Example vector, Vector W, String realClass, ClassifierData classifierData, double epsilonArgMax)
     {
         try{
             PredictedLabels tree = new PredictedLabels();
