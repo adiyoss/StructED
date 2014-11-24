@@ -1,14 +1,12 @@
 train_path:data/db/MNIST/train.data.txt
-w_output:data/weights/mnist.weights.DL
-type:2
+w_output:data/weights/mnist.weights.PA
+type:0
 task:1
 epoch:5
-init_w:data/weights/mnist.weights.SVM
 phi:1
 prediction:1
 reader:0
 writer:0
 isAvg:1
 size_of_vector:7800
-eta:0.1
-epsilon:-0.36
+c:0.0005
