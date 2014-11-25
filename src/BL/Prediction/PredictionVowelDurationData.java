@@ -62,21 +62,6 @@ public class PredictionVowelDurationData implements Prediction{
                 }
             }
 
-            Example phiData = classifierData.phi.convert(vector,maxLabel,classifierData.kernel);
-            Example phiRealData = classifierData.phi.convert(vector,vector.getLabel(),classifierData.kernel);
-
-            TreeMap<Integer, Double> tree = ModelHandler.sortMul(W, phiData.getFeatures());
-            MapValueComparatorDescending_IntKey vc = new MapValueComparatorDescending_IntKey(tree);
-            TreeMap<Integer, Double> result_pred = new  TreeMap<Integer, Double>(vc);
-            result_pred.putAll(tree);
-            Logger.info("Predict = "+result_pred.toString());
-
-            TreeMap<Integer, Double> treeReal = ModelHandler.sortMul(W, phiRealData.getFeatures());
-            MapValueComparatorDescending_IntKey vcReal = new MapValueComparatorDescending_IntKey(treeReal);
-            TreeMap<Integer, Double> result_real = new  TreeMap<Integer, Double>(vcReal);
-            result_real.putAll(treeReal);
-            Logger.info("Real = "+result_real.toString());
-
             PredictedLabels result = new PredictedLabels();
             result.put(maxLabel, maxVal);
 
@@ -90,38 +75,6 @@ public class PredictionVowelDurationData implements Prediction{
 
     public PredictedLabels predictForTest(Example vector, Vector W, String realClass, ClassifierData classifierData, int returnAll)
     {
-//        if(returnAll != Consts.ERROR_NUMBER) {
-//            try {
-//                PredictedLabels tree = new PredictedLabels();
-//                //validation
-//                if (vector.sizeOfVector <= 0) {
-//                    Logger.error(ErrorConstants.PHI_VECTOR_DATA);
-//                    return null;
-//                }
-//
-//                //loop over all the classifications of this specific example
-//                for (int i = Consts.MIN_GAP_START; i < vector.sizeOfVector - (Consts.MAX_VOWEL + Consts.MIN_GAP_END); i++) {
-//                    for (int j = i + Consts.MIN_VOWEL; j < i + Consts.MAX_VOWEL; j++) {
-//                        Example phiData = classifierData.phi.convert(vector, (i + 1) + Consts.CLASSIFICATION_SPLITTER + (j + 1), classifierData.kernel);
-//                        //multiple the vectors
-//                        double tmp = MathHelpers.multipleVectors(W, phiData.getFeatures());
-//
-//                        //get the max value for the max classification
-//                        tree.put((i + 1) + Consts.CLASSIFICATION_SPLITTER + (j + 1), tmp);
-//                    }
-//                }
-//
-//                MapValueComparatorDescending vc = new MapValueComparatorDescending(tree);
-//                PredictedLabels result = new PredictedLabels(vc);
-//                result.putAll(tree);
-//
-//                return result;
-//
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//                return null;
-//            }
-//        } else
-            return predictForTrain(vector, W, realClass, classifierData ,0);
+        return predictForTrain(vector, W, realClass, classifierData ,0);
     }
 }

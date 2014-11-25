@@ -15,8 +15,6 @@ import java.util.ArrayList;
 
 public class RankReader implements Reader{
 
-
-
     public InstancesContainer readData(String path, String dataSpliter, String valueSpliter)
     {
         ArrayList<ArrayList<String>> data = readFile(path,dataSpliter);

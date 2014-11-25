@@ -2,7 +2,6 @@ package BL.Algorithms;
 
 import java.util.ArrayList;
 import java.util.Map;
-import java.util.TreeMap;
 
 import BL.ClassifierData;
 import Constants.ConfigParameters;
@@ -49,7 +48,7 @@ public class CRF implements AlgorithmUpdateRule {
 			double denominator = 0;
 
             //the parameter 1 at the end is used to get all the predicted labels and not only the max one
-            //it can be anything but -1 - Consts.ERROR_NUMBER
+            //it can be anything but -1 = Consts.ERROR_NUMBER
             PredictedLabels predictMap = classifierData.predict.predictForTest(vector,currentWeights,vector.getLabel(),classifierData,1);
 
 			for(Map.Entry<String, Double> entry : predictMap.entrySet())

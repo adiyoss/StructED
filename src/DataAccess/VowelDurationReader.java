@@ -36,7 +36,6 @@ public class VowelDurationReader implements Reader{
         Example example = Factory.getExample(2);
 
         //extract the labels
-//        String label = (Integer.valueOf(labels.get(1).get(0))/5)+Consts.CLASSIFICATION_SPLITTER+(Integer.valueOf(labels.get(1).get(1))/5);
         String label = labels.get(1).get(0)+Consts.CLASSIFICATION_SPLITTER+labels.get(1).get(1);
         example.setLabel(label);
 

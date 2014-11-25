@@ -10,7 +10,6 @@ import Data.Entities.PredictedLabels;
 import Data.Entities.Vector;
 import Data.Logger;
 import DataAccess.Reader;
-
 import java.util.List;
 import java.util.Map;
 
@@ -20,7 +19,7 @@ public class Classifier {
     private Vector avgWeights = new Vector();
 
 	//train the algorithm and return the final weights
-	public Vector train(Vector W, InstancesContainer data, List<Double> params, Reader reader) throws Exception
+	public Vector train(Vector W, InstancesContainer data, List<Double> params, Reader reader, int isAvg) throws Exception
 	{
         //counter - used for debug
         Vector best_W = new Vector(W);
@@ -32,8 +31,6 @@ public class Classifier {
 			return null;
 		}
 
-//        classifierData.arguments.clear();
-        //TODO clone params
         classifierData.arguments = params;
 
         Logger.infoTime("Start Training...");
@@ -61,15 +58,17 @@ public class Classifier {
 
             //############################################################################################################//
             //######################################  UPDATE AVERAGE WEIGHTS  ############################################//
-            if(avgWeights.size() != 0) {
-                for (Map.Entry<Integer, Double> entry : avgWeights.entrySet())
-                    avgWeights.put(entry.getKey(), (entry.getValue() * (classifierData.iteration - 1) + W.get(entry.getKey())) / classifierData.iteration);
-                for(Map.Entry<Integer, Double> entry : W.entrySet()) {
-                    if (!avgWeights.containsKey(entry.getKey()))
-                        avgWeights.put(entry.getKey(), entry.getValue() / classifierData.iteration);
-                }
-            } else
-                avgWeights = (Vector)W.clone();
+            if(isAvg == 1) {
+                if (avgWeights.size() != 0) {
+                    for (Map.Entry<Integer, Double> entry : avgWeights.entrySet())
+                        avgWeights.put(entry.getKey(), (entry.getValue() * (classifierData.iteration - 1) + W.get(entry.getKey())) / classifierData.iteration);
+                    for (Map.Entry<Integer, Double> entry : W.entrySet()) {
+                        if (!avgWeights.containsKey(entry.getKey()))
+                            avgWeights.put(entry.getKey(), entry.getValue() / classifierData.iteration);
+                    }
+                } else
+                    avgWeights = (Vector) W.clone();
+            }
             //############################################################################################################//
 
 
@@ -91,7 +90,7 @@ public class Classifier {
                     bestCumulativeLoss = cumulative_loss;
                     best_W = (Vector) W.clone();
                 }
-                //########################################################################################################//
+                //#########################################################################################################//
 
                 //************* PRINTINGS ****************//
                 Logger.info("Cumulative loss on validation set: " + cumulative_loss + ", Best cumulative loss on validation set: " + bestCumulativeLoss);

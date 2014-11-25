@@ -2,29 +2,32 @@ package BL.Kernels;
 
 import Data.Entities.Vector;
 
-import java.util.HashSet;
-import java.util.Map;
-
 public class Poly2Kernel implements Kernel {
 
+    //new dimension = d + d*(d-1)/2.0
     public Vector convertVector(Vector vector, int vectorSize)
     {
-        Vector newVector = new Vector();
+        Vector expansionVector = new Vector();
 
         double sqrt_2 = Math.sqrt(2);
+        int loc = 0;
 
-        for (Map.Entry<Integer, Double> entry : vector.entrySet())
-            newVector.put(entry.getKey(), entry.getValue()*entry.getValue());
+        //============================================//
+        for (int j=0 ; j<vectorSize ; j++) {
+            if(vector.containsKey(j))
+                expansionVector.put(loc, vector.get(j)*vector.get(j));
+            loc++;
+        }
 
-        HashSet<Integer> cache = new HashSet<Integer>();
-        for (Map.Entry<Integer, Double> firstEntry : vector.entrySet()) {
-            cache.add(firstEntry.getKey());
-            for (Map.Entry<Integer, Double> secondEntry : vector.entrySet()) {
-                if(!cache.contains(secondEntry.getKey()))
-                    newVector.put(vectorSize+(firstEntry.getKey()*secondEntry.getKey())/2, sqrt_2*firstEntry.getValue()*secondEntry.getValue());
+        //============================================//
+        for (int j = 0 ; j<vectorSize-1 ; j++) {
+            for (int k=j+1 ; k<vectorSize ; k++) {
+                if(vector.containsKey(j) && vector.containsKey(k))
+                    expansionVector.put(loc, sqrt_2*vector.get(j)*vector.get(k));
+                loc++;
             }
         }
 
-        return newVector;
+        return expansionVector;
     }
 }

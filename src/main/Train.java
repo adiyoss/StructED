@@ -13,7 +13,6 @@ import Data.Entities.Vector;
 import DataAccess.Reader;
 import DataAccess.Writer;
 import Helpers.ModelHandler;
-import jsc.distributions.Gamma;
 
 public class Train {
     //parameters
@@ -140,7 +139,7 @@ public class Train {
                 //preform random shuffle for the next epoch
                 instances = ModelHandler.randomShuffle(instances);
                 //train the algorithm
-                W = classifier.train(W, instances, task_param, reader);
+                W = classifier.train(W, instances, task_param, reader,isAvg);
                 if(W == null)
                     return;
             }

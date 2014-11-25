@@ -30,12 +30,9 @@ public class ModelHandler {
         return W;
     }
 
-    //TODO validate this function
     public static Vector convert2Weights(ArrayList<ArrayList<String>> data) throws ParseException
     {
         Vector result = new Vector();
-
-
         for(int i=0 ; i<data.size() ; i++)
         {
             for(int j=0 ; j<data.get(i).size() ; j++){

@@ -15,6 +15,4 @@ public class ExampleStandard extends Example {
     public void setFeatures(Vector features) {
         this.features = features;
     }
-
-
 }

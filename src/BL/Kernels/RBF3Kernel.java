@@ -3,88 +3,93 @@ package BL.Kernels;
 import Constants.ConfigParameters;
 import Data.Entities.Vector;
 
-import java.util.HashSet;
-import java.util.Map;
-
 public class RBF3Kernel implements Kernel {
 
     private double sigma = ConfigParameters.getInstance().SIGMA;//default value
 
-    //TODO check this thing one more time
+    //new dimension = 1 + 3.0*d + 3.0*d*(d-1)/2.0 + d*(d-1)*(d-2)/6.0
     public Vector convertVector(Vector vector, int vectorSize)
     {
-        Vector newVector = new Vector();
-        HashSet<Integer> cache = new HashSet<Integer>(); // used for indexing the feature values
+        Vector expansionVector = new Vector();
 
-        double sqrSigma = sigma*sigma;
-        double threeSigma = sigma*sigma*sigma;
+        double sigmaSqr = sigma*sigma;
+        double sigmaThrd = sigma*sigma*sigma;
 
         // exp(-||x||^2/sigma2)
-        double x_norm2 = 0;
-        for (Integer key : vector.keySet())
-            x_norm2 += vector.get(key)*vector.get(key);
-
-        double exp2_coef = Math.exp(-x_norm2/(2.0*sqrSigma));
+        double x_norm2 = 0.0;
+        for (int j=0 ; j<vectorSize ; j++) {
+            if(vector.containsKey(j))
+                x_norm2 += vector.get(j) * vector.get(j);
+        }
+        double exp2_coef = Math.exp(-x_norm2/(2.0*sigmaSqr));
 
         // exp(-x) expansion
-        int location = 0;
+        int loc = 0;
         double tmp_coef;
-        newVector.put(0,exp2_coef);
-        location++;
+        expansionVector.put(loc,exp2_coef);
+        loc++;
 
         //============================================//
         tmp_coef = 1/sigma;
-        double tmp_coef_2 = 1/(Math.sqrt(2)*sqrSigma);
-        double tmp_coef_3 = 1.0/(Math.sqrt(6.0)*threeSigma);
-        for (Map.Entry<Integer, Double> entry : vector.entrySet()){
-            newVector.put(1+entry.getKey(),entry.getValue()*tmp_coef*exp2_coef);
-
-            newVector.put(1+vectorSize+entry.getKey(),entry.getValue()*entry.getValue()*tmp_coef_2*exp2_coef);
-
-            newVector.put(1+(2*vectorSize)+(vectorSize*(vectorSize-1))/2+entry.getKey(),entry.getValue()*entry.getValue()*entry.getValue()*tmp_coef_3*exp2_coef);
+        for (int j=0 ; j<vectorSize ; j++){
+            if(vector.containsKey(j))
+                expansionVector.put(loc,vector.get(j) * tmp_coef * exp2_coef);
+            loc++;
         }
-        //============================================//
 
         //============================================//
-        //TODO ask yossi about this
-        tmp_coef = 1.0/(sqrSigma);
-        tmp_coef_2 = Math.sqrt(3.0)/(Math.sqrt(6.0)*threeSigma);
+        tmp_coef = 1.0/(Math.sqrt(2.0)*sigmaSqr);
+        for (int j=0 ; j<vectorSize ; j++){
+            if(vector.containsKey(j))
+                expansionVector.put(loc,vector.get(j) * vector.get(j) * tmp_coef * exp2_coef);
+            loc++;
+        }
 
-        for (Map.Entry<Integer, Double> firstEntry : vector.entrySet()){
-            cache.add(firstEntry.getKey());
-            for (Map.Entry<Integer, Double> secondEntry : vector.entrySet()){
-                if(!cache.contains(secondEntry.getKey())) {
-                    newVector.put(1+(2*vectorSize)+(firstEntry.getKey()*secondEntry.getKey())/2, firstEntry.getValue() * secondEntry.getValue() * tmp_coef * exp2_coef);
-                    newVector.put(1+(3*vectorSize)+(vectorSize*(vectorSize-1))/2+(firstEntry.getKey()*secondEntry.getKey())/2, firstEntry.getValue() * firstEntry.getValue() * secondEntry.getValue() * tmp_coef_2 * exp2_coef);
-                    newVector.put(1+(3*vectorSize)+(vectorSize*(vectorSize-1))+(firstEntry.getKey()*secondEntry.getKey())/2, firstEntry.getValue() * secondEntry.getValue() * secondEntry.getValue() * tmp_coef_2 * exp2_coef);
+        //============================================//
+        tmp_coef = 1.0/(sigmaSqr);
+        for (int j=0 ; j<vectorSize-1 ; j++){
+            for (int k=j+1 ; k<vectorSize ; k++){
+                if(vector.containsKey(j) && vector.containsKey(k))
+                    expansionVector.put(loc,vector.get(j) * vector.get(k) * tmp_coef * exp2_coef);
+                loc++;
+            }
+        }
+
+        //============================================//
+        tmp_coef = 1.0/(Math.sqrt(6.0)*sigmaThrd);
+        for (int j=0 ; j<vectorSize ; j++){
+            if(vector.containsKey(j))
+                expansionVector.put(loc,vector.get(j) * vector.get(j) * vector.get(j) * tmp_coef * exp2_coef);
+            loc++;
+        }
+
+        //============================================//
+        tmp_coef = Math.sqrt(3.0)/(Math.sqrt(6.0)*sigmaThrd);
+        for (int j=0 ; j<vectorSize-1 ; j++){
+            for (int k=j+1 ; k<vectorSize ; k++){
+                if(vector.containsKey(j) && vector.containsKey(k)) {
+                    expansionVector.put(loc, vector.get(j) * vector.get(j) * vector.get(k) * tmp_coef * exp2_coef);
+                    loc++;
+                    expansionVector.put(loc, vector.get(j) * vector.get(k) * vector.get(k) * tmp_coef * exp2_coef);
+                    loc++;
+                } else
+                    loc+=2;
+            }
+        }
+
+        //============================================//
+        tmp_coef = 1.0/(sigmaThrd);
+        for (int j=0 ; j<vectorSize-2 ; j++){
+            for (int k=j+1 ; k<vectorSize-1 ; k++){
+                for (int l=k+1 ; l<vectorSize ; l++){
+                    if(vector.containsKey(j) && vector.containsKey(k) && vector.containsKey(l))
+                        expansionVector.put(loc, vector.get(j) * vector.get(k) * vector.get(l) * tmp_coef * exp2_coef);
+                    loc++;
                 }
             }
         }
-        //============================================//
 
-        cache.clear();
-        HashSet<Integer> helperCache = new HashSet<Integer>(); // used for indexing the feature values
-
-
-        //============================================//
-        tmp_coef = 1.0/(threeSigma);
-        for (Map.Entry<Integer, Double> firstEntry : vector.entrySet()) {
-            cache.add(firstEntry.getKey());
-            for (Map.Entry<Integer, Double> secondEntry : vector.entrySet()) {
-                helperCache.add(secondEntry.getKey());
-                if (!cache.contains(secondEntry.getKey())) {
-                    for (Map.Entry<Integer, Double> thirdEntry : vector.entrySet()) {
-                        if (!cache.contains(thirdEntry.getKey()) && !helperCache.contains(thirdEntry.getKey()))
-                            newVector.put(1+3*vectorSize+3*(vectorSize*(vectorSize-1))/2 + (firstEntry.getKey()*(secondEntry.getKey()-1)*(thirdEntry.getKey()-2))/6, firstEntry.getValue() * secondEntry.getValue() * thirdEntry.getValue() * tmp_coef * exp2_coef);
-
-                        location++;
-                    }
-                }
-            }
-        }
-        //============================================//
-        return newVector;
-
+        return expansionVector;
     }
 
     public void setSigma(double sigma){this.sigma = sigma;}

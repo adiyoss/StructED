@@ -9,7 +9,6 @@ import Data.Entities.PredictedLabels;
 import Data.Entities.Vector;
 import Data.Logger;
 import Helpers.MathHelpers;
-import sun.rmi.runtime.Log;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -67,20 +66,9 @@ public class RankSVM implements AlgorithmUpdateRule{
 
                 Example phiRealLabel = classifierData.phi.convert(vector, predictLabels[0], classifierData.kernel);
                 Example phiPrediction = classifierData.phi.convert(vector, predictLabels[1], classifierData.kernel);
-
                 Vector phiDifference = MathHelpers.subtract2Vectors(phiRealLabel.getFeatures(), phiPrediction.getFeatures());
 
-                double t1 = MathHelpers.multipleVectors(result,phiRealLabel.getFeatures());
-                double t2 = MathHelpers.multipleVectors(result,phiPrediction.getFeatures());
-
-                double taskLossValue = classifierData.taskLoss.computeTaskLoss(String.valueOf(t1),String.valueOf(t2),classifierData.arguments);
-
-                //TODO figure out if this is necessary
-                Logger.info("After: "+ taskLossValue);
-                //compute the phi difference
-
                 double newEta = eta/Math.sqrt(algorithmIteration);
-
                 double coefficientFirstArgument = (1-(lambda*newEta));
 
                 Vector firstArgument = MathHelpers.mulScalarWithVectors(currentWeights, coefficientFirstArgument);

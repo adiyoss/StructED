@@ -30,6 +30,7 @@ public class PhiDummyConverter implements PhiConverter {
             double diff_2_Start = Math.abs(vector.getFeatures().get(i)-vector.getFeatures().get(i-2));
             double diff_2_End = Math.abs(vector.getFeatures().get(j)-vector.getFeatures().get(j+2));
 
+            //compute the avg of the signal from start to end
             double avg = 0;
             for(int k=i ; k<j ; k++)
                 avg+=vector.getFeatures().get(k);
@@ -40,18 +41,20 @@ public class PhiDummyConverter implements PhiConverter {
             }
             avg /= (double)(j-i);
 
+            //compute the avg MIN_GAP_END_DUMMY after end
             double gapEnd = 0;
             for(int k=j ; k<j+Consts.MIN_GAP_END_DUMMY ; k++)
                 gapEnd+=vector.getFeatures().get(k);
 
             gapEnd/=(double)Consts.MIN_GAP_END_DUMMY;
 
+            //compute the avg MIN_GAP_START_DUMMY before start
             double gapStart = 0;
             for(int k=i-Consts.MIN_GAP_START_DUMMY+1 ; k<=i ; k++)
                 gapStart+=vector.getFeatures().get(k);
-
             gapStart/=(double)Consts.MIN_GAP_START_DUMMY;
 
+            //adding the feature functions
             Vector tmpVector = new Vector();
             tmpVector.put(0, diff_1_Start);
             tmpVector.put(1, diff_1_End);

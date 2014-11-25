@@ -2,7 +2,6 @@ package Data;
 
 import BL.*;
 import BL.Algorithms.*;
-import BL.Kernels.Kernel;
 import BL.Kernels.Poly2Kernel;
 import BL.Kernels.RBF2Kernel;
 import BL.Kernels.RBF3Kernel;
@@ -187,18 +186,6 @@ public class Factory {
                 return new LazyInstancesContainer();
             default:
                 return new InstancesContainer();
-        }
-    }
-
-    public static TaskLoss getTaskLoss(int task){
-
-        switch (task) {
-            case 0:
-                return new TaskLossVowelDuration();
-            case 1:
-                return new TaskLossMultiClass();
-            default:
-                return null;
         }
     }
 }

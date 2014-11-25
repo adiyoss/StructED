@@ -12,7 +12,6 @@ public class PhiSparseConverter implements PhiConverter {
 
 	@Override
 	public Example convert(Example vector, String label, Kernel kernel) {
-
         try{
             //parse the label
             int intLabel = Integer.parseInt(label);
@@ -35,4 +34,9 @@ public class PhiSparseConverter implements PhiConverter {
             return null;
         }
 	}
+
+    //setter for the max feature parameter
+    public void setMaxFeatures(int maxFeatures){
+        this.maxFeatures = maxFeatures;
+    }
 }

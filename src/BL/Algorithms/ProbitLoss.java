@@ -5,7 +5,6 @@ import java.util.Random;
 
 import BL.ClassifierData;
 import Constants.ConfigParameters;
-import Constants.Consts;
 import Constants.ErrorConstants;
 import Data.Entities.Example;
 import Data.Entities.Vector;

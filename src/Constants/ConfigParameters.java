@@ -49,7 +49,7 @@ public class ConfigParameters {
     public static final int PL_PARAMS_SIZE = 6; //The number params 4 Probit Loss
 
     //GENERAL PARAMETERS SIZES TEST
-    public static final int GENERAL_PARAMS_SIZE_TEST = 11; //The number of must have params in the test config file
+    public static final int GENERAL_PARAMS_SIZE_TEST = 12; //The number of must have params in the test config file
     public static final int GENERAL_PARAMS_SIZE_TEST_VALIDATION = 10; //The number of must have params in the test config file
     public static final String W_PATH = "w_path";
     public static final String OUTPUT_FILE = "output_file";
