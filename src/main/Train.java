@@ -1,3 +1,21 @@
+/*
+ * StructED - Machine Learning, Structured Prediction Package written in Java.
+ * Copyright (C) 2014 Yossi Adi, E-Mail: yossiadidrum@gmail.com
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package main;
 
 import java.util.ArrayList;
@@ -30,9 +48,14 @@ public class Train {
 
 	public static void main(String[] args) {
 		try{
-    //#############################################################################//
-    //==========================LOADING CONFIG PARAMETERS==========================//
-    //#############################################################################//
+            //==============COPYRIGHT============//
+            Logger.info("This program comes with ABSOLUTELY NO WARRANTY");
+            Logger.info("This is free software, and you are welcome to redistribute it under certain conditions, see LICENSE file for mire information.");
+            //===================================//
+
+            //#############################################################################//
+            //==========================LOADING CONFIG PARAMETERS==========================//
+            //#############################################################################//
             //get the config path
             if(args.length != 1){
                 Logger.error("Error with argument parameters.");
@@ -90,12 +113,12 @@ public class Train {
             ArrayList<Double> algorithmParameters = new ArrayList<Double>();
             for(int i = ConfigParameters.GENERAL_PARAMS_SIZE_TRAIN_VALIDATION ; i<arguments.size() ; i++)
                 algorithmParameters.add(Double.parseDouble(arguments.get(i)));
-    //=============================================================================//
+            //=============================================================================//
 
 
-    //#############################################################################//
-    //==================LOADING THE TRAIN DATA AND THE MODEL=======================//
-    //#############################################################################//
+            //#############################################################################//
+            //==================LOADING THE TRAIN DATA AND THE MODEL=======================//
+            //#############################################################################//
             //init the weights by the user choice and the best_W parameter, existing ones or just 0's
             Vector W = ModelHandler.setWeights(isW, Paths.getInstance().INIT_WEIGHTS_PATH);
             Logger.infoTime("Loading train data...");
@@ -108,11 +131,11 @@ public class Train {
             instances = reader.readData(Paths.getInstance().TRAIN_PATH, Consts.SPACE, Consts.COLON_SPLITTER);
             if ( instances.getSize() == 0 )
                 return;
-    //=============================================================================//
+            //=============================================================================//
 
-    //#############################################################################//
-    //================================TRAIN========================================//
-    //#############################################################################//
+            //#############################################################################//
+            //================================TRAIN========================================//
+            //#############################################################################//
             //===================================//
             //print the start time of the program//
             Logger.infoTime("Start Training:");
@@ -152,18 +175,18 @@ public class Train {
             long seconds = TimeUnit.MILLISECONDS.toSeconds(totalTime);
             Logger.info("Running time in seconds: " + seconds);
             //===================================//
-    //=============================================================================//
+            //=============================================================================//
 
-    //#############################################################################//
-    //==========================WRITE THE MODEL====================================//
-    //#############################################################################//
+            //#############################################################################//
+            //==========================WRITE THE MODEL====================================//
+            //#############################################################################//
             //write the final weights to output file
             Writer writer = Factory.getWriter(writerType);
             if(isAvg == 1)
                 writer.writeHashMap2File(Paths.getInstance().OUTPUT_WEIGHTS_PATH, classifier.getAvgWeights());
             else
                 writer.writeHashMap2File(Paths.getInstance().OUTPUT_WEIGHTS_PATH, W);
-    //=============================================================================//
+            //=============================================================================//
 
 		} catch (Exception e) {
             Logger.error(e.getMessage());
