@@ -1,0 +1,37 @@
+#=================================================#
+#=====================TRAIN=======================#
+train_path:data/db/dummy/train.txt			#train set path - mandatory
+validation_path:data/db/files/validation.mutual		#validation set path - optional
+w_output:data/weights/dummy.weights			#path for output the model - mandatory
+type:1							#the algorithm type - mandatory
+task:3							#the task loss function - mandatory
+epoch:5							#the number of epochs on the data - mandatory
+task_param:1						#task loss parameters if needed, split between the parameters by ; - optional
+kernel:1:19						#kernel type, and parameters(i.e sigma) - optional
+init_w:data/weights/w_init.txt				#the path for the initial weights - optional
+phi:3							#phi feature functions type - mandatory
+prediction:3						#prediction function(should implement argmax for train and test) - mandatory
+reader:0						#reader type: standard,rank etc. - mandatory
+writer:0						#writer type: standard,rank etc. - mandatory
+isAvg:1							#boolean that indicates whether to average the weights vector - optional, default is 0
+size_of_vector:4					#size of vector after the feature mapping function - mandatory
+#parameters for the algorithm, will be different for each algorithm - mandatory
+#more details can be found inside the README file
+#=================================================#
+#======================TEST=======================#
+test_path:data/db/dummy/test.txt			#test set path - mandatory
+output_file:res/dummy_scores.txt			#path to output the scores file
+w_path:data/weights/dummy.weights			#the path to the model
+examples_2_display:3					#how many examples to display in the score file
+task:3							#the task loss function - mandatory
+task_param:1;3						#task loss parameters if needed, split between the parameters by ; - optional
+kernel:1:19 						#kernel type, and parameters(i.e sigma) - Optional
+phi:3							#phi feature functions type - mandatory
+prediction:3						#prediction function(should implement argmax for train and test) - mandatory
+reader:0						#reader type: standard,rank etc. - mandatory
+writer:0						#writer type: standard,rank etc. - mandatory
+size_of_vector:4					#size of vector after the feature mapping function - mandatory
+#more details can be found inside the README file
+#=================================================#
+
+to comment parameters type # at the beginning of the line

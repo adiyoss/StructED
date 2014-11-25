@@ -1,0 +1,16 @@
+definitions.tex
+Tutorial.aux
+Tutorial.log
+Tutorial.out
+Tutorial.synctex.gz
+Tutorial.tex
+img/
+logo.png
+predict.png
+train.png
+MNIST/
+out/
+META-INF/
+StructED_Package-github.iml
+.idea/
+small.train.vowel
