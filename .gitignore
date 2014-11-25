@@ -10,6 +10,7 @@ predict.png
 train.png
 MNIST/
 out/
+META-INF/
 StructED_Package-github.iml
 .idea/
 small.train.vowel
