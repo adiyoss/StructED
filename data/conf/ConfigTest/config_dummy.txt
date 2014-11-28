@@ -4,7 +4,6 @@ w_path:data/weights/dummy.weights
 examples_2_display:3
 task:3
 task_param:1
-kernel:2:9
 phi:3
 prediction:3
 reader:0
