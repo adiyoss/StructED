@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="StructED, structured prediction learning package">
+    <meta name="author" content="adiyoss yossi adi joseph keshet">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>StructED - Installation</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/navbar-fixed-top.css" rel="stylesheet">
+    <link href="css/sticky-footer-navbar.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/jumbotron.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="assets/ie-emulation-modes-warning.js"></script>
+
+        <!-- Custom Fonts -->
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="index.html">StrcutED</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">            
+            <li><a href="introduction.html">Introduction</a></li>
+            <li><a href="installation.html">Installation</a></li>
+            <li><a href="tut_general.html">Tutorials</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="https://github.com/adiyoss/StructED" target="blank"><i class="fa fa-github fa-fw"></i></a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+    </nav>
+
+    <div class="container">
+      <div>
+          <h2 class="text-center">Installation</h2>
+          <hr>
+          <div>
+            <h3><u>Compile</u></h3>
+            <div>
+              <p>In order to install StructED package one needs to do the following: </p>
+              <p style="font-size:12px">* To use StructED to your own specific task you should implement the required interfaces before compiling.</p>
+              <ol>
+                <li>Download StructED package from <a href="https://github.com/adiyoss/StructED" target="blank">GitHub.</a></li>
+                <li>CD into the StructED path.</li>
+                <li>Run sh install.sh in the terminal.</li>                              
+              </ol>
+            </div>
+          </div>
+
+          <div>
+            <h3><u>Config File</u></h3>
+            <p>In order to use the package one must first implement the required interfaces for his specific task, more details about the adding new task can be found in <a href="tut_general.html">tutorials.</a></p>
+            <p>After implementing the above functions we need to chose the algorithm, for that we need to define a config file. The file should be from the following format: (All the parameters in the config file should be as follows: parameter type, colon(:), parameter value) Examples of config files can be found in the package source code under data/conf/algorithms_example directory.</p>
+            <h4>Config File - Train</h4>
+            <p>Every train config file should include both general and algorithm dependent parameters:</p>
+            <h5>General Parameters: </h5>
+            <ul>
+              <li><b>train_path</b>: the path to the training set data - Mandatory </li>
+              <li><b>w_output</b>: the path to save the weights vector (model)</li>
+              <li><b>type</b>: the algorithm type - Mandatory
+                <ul>
+                  <li>0 - Passive Aggressive</li>
+                  <li>1 - SVM</li>
+                  <li>2 - Direct Loss</li>
+                  <li>3 - CRF</li>
+                  <li>4 - Ramp Loss</li>
+                  <li>5 - Probit Loss</li>
+                </ul>
+              </li>
+              <li><b>task</b>: the cost/loss function number - Mandatory</li>
+              <li><b>epoch</b>: the number of epochs on the data - Mandatory</li>
+              <li><b>task_param</b>: cost/loss parameters if needed, can store multiple parameters splited by (;) - optional</li>
+              <li><b>kernel</b>: kernel type, and parameters(i.e sigma) - Optional
+                <ul>
+                  <li>0 - poly 2 degree</li>
+                  <li>1 - 2nd taylor approximation for RBF - setting the sigma value can be done like that: kernel:1:19</li>
+                  <li>2 - 3rd taylor approximation for RBF - setting the sigma value can be done like that: kernel:2:19</li>
+                </ul>
+              </li>
+              <li><b>init_w</b>: the path for the initial weights - Optional</li>
+              <li><b>phi</b>: feature function type - Mandatory</li>
+              <li><b>prediction</b>: prediction function, should implement also the loss-augmented function - Mandatory</li>
+              <li><b>reader</b>: db reader type - Mandatory</li>
+              <li><b>writer</b>: db writer type - Mandatory
+                <ul>
+                  <li>for both reader and writer
+                <ul>
+                  <li>use 0 for standard reader(like mnist db or the dummy data)</li>
+                </ul>
+                </li>
+                </ul>
+              </li>
+              <li><b>isAvg</b>: boolean that indicates whether to average the weights vector - optional, default is 0</li>
+              <li><b>size_of_vector</b>: size of vector after the feature mapping functions - Mandatory</li>
+            </ul>
+            <h5>Algorithm Dependent: </h5>           
+              <li>
+                <b>Passive Aggressive</b>
+                <ul>
+                  <li><b>c</b>: parameter for the PA algorithm<br></li>
+                </ul>
+              </li>
+              <li>
+                <b>SVM</b>
+                <ul>
+                  <li><b>lambda</b>: lambda parameter for the SVM<br></li>
+                  <li><b>eta</b>: learning rate</li>
+                </ul>
+              </li>            
+              <li>
+                <b>Direct Loss</b>
+                <ul>
+                  <li><b>eta</b>: learning rate</li>
+                  <li><b>epsilon</b>: epsilon parameter for the DL<br></li>
+                </ul>
+              </li>
+              <li>
+                <b>CRF</b>
+                <ul>
+                  <li><b>eta</b>: learning rate</li>
+                  <li><b>lambda</b>: lambda parameter for the CRF</li>
+                </ul>
+              </li>                            
+              <li>
+                <b>Ramp Loss</b>
+                <ul>
+                  <li><b>eta</b>: learning rate</li>
+                  <li><b>lambda</b>: lambda parameter for the RL<br></li>
+                </ul>
+              </li>
+              <li>
+                <b>Probit Loss</b>
+                <ul>
+                  <li><b>eta</b>: learning rate</li>
+                  <li><b>lambda</b>: lambda parameter for the PL</li>
+                  <li><b>num_of_iteration</b>: the number of times to generation noise for the weights vector</li>
+                  <li><b>noise_all_vector</b>: boolean(1/0) indicates whether to generate noise through all the weight vector or just in one random place</li>
+                  <li><b>noise_mean</b>: the mean of the noise to be generated(we draw the noise from a normal distribution)</li>
+                  <li><b>noise_std</b>: the standard deviation of the noise to be generated(we draw the noise from a normal distribution)<br></li>
+                </ul>
+              </li>
+
+            <h4>Config File - Test</h4>
+            <p>Every test config file should include the following parameters as specified:</p>
+            <ul>
+              <li><b>test_path</b>: the path to the test set data - Mandatory </li>
+              <li><b>output_file</b>: the path to output the scores file - Mandatory</li>
+              <li><b>w_path</b>: the path to the weights vector (model) - Mandatory </li>
+              <li><b>examples_2_display</b>: how many examples to display in the scores file - Mandatory</li>
+              <li><b>task</b>: the loss(cost) function, the same as the train - Mandatory</li>
+              <li><b>task_param</b>: task loss parameters if needed</li>
+              <li><b>kernel</b>: kernel type, and parameters(i.e sigma) - Optional
+
+              <ul>
+              <li>0 - poly 2 degree</li>
+              <li>1 - RBF 2nd taylor approximation - setting the sigma value can be done like that: kernel:1:19</li>
+              <li>2 - RBF 3rd taylor approximation - setting the sigma value can be done like that: kernel:2:19</li>
+              </ul>
+              </li>
+              <li><b>phi</b>: feature function type - Mandatory</li>
+              <li><b>prediction</b>: prediction function, should implement the inferences - Mandatory</li>
+              <li><b>reader</b>: reader type - Mandatory</li>
+              <li><b>writer</b>: writer type - Mandatory
+
+              <ul>
+              <li>for both reader and writer
+
+              <ul>
+              <li>use 0 for standard reader(like mnist db or the dummy data)</li>
+              </ul>
+              </li>
+              </ul>
+              </li>
+              <li><b>size_of_vector</b>: size of vector after the feature mapping functions - Mandatory</li>
+            </ul>
+
+            <h3><u>Usage</u></h3>
+              <li>Now: </li>              
+                <ul>
+                  <li><p>For train type: sh train.run.sh &lt config file path &gt</p></li>
+                  <li>For predict type: sh predict.run.sh &lt config file path &gt</li>
+                </ul>  
+          </div>
+      </div>
+    </div> <!-- /container -->
+
+    <footer class="footer">
+      <div class="container">
+        <p class="text-muted">Copyright &copy; Adiyoss</p>
+      </div>
+    </footer>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="assets/ie10-viewport-bug-workaround.js"></script>
+  </body>
+</html>

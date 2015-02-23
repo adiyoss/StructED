@@ -8,7 +8,7 @@
     <meta name="author" content="adiyoss yossi adi joseph keshet">
     <link rel="icon" href="../../favicon.ico">
 
-    <title>StructED</title>
+    <title>StructED - Introduction</title>
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.css" rel="stylesheet">
@@ -27,6 +27,8 @@
     <!-- Custom Fonts -->
     <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+
+    <link href="css/introduction.css" rel="stylesheet">    
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -58,62 +60,38 @@
           </ul>
         </div><!--/.nav-collapse -->
     </nav>
-
-    <!-- Main jumbotron for a primary marketing message or call to action -->
-    <div class="container">
-      <div class="jumbotron">      
-        <div class="row text-center">
-          <div class="col-md-3">
-          </div>
-          <div class="col-md-5">
-            <img src="img/STRUCTED-LOGO.png" class="img-responsive" style="width:500px">
-         </div>
-          <div class="col-md-3">
-          </div>
-        </div>
-        <hr>
-        <div class="row">
-          <p>StructED is a collection of machine learning algorithms for structured prediction. Structured tasks are distinctive: each task has a unique evaluation metric, its own set of feature functions, and in many cases a non-standard inference.</p> 
-          <p>Consequently, implementation of a machine learning system that utilizes structured prediction is complex and involved. StructED handles this inherent complexity by introducing specially-designed interfaces for an evaluation function, a set of feature functions, and a decoder. The collection of all the training algorithms is implemented using the same interfaces, and adding a new training algorithm is straightforward.</p>
-          <hr>
-          <p><a class="btn btn-primary btn-md" href="introduction.html" role="button">More about structred prediction &raquo;</a></p>
-        </div>
-      </div>
-    </div>
-
-    <div class="container">
-      <!-- Example row of columns -->
-      <div class="row">
-        <div class="col-md-4">
-          <h2>Citing</h2>
-          <p>If you like our work and find it usfull for you, please cite our paper:</p>  
-          <p>TBD</p>        
-        </div>
-        <div class="col-md-4">
-          <h2>Examples</h2>
-          <p>Here we provide three examples for using StructED for different tasks. The first one is the MNIST benchmark, the second one is 
-          the Vowel Duration Measurement and the last one is an example on synthetic data we generated. 
-          </p>
-          <p><a class="btn btn-default" href="tut_general.html" role="button">View details &raquo;</a></p>
-       </div>
-        <div class="col-md-4">
-          <h2>Installation</h2>
-          <p>StructED package was writen in java hence installation is very easy and straightforward. All the details about how to install and use StructED can be found in the following link.</p>
-          <br>
-          <p><a class="btn btn-default" href="installation.html" role="button">View details &raquo;</a></p>
-        </div>
-      </div>
-
-      <hr>
-    </div> <!-- /container -->
-    </div>
     
+    <div class="container_short">
+      <!-- Example row of columns -->
+      <div> 
+        <h2 class="row text-center">What is Structred Prediction?</h2>
+        <hr>
+          <div>
+            <p>Consider a supervised learning setting with input instances x ∈ X and target labels y ∈ Y, which refers to a set of complex objects with an internal structure. We assumed a fixed mapping φ : X × Y → Rd from the set of input objects and target labels to a real vector of length d, where we call the elements of this mapping feature functions or feature maps. Also consider a linear decoder with parameters w ∈ Rd, such that yˆw is a good approximation to the true label of x, as follows:</p>
+            
+            <p class="text-center img-responsive"><img src="img/argmax.png" style="width:320px" /></p>
+            
+            <p>Ideally, the learning algorithm finds w such that the prediction rule optimizes the expected desired measure of preference or evaluation metric on unseen data. We define a cost func- tion, l(y,yˆw), to be a non-negative measure of error when predicting yˆw instead of y as the label of x. Our goal is to find the parameters vector w that minimizes this function. Often the desired evaluation metric is a utility function that needs to be maximized (like BLEU or NDCG) and then we define the cost to be 1 minus the evaluation metric.
+            We assume that exists some unknown probability distribution ρ over pairs (x, y) where y is the desired output for input x. We would like to set w so as to minimize the expected cost, or the risk, for predicting yˆw,</p>
+
+            <p class="text-center img-responsive"><img src="img/argmin_e.png" style="width:380px"/></p>
+            
+            <p>This objective function is hard to minimize directly (Keshet, 2014). Given a training set of examples S = {(xi,yi)}mi=1, where each pair (xi,yi) is drawn i.i.d from ρ, a common practice is to find the model parameters that minimize the regularized mean surrogate loss,</p>
+            
+            <p class="text-center img-responsive"><img src="img/argmin_m.png" style="width:450px"/></p>
+
+            <p>where l(w, x, y) is a surrogate loss function, and λ is a trade-off parameter between the loss
+              term and the regularization. Each algorithm has its own definition of the surrogate loss, e.g., the surrogate loss in max-margin Markov model (Taskar et al., 2003) is the structured hinge loss with a Hamming cost, whereas the surrogate loss in conditional random fields (Lafferty et al., 2001) is the log loss function. A general survey on structured prediction algorithms and their prediction rules is given in Keshet (2014).
+            </p>
+          </div>
+      </div>
+    </div> <!-- /container -->
+
     <footer class="footer">
       <div class="container">
         <p class="text-muted">Copyright &copy; Adiyoss</p>
       </div>
     </footer>
-
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->

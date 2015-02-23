@@ -8,7 +8,7 @@
     <meta name="author" content="adiyoss yossi adi joseph keshet">
     <link rel="icon" href="../../favicon.ico">
 
-    <title>StructED</title>
+    <title>StructED - Tutorial</title>
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.css" rel="stylesheet">
@@ -16,7 +16,6 @@
    <!-- Custom styles for this template -->
     <link href="css/navbar-fixed-top.css" rel="stylesheet">
     <link href="css/sticky-footer-navbar.css" rel="stylesheet">
-
     <!-- Custom styles for this template -->
     <link href="css/jumbotron.css" rel="stylesheet">
 
@@ -59,55 +58,43 @@
         </div><!--/.nav-collapse -->
     </nav>
 
-    <!-- Main jumbotron for a primary marketing message or call to action -->
     <div class="container">
-      <div class="jumbotron">      
-        <div class="row text-center">
-          <div class="col-md-3">
-          </div>
-          <div class="col-md-5">
-            <img src="img/STRUCTED-LOGO.png" class="img-responsive" style="width:500px">
-         </div>
-          <div class="col-md-3">
-          </div>
-        </div>
-        <hr>
-        <div class="row">
-          <p>StructED is a collection of machine learning algorithms for structured prediction. Structured tasks are distinctive: each task has a unique evaluation metric, its own set of feature functions, and in many cases a non-standard inference.</p> 
-          <p>Consequently, implementation of a machine learning system that utilizes structured prediction is complex and involved. StructED handles this inherent complexity by introducing specially-designed interfaces for an evaluation function, a set of feature functions, and a decoder. The collection of all the training algorithms is implemented using the same interfaces, and adding a new training algorithm is straightforward.</p>
+      <div>
+          <h2 class="text-center">Tutorials</h2>
           <hr>
-          <p><a class="btn btn-primary btn-md" href="introduction.html" role="button">More about structred prediction &raquo;</a></p>
+          <div>            
+            <div>
+              <p>In order to use StructED to a specific task one must implement three interfaces which contains four functions:</p>
+              <ol>
+                <li>Loss function from TaskLoss interface.</li>
+                <li>An argmax over the linear discriminant function from Prediction interface.</li>
+                <li>An argmax over the loss-augmented linear discriminant function from Prediction interface.</li>
+                <li>A function for computing Phi from PhiConverter interface.</li>
+              </ol>
+
+              <div style="padding-top:50px">              
+                <p>Here we provide three examples for the use of StructED, each example has its own implementation and tutorial:</p>
+                <hr>
+                <div class="row">
+                  <div class="col-md-3 text-center">
+                    <h2>MNIST</h2>  
+                    <p><a class="btn btn-default" href="web_data/dummy_tutorial.zip" role="button"><i class="fa fa-download fa-fw"></i>Donwload</a></p> 
+                  </div>
+                  <div class="col-md-5 text-center">
+                    <h2>Vowel Duration</h2>
+                    <p><a class="btn btn-default" href="web_ata/dummy_tutorial.zip" role="button"><i class="fa fa-download fa-fw"></i>Donwload</a></p>
+                 </div>
+                  <div class="col-md-3 text-center">
+                    <h2>Dummy Data</h2>
+                    <p><a class="btn btn-default" href="web_data/dummy_tutorial.zip" role="button" download><i class="fa fa-download fa-fw"></i>Donwload</a></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
 
-    <div class="container">
-      <!-- Example row of columns -->
-      <div class="row">
-        <div class="col-md-4">
-          <h2>Citing</h2>
-          <p>If you like our work and find it usfull for you, please cite our paper:</p>  
-          <p>TBD</p>        
-        </div>
-        <div class="col-md-4">
-          <h2>Examples</h2>
-          <p>Here we provide three examples for using StructED for different tasks. The first one is the MNIST benchmark, the second one is 
-          the Vowel Duration Measurement and the last one is an example on synthetic data we generated. 
-          </p>
-          <p><a class="btn btn-default" href="tut_general.html" role="button">View details &raquo;</a></p>
-       </div>
-        <div class="col-md-4">
-          <h2>Installation</h2>
-          <p>StructED package was writen in java hence installation is very easy and straightforward. All the details about how to install and use StructED can be found in the following link.</p>
-          <br>
-          <p><a class="btn btn-default" href="installation.html" role="button">View details &raquo;</a></p>
-        </div>
-      </div>
-
-      <hr>
-    </div> <!-- /container -->
-    </div>
-    
     <footer class="footer">
       <div class="container">
         <p class="text-muted">Copyright &copy; Adiyoss</p>
