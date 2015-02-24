@@ -1,0 +1,10 @@
+\BOOKMARK [1][-]{section.1}{Introduction}{}% 1
+\BOOKMARK [1][-]{section.2}{Vowel Duration Measurement}{}% 2
+\BOOKMARK [1][-]{section.3}{The Data}{}% 3
+\BOOKMARK [1][-]{section.4}{The Code}{}% 4
+\BOOKMARK [2][-]{subsection.4.1}{Task Loss}{section.4}% 5
+\BOOKMARK [2][-]{subsection.4.2}{Predict - Inference}{section.4}% 6
+\BOOKMARK [2][-]{subsection.4.3}{Feature Functions}{section.4}% 7
+\BOOKMARK [2][-]{subsection.4.4}{Factory Update}{section.4}% 8
+\BOOKMARK [1][-]{section.5}{The Config File}{}% 9
+\BOOKMARK [1][-]{section.6}{Running The Code}{}% 10
