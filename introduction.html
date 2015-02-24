@@ -28,7 +28,17 @@
     <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
 
-    <link href="css/introduction.css" rel="stylesheet">    
+    <link href="css/introduction.css" rel="stylesheet">  
+
+    <!-- USED FOR LATEX CODE INSIDE THE HTML -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        extensions: ["tex2jax.js"],
+        jax: ["input/TeX","output/HTML-CSS"],
+        tex2jax: {inlineMath: [["$","$"],["\\(","\\)"]]}
+      });
+    </script>
+    <script type="text/javascript" src="js/MathJax.js"></script>  
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -60,32 +70,92 @@
           </ul>
         </div><!--/.nav-collapse -->
     </nav>
+
+    <div style="display:none">
+    \(      
+      \newcommand{\oneinf}{\ell_{1,\infty}}
+      \newcommand{\onetwo}{\ell_{1,2}}
+    \)
+    </div>
     
-    <div class="container_short">
+
+    <div class="container container_short">
       <!-- Example row of columns -->
+      <h2 class="text-center">Introduction</h2>
+      <hr>
       <div> 
-        <h2 class="row text-center">What is Structred Prediction?</h2>
-        <hr>
+          <h3><u>What is Structred Prediction?</u></h3> 
           <div>
-            <p>Consider a supervised learning setting with input instances x ∈ X and target labels y ∈ Y, which refers to a set of complex objects with an internal structure. We assumed a fixed mapping φ : X × Y → Rd from the set of input objects and target labels to a real vector of length d, where we call the elements of this mapping feature functions or feature maps. Also consider a linear decoder with parameters w ∈ Rd, such that yˆw is a good approximation to the true label of x, as follows:</p>
-            
-            <p class="text-center img-responsive"><img src="img/argmax.png" style="width:320px" /></p>
-            
-            <p>Ideally, the learning algorithm finds w such that the prediction rule optimizes the expected desired measure of preference or evaluation metric on unseen data. We define a cost func- tion, l(y,yˆw), to be a non-negative measure of error when predicting yˆw instead of y as the label of x. Our goal is to find the parameters vector w that minimizes this function. Often the desired evaluation metric is a utility function that needs to be maximized (like BLEU or NDCG) and then we define the cost to be 1 minus the evaluation metric.
-            We assume that exists some unknown probability distribution ρ over pairs (x, y) where y is the desired output for input x. We would like to set w so as to minimize the expected cost, or the risk, for predicting yˆw,</p>
-
-            <p class="text-center img-responsive"><img src="img/argmin_e.png" style="width:380px"/></p>
-            
-            <p>This objective function is hard to minimize directly (Keshet, 2014). Given a training set of examples S = {(xi,yi)}mi=1, where each pair (xi,yi) is drawn i.i.d from ρ, a common practice is to find the model parameters that minimize the regularized mean surrogate loss,</p>
-            
-            <p class="text-center img-responsive"><img src="img/argmin_m.png" style="width:450px"/></p>
-
-            <p>where l(w, x, y) is a surrogate loss function, and λ is a trade-off parameter between the loss
-              term and the regularization. Each algorithm has its own definition of the surrogate loss, e.g., the surrogate loss in max-margin Markov model (Taskar et al., 2003) is the structured hinge loss with a Hamming cost, whereas the surrogate loss in conditional random fields (Lafferty et al., 2001) is the log loss function. A general survey on structured prediction algorithms and their prediction rules is given in Keshet (2014).
-            </p>
+            <p>The ultimate objective of discriminative learning is to train a system to optimize a  desired measure of performance. In binary classification we are interested in finding a function that assigns a binary label to a single object, and minimizes the error rate (correct or incorrect) on unseen data.</p> 
+            <p>In structured prediction, we are interested in the prediction of a structured label, where the input is a complex object. Typically, each structured prediction task has its own measure of performance or evaluation metric, such as word error rate in speech recognition, the BLEU score in machine translation or the intersection-over-union score in object segmentation. In the chapter we review different objective functions for structured prediction and analyze them in the light of how they optimize to the desired measure of performance.</p>
           </div>
+          
+          <h3><u>Example</u></h3>   
+          <div>       
+            <p>Let's say we wish to measure the most accurate start and end times of a vowel phoneme in a spoken word. We could simply train a binary classifier that will indicate whether a frame signal is vowel or not. With that in hand we could just run on all the signal frames and mark the start and end time of the vowel.</p>
+            <p>This approach does not pay attention to the internal structure of the desire label, hence it loses a lot of valuable information.</p>
+            <p>The structured prediction approach will look at the desired label as one piece by defining specific task loss that will be more sensitive then 0-1 loss, designing special feature maps for this specific task, and so on.</p>
+            <p>We provide very detailed tutorial on the Vowel Duration Measurement which can be found <a href="tut_general.html">here.</a></p>
+          </div>
+
+          </ol> 
+          <h3><u>More Formally</u></h3>          
+          <div>
+            <p>Consider a supervised learning setting with input instances $x \in \mathcal{x}$ and target labels $y \in \mathcal{y}$, which refers to a set of complex objects with an internal structure.</p>
+            <p>We assumed a fixed mapping $\phi: \mathcal{x} \times \mathcal{y} \rightarrow \mathbb{R}^d$ from the set of input objects and target labels to a real vector of length $d$, where we call the elements of this mapping $\textit{feature functions}$ or $\textit{feature maps}$. Also consider a linear decoder with parameters $w \in \mathbb{R}^d$, such that $\hat{y}_{w}$is a good approximation to the true label of $x$, as follows:</p>
+
+            <p class="text-center">              
+              \begin{equation}
+              \label{eq:decoding}
+              \hat{y}_{w}(x) = argmax_{y \in \mathcal{y}} ~ w^\top \phi(x, y)
+              \end{equation}    
+            </p>
+            
+            <p>Ideally, the learning algorithm finds $w$ such that the prediction rule optimizes the expected desired $\textit{measure of preference}$ or $\textit{evaluation metric}$ on unseen data. We define a $\textit{cost}$ function, $\ell(y, \hat{y}_{w})$, to be a non-negative measure of error when predicting $\hat{y}_{w}$instead of $y$ as the label of $x$.</p> 
+            <p>Our goal is to find the parameters vector $w$ that minimizes this function. Often the desired evaluation metric is a utility function that needs to be maximized (like BLEU or NDCG) and then we define the cost to be 1 minus the evaluation metric.</p>
+            <p>We assume that exists some unknown probability distribution $\rho$ over pairs $(x,y)$ where $y$ is the desired output for input $x$. We would like to set $w$ so as to minimize the expected cost, or the $\textit{risk}$, for predicting $\hat{y}_{w}$,</p>
+
+            <p class="text-center">
+              \begin{equation}
+              \label{eq:w*}
+              w^* = argmin_{w} ~ \mathbb{E}_{(x,y) \sim \rho} [\ell(y,\hat{y}_{w}(x))]. 
+              \end{equation}
+            </p>
+            
+            <p>This objective function is hard to minimize directly <a href="http://u.cs.biu.ac.il/~jkeshet/papers/Keshet14.pdf" target="blank">(Keshet, 2014)</a>. Given a training set of examples $\mathcal{s} = \{(x_i,y_i)\}_{i=1}^{m}$, where each pair $(x_i, y_i)$ is drawn i.i.d from $\rho$, a common practice is to find the model parameters that minimize the regularized mean surrogate loss, </p>
+            
+            <p class="text-center">
+              \begin{equation}
+              \label{eq:reg-loss}
+              w^* = argmin_{w}  ~ \frac{1}{m}\sum_{i=1}^{m} \bar{\ell}(w,x_i,y_i) + \frac{\lambda}{2} \|w\|^2, 
+              \end{equation} 
+            </p>
+
+            <p>where $\bar{\ell}(w,x,y)$ is a surrogate loss function, and $\lambda$ is a trade-off parameter between the loss term and the regularization. Each algorithm has its own definition of the surrogate loss, e.g., the surrogate loss in max-margin Markov model <a href="http://papers.nips.cc/paper/2397-max-margin-markov-networks.pdf" target="blank">(Taskar et al., 2003)</a> is the structured hinge loss with a Hamming cost, whereas the surrogate loss in conditional random fields <a href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.26.803&rep=rep1&type=pdf" target="blank">(Lafferty et al., 2001)</a> is the log loss function. A general survey on structured prediction algorithms and their prediction rules is given in <a href="http://u.cs.biu.ac.il/~jkeshet/papers/Keshet14.pdf" target="blank">(Keshet, 2014)</a>.
+            </p>            
+          </div>
+
+          <h3><u>Modules</u></h3>
+          <div>
+            <p>We implemented six structured prediction algorithms in StructED:</p>
+            <ol>
+              <li>Structured SVM optimized with stochastic sub-gradient descent <a href="http://ttic.uchicago.edu/~nati/Publications/PegasosMPB.pdf" target="blank">(Shalev-Shwartz et al., 2011).</a></li>
+              <li>PA <a href="http://webee.technion.ac.il/people/koby/publications/crammer06a.pdf" target="blank">(Crammer et al., 2006).</a></li>
+              <li>CRF <a href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.26.803&rep=rep1&type=pdf" target="blank">(Lafferty et al., 2001).</a></li>
+              <li>Direct Loss Minimization <a href="http://u.cs.biu.ac.il/~jkeshet/papers/McAllesterHaKe10.pdf" target="blank">(McAllester et al., 2010).</a></li>            
+              <li>Ramp Loss <a href="http://papers.nips.cc/paper/4268-generalization-bounds-and-consistency-for-latent-structural-probit-and-ramp-loss.pdf" target="blank">(McAllester and Keshet, 2011).</a></li>            
+              <li>Probit Loss <a href="http://cs.haifa.ac.il/~tamir/papers/KeshetMcHa10.pdf" target="blank">(Keshet et al., 2011).</a></li>
+            </ol>
+            <p>Although it is not so populare in structured prediction, we also implemented two kernel expansion functions:</p>
+            <ol>
+              <li>Polynomial.</li>
+              <li>RBF using 2nd and 3rd Taylor approximation.</li>
+            </ol>
+            <p>Moreover, in order to support multi-class as well, we also implemented phi functions, an argmax function, an argmax function over loss-augmented and zero-one loss functions for multi-class classifications.</p>
+            <p>Hence, using StructED as a multi-class classifier is straightforward. More detailes about using StructED for multi-class tasks can be found <a href="tut_general.html">here.</a></p>
+          </div>          
       </div>
-    </div> <!-- /container -->
+    </div> <!-- /container -->    
 
     <footer class="footer">
       <div class="container">
@@ -98,6 +168,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="assets/ie10-viewport-bug-workaround.js"></script>
+    <script src="assets/ie10-viewport-bug-workaround.js"></script>    
   </body>
 </html>
