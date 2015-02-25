@@ -19,21 +19,22 @@
 package tests;
 
 import Constants.Consts;
-import Constants.Paths;
 import Data.Factory;
 import Data.InstancesContainer;
 import DataAccess.Reader;
 import junit.framework.TestCase;
 
-// Unit tests for the Standard Reader class
+/*
+    Unit tests for the Standard Reader class
+ */
 public class StandardReaderTest extends TestCase {
 
     public void testReadData() throws Exception {
         InstancesContainer instances_train;
         InstancesContainer instances_test;
         Reader reader =  Factory.getReader(0);
-        instances_train = reader.readData("data/db/dummy/train.txt", Consts.SPACE, Consts.COLON_SPLITTER);
-        instances_test = reader.readData("data/db/dummy/test.txt", Consts.SPACE, Consts.COLON_SPLITTER);
+        instances_train = reader.readData("data/test_data/db/train_dummy.txt", Consts.SPACE, Consts.COLON_SPLITTER);
+        instances_test = reader.readData("data/test_data/db/test_dummy.txt", Consts.SPACE, Consts.COLON_SPLITTER);
 
         assertEquals("Number of examples must be: 14",14,instances_train.getSize());
         assertEquals("Number of examples must be: 6",6,instances_test.getSize());
@@ -41,11 +42,11 @@ public class StandardReaderTest extends TestCase {
 
     public void testReadFile() throws Exception {
         Reader reader =  Factory.getReader(0);
-        assertEquals("length must be: 11", 11, reader.readFile("data/test_data/config_CRF.txt", Consts.COLON_SPLITTER).size());
-        assertEquals("length must be: 13", 13, reader.readFile("data/test_data/config_DL.txt", Consts.COLON_SPLITTER).size());
-        assertEquals("length must be: 12", 12, reader.readFile("data/test_data/config_PA.txt", Consts.COLON_SPLITTER).size());
-        assertEquals("length must be: 19", 19, reader.readFile("data/test_data/config_Probit.txt", Consts.COLON_SPLITTER).size());
-        assertEquals("length must be: 13", 13, reader.readFile("data/test_data/config_Ramp.txt", Consts.COLON_SPLITTER).size());
-        assertEquals("length must be: 14", 14, reader.readFile("data/test_data/config_SVM.txt", Consts.COLON_SPLITTER).size());
+        assertEquals("length must be: 11", 11, reader.readFile("data/test_data/conf_train/config_CRF.txt", Consts.COLON_SPLITTER).size());
+        assertEquals("length must be: 13", 13, reader.readFile("data/test_data/conf_train/config_DL.txt", Consts.COLON_SPLITTER).size());
+        assertEquals("length must be: 12", 12, reader.readFile("data/test_data/conf_train/config_PA.txt", Consts.COLON_SPLITTER).size());
+        assertEquals("length must be: 19", 19, reader.readFile("data/test_data/conf_train/config_Probit.txt", Consts.COLON_SPLITTER).size());
+        assertEquals("length must be: 13", 12, reader.readFile("data/test_data/conf_train/config_Ramp.txt", Consts.COLON_SPLITTER).size());
+        assertEquals("length must be: 14", 14, reader.readFile("data/test_data/conf_train/config_SVM.txt", Consts.COLON_SPLITTER).size());
     }
 }

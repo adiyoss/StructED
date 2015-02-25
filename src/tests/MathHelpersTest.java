@@ -22,7 +22,9 @@ import Data.Entities.Vector;
 import Helpers.MathHelpers;
 import junit.framework.TestCase;
 
-// Unit tests for the MathHelpers class
+/*
+    Unit tests for the MathHelpers Reader class
+ */
 public class MathHelpersTest extends TestCase {
 
     private double delta = 0.0001;

@@ -1,0 +1,11 @@
+test_path:data/db/vowel/test.results
+output_file:res/DL.txt
+w_path:data/weights/vowel.weights.DL
+examples_2_display:-1
+task:0
+task_param:2;3
+phi:0
+prediction:0
+reader:2
+writer:0
+size_of_vector:42

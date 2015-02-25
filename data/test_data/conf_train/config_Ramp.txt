@@ -10,7 +10,6 @@ reader:0
 writer:0
 size_of_vector:4
 eta:0.1
-lambda:0.8
 
 
 
