@@ -16,6 +16,17 @@ All the source code for StructED is available to download StructED repository. T
 
 Very detailed tutorial about adding new task to StructED can be found under the docs/ directory.
 
+
+COMPILE
+======
+In order to install StructED package one needs to do the following:
+
+To use StructED to your own specific task you should implement the required interfaces before compiling.
+
+ - Download StructED package from GitHub.
+ - CD into the StructED path.
+ - Run sh install.sh in the terminal.
+
 CONFIG FILE - TRAIN
 ======
 
@@ -122,6 +133,12 @@ CONFIG FILE - PREDICT
 	- for both reader and writer
 		- use 0 for standard reader(like mnist db or the dummy data)
  - size_of_vector: size of vector after the feature mapping functions - Mandatory
+
+USAGE
+=====
+Now:
+ - For train type: sh train.run.sh < config file path >
+ - For predict type: sh predict.run.sh < config file path >
 
 Examples
 ========
