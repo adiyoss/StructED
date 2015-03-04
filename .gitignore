@@ -1,9 +1,12 @@
-definitions.tex
-Tutorial_vowel.tex
-Tutorial_mnist.tex
-Tutorial_dummy.tex
+data/docs/tutorial_dummy/definitions.tex
+data/docs/tutorial_mnist/definitions.tex
+data/docs/tutorial_vowel/definitions.tex
+data/docs/tutorial_vowel/Tutorial_vowel.tex
+data/docs/tutorial_mnist/Tutorial_mnist.tex
+data/docs/tutorial_dummy/Tutorial_dummy.tex
 data/docs/img/
 data/db/MNIST/
+.textpadtmp/
 out/
 META-INF/
 StructED_Package-github.iml
