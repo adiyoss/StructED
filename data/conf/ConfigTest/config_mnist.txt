@@ -1,6 +1,6 @@
 test_path:data/db/MNIST/test.data.txt
 output_file:res/mnist_scores_Perceptron.txt
-w_path:data/weights/mnist.weights.perceptron
+w_path:data/weights/MNIST/mnist.weights.perceptron
 examples_2_display:3
 task:1
 phi:1
