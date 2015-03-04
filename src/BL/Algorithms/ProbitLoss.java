@@ -62,7 +62,7 @@ public class ProbitLoss implements AlgorithmUpdateRule {
 	//eta would be at the first cell
 	//lambda would be at the second cell
 	//the number of iteration that we'll go and generate epsilon 
-	public Vector update(Vector currentWeights, Example vector, ClassifierData classifierData) {
+	public Vector update(Vector currentWeights, Example example, ClassifierData classifierData) {
 
         try{
             double algorithmIteration = classifierData.iteration;
@@ -93,9 +93,9 @@ public class ProbitLoss implements AlgorithmUpdateRule {
 				//W+EpsilonVector
                 Vector U = MathHelpers.add2Vectors(currentWeights, epsilonVector);
                 //get the noisy prediction
-				String noisyPrediction = classifierData.predict.predictForTrain(vector, U, vector.getLabel(), classifierData, 1).firstKey();
+				String noisyPrediction = classifierData.predict.predictForTrain(example, U, example.getLabel(), classifierData, 1).firstKey();
 				//calculate loss
-                double taskLossValue = classifierData.taskLoss.computeTaskLoss(vector.getLabel(), noisyPrediction, classifierData.arguments);
+                double taskLossValue = classifierData.taskLoss.computeTaskLoss(example.getLabel(), noisyPrediction, classifierData.arguments);
 				//update the expectation
                 epsilonVector = MathHelpers.mulScalarWithVectors(epsilonVector, taskLossValue);
 				expectation = MathHelpers.add2Vectors(expectation, epsilonVector);

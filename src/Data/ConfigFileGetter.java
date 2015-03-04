@@ -24,7 +24,6 @@ import Constants.ConfigParameters;
 import Constants.Consts;
 import Constants.ErrorConstants;
 import Constants.Paths;
-import Data.Entities.Example;
 import DataAccess.Reader;
 import Helpers.ConverterHelplers;
 
@@ -39,7 +38,7 @@ public class ConfigFileGetter {
             int index = 0;
 
             //validation
-            if(data == null || data.size() == 0 || data.size() < ConfigParameters.GENERAL_PARAMS_SIZE_TRAIN_VALIDATION){
+            if(data == null || data.size() == 0 || data.size() < ConfigParameters.GENERAL_PARAMS_SIZE_TRAIN_MINIMUM){
                 Logger.error(ErrorConstants.CONFIG_ARGUMENTS_ERROR);
                 return null;
             }
@@ -176,31 +175,34 @@ public class ConfigFileGetter {
             //validate the rest of the parameters depends on the type
             switch (Integer.valueOf(result.get(0))){
                 case 0:
-                    if(!validatePA(data, index))
+                    if(!validatePA(data, index)) // PA
                         return null;
                     break;
                 case 1:
-                    if(!validateSVM(data, index))
+                    if(!validateSVM(data, index)) // SVM
                         return null;
                     break;
                 case 2:
-                    if(!validateDL(data, index))
+                    if(!validateDL(data, index)) //DLM
                         return null;
                     break;
                 case 3:
-                    if(!validateCRF(data, index))
+                    if(!validateCRF(data, index)) //CRF
                         return null;
                     break;
                 case 4:
-                    if(!validateRL(data, index))
+                    if(!validateRL(data, index)) //RL
                         return null;
                     break;
                 case 5:
-                    if(!validatePL(data, index))
+                    if(!validatePL(data, index)) //PL
                         return null;
                     break;
                 case 6:
-                    if(!validateSVM(data, index))
+                    // structured perceptron does not need any special parameters
+                    break;
+                case 7:
+                    if(!validateSVM(data, index)) // Rank-SVM
                         return null;
                     break;
                 default:

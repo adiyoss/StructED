@@ -9,6 +9,6 @@ prediction:1
 reader:0
 writer:0
 isAvg:1
-size_of_vector:7800
+size_of_vector:7840
 eta:0.1
 epsilon:-0.36

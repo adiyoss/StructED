@@ -51,19 +51,19 @@ public class PassiveAggressive implements AlgorithmUpdateRule {
 
     @Override
 	//the first cell of the arguments attribute would be the C value
-	public Vector update(Vector currentWeights, Example vector, ClassifierData classifierData) {
+	public Vector update(Vector currentWeights, Example example, ClassifierData classifierData) {
 		
 		try{
 			//get the prediction
-			String prediction = classifierData.predict.predictForTrain(vector, currentWeights, vector.getLabel(), classifierData,1).firstKey();
+			String prediction = classifierData.predict.predictForTrain(example, currentWeights, example.getLabel(), classifierData,1).firstKey();
 
-            Example phiRealLabel = classifierData.phi.convert(vector, vector.getLabel(), classifierData.kernel);
-            Example phiPrediction = classifierData.phi.convert(vector, prediction, classifierData.kernel);
+            Example phiRealLabel = classifierData.phi.convert(example, example.getLabel(), classifierData.kernel);
+            Example phiPrediction = classifierData.phi.convert(example, prediction, classifierData.kernel);
 			
 			//compute the phi difference
             Vector phiDifference = MathHelpers.subtract2Vectors(phiRealLabel.getFeatures(), phiPrediction.getFeatures());
 			
-			double taskLossValue = classifierData.taskLoss.computeTaskLoss(prediction, vector.getLabel(), classifierData.arguments);
+			double taskLossValue = classifierData.taskLoss.computeTaskLoss(prediction, example.getLabel(), classifierData.arguments);
 			
 			double multipleVectors = MathHelpers.multipleVectors(currentWeights , phiDifference);
 			double denominator = MathHelpers.multipleVectors(phiDifference, phiDifference);

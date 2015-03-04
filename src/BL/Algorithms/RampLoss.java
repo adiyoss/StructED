@@ -52,19 +52,19 @@ public class RampLoss implements AlgorithmUpdateRule {
 	@Override
 	//the eta variable in is the first cell
 	//the lambda variable s in the second cell
-	public Vector update(Vector currentWeights, Example vector, ClassifierData classifierData) {
+	public Vector update(Vector currentWeights, Example example, ClassifierData classifierData) {
 		
 		try{
             double algorithmIteration = classifierData.iteration;
             double newEta = eta/Math.sqrt(algorithmIteration);
 
 			//get the prediction
-			String prediction = classifierData.predict.predictForTrain(vector, currentWeights, vector.getLabel(), classifierData, 0).firstKey();
+			String prediction = classifierData.predict.predictForTrain(example, currentWeights, example.getLabel(), classifierData, 0).firstKey();
 			//get the prediction with the task loss
-			String predictionLoss = classifierData.predict.predictForTrain(vector, currentWeights, vector.getLabel(), classifierData, 1).firstKey();
+			String predictionLoss = classifierData.predict.predictForTrain(example, currentWeights, example.getLabel(), classifierData, 1).firstKey();
 
-            Example phiPredictionNoLoss = classifierData.phi.convert(vector,prediction,classifierData.kernel);
-            Example phiPredictionWithLoss= classifierData.phi.convert(vector,predictionLoss,classifierData.kernel);
+            Example phiPredictionNoLoss = classifierData.phi.convert(example,prediction,classifierData.kernel);
+            Example phiPredictionWithLoss= classifierData.phi.convert(example,predictionLoss,classifierData.kernel);
 
 			
 			//compute the ramp loss
