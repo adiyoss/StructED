@@ -35,6 +35,7 @@ GENERAL PARAMETERS
  	- 3 - CRF
  	- 4 - Ramp Loss
  	- 5 - Probit Loss
+	- 6 - Structured Perceptron
  - task: the cost/loss function number - Mandatory
  - epoch: the number of epochs on the data - Mandatory
  - task_param: cost/loss parameters if needed, can store multiple parameters splited by (;) - optional
@@ -95,6 +96,10 @@ Probit Loss
  - noise_all_vector: boolean(1/0) indicates whether to generate noise through all the weight vector or just in one random place
  - noise_mean: the mean of the noise to be generated(we draw the noise from a normal distribution)
  - noise_std: the standard deviation of the noise to be generated(we draw the noise from a normal distribution)
+
+Structured Perceptron
+===
+ - The structured perceptron does not need any special parameters
 
 
 CONFIG FILE - PREDICT
