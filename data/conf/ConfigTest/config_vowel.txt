@@ -1,6 +1,6 @@
 test_path:data/db/vowel/test.results
-output_file:res/DL.txt
-w_path:data/weights/vowel.weights.DL
+output_file:res/SVM_vowel_new.txt
+w_path:data/weights/vowel.weights.SVM
 examples_2_display:-1
 task:0
 task_param:2;3
