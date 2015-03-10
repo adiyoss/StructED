@@ -74,8 +74,14 @@
         </div>
         <hr>
         <div class="row">
-          <p>StructED is a collection of machine learning algorithms for structured prediction. Structured tasks are distinctive: each task has a unique evaluation metric, its own set of feature functions, and in many cases a non-standard inference.</p> 
-          <p>Consequently, implementation of a machine learning system that utilizes structured prediction is complex and involved. StructED handles this inherent complexity by introducing specially-designed interfaces for an evaluation function, a set of feature functions, and a decoder. The collection of all the training algorithms is implemented using the same interfaces, and adding a new training algorithm is straightforward.</p>
+          <p>
+            <p>
+            Most software packages in machine learning available today are designed to solve binary, regression or multiclass problems, where the input to such classifiers is a fixed-length vector and the output is an integer or a real number. Structured prediction is the case where both the input and the output are structured objects (a graph, an acoustic speech utterance, a sequence of words, an image, etc.). Consequently, the structured output space can be exponentially large (all possible phoneme or word sequences, all possible taxonomy graphs, all possible human poses, etc.) and the evaluation metric is not the 0-1 loss but rather a unique task-dependent metric (word error rate in speech recognition, the BLEU score in machine translation, the NDCG score in information retrieval, or the intersection-over-union score in visual object segmentation).</p>
+            <p>
+            Structured tasks are therefore distinctive: each task has a unique evaluation metric, its own set of feature functions, and in many cases a non-standard inference. Consequently, implementation of a machine learning system that utilizes structured prediction is complex and involved. </p>
+          <p>
+            StructED is a software packages that implements a collection of machine learning algorithms for large scale structured prediction. It handles this inherent complexity by providing the user a set of interfaces for easy implementation of the evaluation metric, the set of feature functions and the decoder. The package contains a set of structured prediction training algorithms, and it is straightforward to add new ones. It was written in Java, hence it is platform independent, and was released under the GNU GPL v3.0 license.
+          </p>
           <hr>
           <p><a class="btn btn-primary btn-md" href="introduction.html" role="button">More about structred prediction &raquo;</a></p>
         </div>
@@ -99,7 +105,7 @@
        </div>
         <div class="col-md-4">
           <h3>Installation</h3>
-          <p>StructED package was written in java hence installation is very easy and straightforward. All the details about how to install and use StructED can be found in the following link.</p>
+          <p>StructED package was written in Java hence installation is very easy and straightforward. All the details about how to install and use StructED can be found in the following link.</p>
           <br>
           <p><a class="btn btn-default" href="installation.html" role="button">View details &raquo;</a></p>
         </div>
