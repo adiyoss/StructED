@@ -87,42 +87,38 @@
           <h3><u>What is Structred Prediction?</u></h3> 
           <div>
             <p>The ultimate objective of discriminative learning is to train a system to optimize a  desired measure of performance. In binary classification we are interested in finding a function that assigns a binary label to a single object, and minimizes the error rate (correct or incorrect) on unseen data.</p> 
-            <p>In structured prediction, we are interested in the prediction of a structured label, where the input is a complex object. Typically, each structured prediction task has its own measure of performance or evaluation metric, such as word error rate in speech recognition, the BLEU score in machine translation or the intersection-over-union score in object segmentation. In the chapter we review different objective functions for structured prediction and analyze them in the light of how they optimize to the desired measure of performance.</p>
-          </div>
-          
-          <h3><u>Example</u></h3>   
-          <div>       
-            <p>Let's say we wish to measure the most accurate start and end times of a vowel phoneme in a spoken word. We could simply train a binary classifier that will indicate whether a frame signal is vowel or not. With that in hand we could just run on all the signal frames and mark the start and end time of the vowel.</p>
-            <p>This approach does not pay attention to the internal structure of the desire label, hence it loses a lot of valuable information.</p>
-            <p>The structured prediction approach will look at the desired label as one piece by defining specific task loss that will be more sensitive then 0-1 loss, designing special feature maps for this specific task, and so on.</p>
-            <p>We provide very detailed tutorial on the Vowel Duration Measurement which can be found <a href="tut_general.html">here.</a></p>
-          </div>
+            <p>In structured prediction the input is a complex object (a spoken uttreance, an image, a phrase, a graph, etc.), and we are interested in the prediction of a structured label (a sequence of words, a bounding box, a parsing tree, etc.). Typically, each structured prediction task has its own measure of performance or evaluation metric, such as word error rate in speech recognition, the BLEU score in machine translation or the intersection-over-union score in object segmentation.</p>
+          </div>          
+          <div> <u>Example</u>
+            In the problem of vowel duration measurement, we wish to measure the start and end times of a vowel phoneme in a spoken word. We could simply train a binary classifier that train to predict if a given 10 msec frame of speech is a vowel or a consonant, and then use it to predict wheather each frames of the test utterance is vowel or not. The we could just run on all the signal frames and mark the start and end time of the vowel. This approach, however,  does not take into consideration the internal structure of the desire label, such as typical vowel duration, or its temporal and spectral characteristics. The structured prediction approach can look at the desired label as a whole and define a set of features that dependes on it onset, it offset or the relation between them. Atypical feature can be the presume duration of the vowel relative to the avarage vowel duration. We provide very detailed tutorial on the <i>vowel duration measurement</i> which can be found <a href="tut_general.html">here.</a></div><br>
+       <div>
+          We begin by posing the structured learning setting. We consider a supervised learning setting with input objects $x \in \mathcal{X}$ and target labels $y \in \mathcal{Y}$. The labels may be sequences, trees, grids, or other high-dimensional objects with internal structure. We assumed a fixed mapping $\phi: \mathcal{X} \times \mathcal{Y} \rightarrow \mathbb{R}^d$ from the set of input objects and target labels to a real vector of length $d$. We call the elements of this mapping feature functions.
+          <div><br>
+
+             <div> <u>Example</u> In the problem of pronunciation modeling, the input $x$ is a pronounced sequence of phones, and the output $y$ is the pronounced word. Most often pronunciation variations cannot be found in a lexicon of canonical pronunciation, and have to be modeled statistically. In this task, the feature functions map a pronunciation from a set of pronunciations of different lengths along with a proposed word to a vector of fixed dimension in $\mathbb{R}^d$. One such feature function might measure the edit distance between the pronunciation $x$ and the canonical pronunciation of the word $y$ in the lexicon. This feature function counts the minimum number of edit operations (insertions, deletions, and substitutions) that are needed to convert the actual pronunciation to the lexicon pronunciation; it is low if the actual pronunciation is close to the lexicon one and high otherwise. See <a href="http://www.cs.biu.ac.il/~jkeshet/papers/TangKeLi12.pdf">Hao, Keshet, and Livescu (2012)</a> and the references therein for full description of this task and other examples of feature functions.
+          </div><br>
 
           </ol> 
           <h3><u>More Formally</u></h3>          
           <div>
-            <p>Consider a supervised learning setting with input instances $x \in \mathcal{x}$ and target labels $y \in \mathcal{y}$, which refers to a set of complex objects with an internal structure.</p>
-            <p>We assumed a fixed mapping $\phi: \mathcal{x} \times \mathcal{y} \rightarrow \mathbb{R}^d$ from the set of input objects and target labels to a real vector of length $d$, where we call the elements of this mapping $\textit{feature functions}$ or $\textit{feature maps}$. Also consider a linear decoder with parameters $w \in \mathbb{R}^d$, such that $\hat{y}_{w}$is a good approximation to the true label of $x$, as follows:</p>
-
+            <p>Consider a supervised learning setting with input instances $x \in \mathcal{X}$ and target labels $y \in \mathcal{Y}$, which refers to a set of complex objects with an internal structure. We assumed a fixed mapping called feature functions (or feature maps) $\phi: \mathcal{X} \times \mathcal{Y} \rightarrow \mathbb{R}^d$ from the set of input objects and target labels to a real vector of length $d$. Also consider a linear decoder with parameters $w \in \mathbb{R}^d$, such that $\hat{y}$ is a good approximation to the true label of $x$, as follows:</p>
             <p class="text-center">              
               \begin{equation}
               \label{eq:decoding}
-              \hat{y}_{w}(x) = argmax_{y \in \mathcal{y}} ~ w^\top \phi(x, y)
+              \hat{y} = argmax_{y \in \mathcal{y}} ~ w^\top \phi(x, y)
               \end{equation}    
             </p>
             
-            <p>Ideally, the learning algorithm finds $w$ such that the prediction rule optimizes the expected desired $\textit{measure of preference}$ or $\textit{evaluation metric}$ on unseen data. We define a $\textit{cost}$ function, $\ell(y, \hat{y}_{w})$, to be a non-negative measure of error when predicting $\hat{y}_{w}$instead of $y$ as the label of $x$.</p> 
-            <p>Our goal is to find the parameters vector $w$ that minimizes this function. Often the desired evaluation metric is a utility function that needs to be maximized (like BLEU or NDCG) and then we define the cost to be 1 minus the evaluation metric.</p>
-            <p>We assume that exists some unknown probability distribution $\rho$ over pairs $(x,y)$ where $y$ is the desired output for input $x$. We would like to set $w$ so as to minimize the expected cost, or the $\textit{risk}$, for predicting $\hat{y}_{w}$,</p>
+            <p>Ideally, the learning algorithm finds $w$ such that the prediction rule optimizes the expected desired $\textit{measure of preference}$ or $\textit{evaluation metric}$ on unseen data. We define a $\textit{cost}$ function, $\ell(y, \hat{y})$, to be a non-negative measure of error when predicting $\hat{y}$ instead of $y$ as the label of $x$. Our goal is to find the parameters vector $w$ that minimizes this function. Often the desired evaluation metric is a utility function that needs to be maximized (like BLEU or NDCG) and then we define the cost to be 1 minus the evaluation metric. We assume that exists some unknown probability distribution $\rho$ over pairs $(x,y)$ where $y$ is the desired output for input $x$. We would like to set $w$ so as to minimize the expected cost, or the $\textit{risk}$, for predicting $\hat{y}$,</p>
 
             <p class="text-center">
               \begin{equation}
               \label{eq:w*}
-              w^* = argmin_{w} ~ \mathbb{E}_{(x,y) \sim \rho} [\ell(y,\hat{y}_{w}(x))]. 
+              w^* = argmin_{w} ~ \mathbb{E}_{(x,y) \sim \rho} [\ell(y,\hat{y}(x))]. 
               \end{equation}
             </p>
             
-            <p>This objective function is hard to minimize directly <a href="http://u.cs.biu.ac.il/~jkeshet/papers/Keshet14.pdf" target="blank">(Keshet, 2014)</a>. Given a training set of examples $\mathcal{s} = \{(x_i,y_i)\}_{i=1}^{m}$, where each pair $(x_i, y_i)$ is drawn i.i.d from $\rho$, a common practice is to find the model parameters that minimize the regularized mean surrogate loss, </p>
+            <p>This objective function is hard to minimize directly <a href="http://u.cs.biu.ac.il/~jkeshet/papers/Keshet14.pdf" target="blank">(Keshet, 2014)</a>. Given a training set of examples $\mathcal{S} = \{(x_i,y_i)\}_{i=1}^{m}$, where each pair $(x_i, y_i)$ is drawn i.i.d from $\rho$, a common practice is to find the model parameters that minimize the regularized mean surrogate loss, </p>
             
             <p class="text-center">
               \begin{equation}
@@ -131,7 +127,7 @@
               \end{equation} 
             </p>
 
-            <p>where $\bar{\ell}(w,x,y)$ is a surrogate loss function, and $\lambda$ is a trade-off parameter between the loss term and the regularization. Each algorithm has its own definition of the surrogate loss, e.g., the surrogate loss in max-margin Markov model <a href="http://papers.nips.cc/paper/2397-max-margin-markov-networks.pdf" target="blank">(Taskar et al., 2003)</a> is the structured hinge loss with a Hamming cost, whereas the surrogate loss in conditional random fields <a href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.26.803&rep=rep1&type=pdf" target="blank">(Lafferty et al., 2001)</a> is the log loss function. A general survey on structured prediction algorithms and their prediction rules is given in <a href="http://u.cs.biu.ac.il/~jkeshet/papers/Keshet14.pdf" target="blank">(Keshet, 2014)</a>.
+            <p>where $\bar{\ell}(w,x,y)$ is a surrogate loss function, and $\lambda$ is a trade-off parameter between the loss term and the regularization. Each algorithm has its own definition of the surrogate loss, e.g., the surrogate loss in max-margin Markov model <a href="http://papers.nips.cc/paper/2397-max-margin-markov-networks.pdf" target="blank">(Taskar et al., 2003)</a> is the structured hinge loss with the Hamming cost, whereas the surrogate loss in conditional random fields <a href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.26.803&rep=rep1&type=pdf" target="blank">(Lafferty et al., 2001)</a> is the log loss function. A general survey on structured prediction algorithms and their prediction rules is given in <a href="http://u.cs.biu.ac.il/~jkeshet/papers/Keshet14.pdf" target="blank">(Keshet, 2014)</a>.
             </p>            
           </div>
 
@@ -149,10 +145,9 @@
             <p>Although it is not so populare in structured prediction, we also implemented two kernel expansion functions:</p>
             <ol>
               <li>Polynomial.</li>
-              <li>RBF using 2nd and 3rd Taylor approximation.</li>
+              <li>RBF using 2nd and 3rd Taylor approximation <a href="http://arxiv.org/abs/1109.4603v1">(Cotter, Keshet and Srebro, 2011)</a></li>
             </ol>
-            <p>Moreover, in order to support multi-class as well, we also implemented phi functions, an argmax function, an argmax function over loss-augmented and zero-one loss functions for multi-class classifications.</p>
-            <p>Hence, using StructED as a multi-class classifier is straightforward. More detailes about using StructED for multi-class tasks can be found <a href="tut_general.html">here.</a></p>
+            <p>Moreover, in order to support multi-class, we also implemented the feature functions, the inference, the loss-augmented inference and and use the zero-one loss as a cost function. Hence, using StructED as a multi-class classifier is straightforward. More detailes about using StructED for multi-class tasks can be found <a href="tut_general.html">here.</a></p>
           </div>          
       </div>
     </div> <!-- /container -->    
