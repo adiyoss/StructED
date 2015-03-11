@@ -127,6 +127,7 @@ public class Test {
             Logger.infoTime("Loading test data...");
             Logger.infoTime("Test file: " + testPath+". ");
             Logger.info("");
+            Logger.infoTime("Model: " + w_path+". ");
             Logger.info("==============================================================");
 
             // read the test data and parse it

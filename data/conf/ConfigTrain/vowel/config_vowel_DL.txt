@@ -4,7 +4,7 @@ type:2
 task:0
 epoch:1
 task_param:1;2
-init_w:data/weights/vowel.weights.SVM
+init_w:data/weights/vowel.weights.PA
 phi:0
 prediction:0
 reader:2
