@@ -18,6 +18,8 @@
 
 package Constants;
 
+import java.util.HashMap;
+
 public class ConfigParameters {
 
     //SINGLETON
@@ -58,6 +60,7 @@ public class ConfigParameters {
 
     //GENERAL PARAMETERS SIZES TRAIN
     public static final int GENERAL_PARAMS_SIZE_TRAIN = 15; //The number of general parameters in the train config file
+    public static final int GENERAL_PARAMS_SIZE_TRAIN_MINIMUM = 10; //The number of general parameters in the train config file
     public static final int GENERAL_PARAMS_SIZE_TRAIN_VALIDATION = 11; //The number of general parameters in the train config file
     public static final int PA_PARAMS_SIZE = 1; //The number params 4 PA
     public static final int SVM_PARAMS_SIZE = 2; //The number params 4 SVM
@@ -65,6 +68,7 @@ public class ConfigParameters {
     public static final int CRF_PARAMS_SIZE = 2; //The number params 4 CRF
     public static final int RL_PARAMS_SIZE = 2; //The number params 4 Ramp Loss
     public static final int PL_PARAMS_SIZE = 6; //The number params 4 Probit Loss
+    public static final int P_PARAMS_SIZE = 0; //The number params 0 Perceptron
 
     //GENERAL PARAMETERS SIZES TEST
     public static final int GENERAL_PARAMS_SIZE_TEST = 12; //The number of must have params in the test config file
@@ -75,6 +79,5 @@ public class ConfigParameters {
 
     //RBF_PARAMETERS
     public static double SIGMA = 1; //The number of must have params in the test config file
-
     public static int VECTOR_SIZE = 1;
 }

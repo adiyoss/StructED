@@ -38,7 +38,7 @@ public class ConfigFileGetter {
             int index = 0;
 
             //validation
-            if(data == null || data.size() == 0 || data.size() < ConfigParameters.GENERAL_PARAMS_SIZE_TRAIN_VALIDATION){
+            if(data == null || data.size() == 0 || data.size() < ConfigParameters.GENERAL_PARAMS_SIZE_TRAIN_MINIMUM){
                 Logger.error(ErrorConstants.CONFIG_ARGUMENTS_ERROR);
                 return null;
             }
@@ -175,31 +175,34 @@ public class ConfigFileGetter {
             //validate the rest of the parameters depends on the type
             switch (Integer.valueOf(result.get(0))){
                 case 0:
-                    if(!validatePA(data, index))
+                    if(!validatePA(data, index)) // PA
                         return null;
                     break;
                 case 1:
-                    if(!validateSVM(data, index))
+                    if(!validateSVM(data, index)) // SVM
                         return null;
                     break;
                 case 2:
-                    if(!validateDL(data, index))
+                    if(!validateDL(data, index)) //DLM
                         return null;
                     break;
                 case 3:
-                    if(!validateCRF(data, index))
+                    if(!validateCRF(data, index)) //CRF
                         return null;
                     break;
                 case 4:
-                    if(!validateRL(data, index))
+                    if(!validateRL(data, index)) //RL
                         return null;
                     break;
                 case 5:
-                    if(!validatePL(data, index))
+                    if(!validatePL(data, index)) //PL
                         return null;
                     break;
                 case 6:
-                    if(!validateSVM(data, index))
+                    // structured perceptron does not need any special parameters
+                    break;
+                case 7:
+                    if(!validateSVM(data, index)) // Rank-SVM
                         return null;
                     break;
                 default:
@@ -350,63 +353,92 @@ public class ConfigFileGetter {
     //==================================================================//
     public boolean validatePA(ArrayList<ArrayList<String>> data, int index)
     {
-        if(!data.get(index).get(0).equalsIgnoreCase(ConfigParameters.C)){
-            Logger.error(ErrorConstants.CONFIG_ARGUMENTS_TYPE_ERROR);
+        try {
+            if (!data.get(index).get(0).equalsIgnoreCase(ConfigParameters.C)) {
+                Logger.error(ErrorConstants.CONFIG_ARGUMENTS_TYPE_ERROR);
+                return false;
+            }
+            return true;
+        } catch (Exception e){
+            Logger.error("Problem with algorithm parameters, PA");
             return false;
         }
-        return true;
     }
 
     public boolean validateSVM(ArrayList<ArrayList<String>> data, int index)
     {
-        if(!data.get(index).get(0).equalsIgnoreCase(ConfigParameters.LAMBDA)
-            || !data.get(index + 1).get(0).equalsIgnoreCase(ConfigParameters.ETA)){
-            Logger.error(ErrorConstants.CONFIG_ARGUMENTS_TYPE_ERROR);
+        try {
+            if (!data.get(index).get(0).equalsIgnoreCase(ConfigParameters.LAMBDA)
+                    || !data.get(index + 1).get(0).equalsIgnoreCase(ConfigParameters.ETA)) {
+                Logger.error(ErrorConstants.CONFIG_ARGUMENTS_TYPE_ERROR);
+                return false;
+            }
+            return true;
+        } catch (Exception e){
+            Logger.error("Problem with algorithm parameters, SVM");
             return false;
         }
-        return true;
     }
 
     public boolean validateDL(ArrayList<ArrayList<String>> data, int index)
     {
-        if(!data.get(index).get(0).equalsIgnoreCase(ConfigParameters.ETA)
-           || !data.get(index + 1).get(0).equalsIgnoreCase(ConfigParameters.EPSILON)){
-            Logger.error(ErrorConstants.CONFIG_ARGUMENTS_TYPE_ERROR);
-            return false;
-        }
-        return true;
+        try {
+            if (!data.get(index).get(0).equalsIgnoreCase(ConfigParameters.ETA)
+                    || !data.get(index + 1).get(0).equalsIgnoreCase(ConfigParameters.EPSILON)) {
+                Logger.error(ErrorConstants.CONFIG_ARGUMENTS_TYPE_ERROR);
+                return false;
+            }
+            return true;
+        } catch (Exception e){
+        Logger.error("Problem with algorithm parameters, DL");
+        return false;
+    }
     }
 
     public boolean validateCRF(ArrayList<ArrayList<String>> data, int index)
     {
-        if(!data.get(index).get(0).equalsIgnoreCase(ConfigParameters.ETA)
-            || !data.get(index + 1).get(0).equalsIgnoreCase(ConfigParameters.LAMBDA)){
-            Logger.error(ErrorConstants.CONFIG_ARGUMENTS_TYPE_ERROR);
+        try {
+            if (!data.get(index).get(0).equalsIgnoreCase(ConfigParameters.ETA)
+                    || !data.get(index + 1).get(0).equalsIgnoreCase(ConfigParameters.LAMBDA)) {
+                Logger.error(ErrorConstants.CONFIG_ARGUMENTS_TYPE_ERROR);
+                return false;
+            }
+            return true;
+        } catch (Exception e){
+            Logger.error("Problem with algorithm parameters, CRF");
             return false;
         }
-        return true;
     }
     public boolean validateRL(ArrayList<ArrayList<String>> data, int index)
     {
-        if(!data.get(index).get(0).equalsIgnoreCase(ConfigParameters.ETA)
-            || !data.get(index + 1).get(0).equalsIgnoreCase(ConfigParameters.LAMBDA)){
-            Logger.error(ErrorConstants.CONFIG_ARGUMENTS_TYPE_ERROR);
+        try {
+            if (!data.get(index).get(0).equalsIgnoreCase(ConfigParameters.ETA)
+                    || !data.get(index + 1).get(0).equalsIgnoreCase(ConfigParameters.LAMBDA)) {
+                Logger.error(ErrorConstants.CONFIG_ARGUMENTS_TYPE_ERROR);
+                return false;
+            }
+            return true;
+        } catch (Exception e){
+            Logger.error("Problem with algorithm parameters, RL");
             return false;
         }
-        return true;
     }
     public boolean validatePL(ArrayList<ArrayList<String>> data, int index)
     {
-        if(!data.get(index).get(0).equalsIgnoreCase(ConfigParameters.ETA)
-                || !data.get(index + 1).get(0).equalsIgnoreCase(ConfigParameters.LAMBDA)
-                || !data.get(index + 2).get(0).equalsIgnoreCase(ConfigParameters.NUM_OF_ITERATION)
-                || !data.get(index + 3).get(0).equalsIgnoreCase(ConfigParameters.NOISE_ALL_VECTOR)
-                || !data.get(index + 4).get(0).equalsIgnoreCase(ConfigParameters.MEAN)
-                || !data.get(index + 5).get(0).equalsIgnoreCase(ConfigParameters.STD_DEV))
-        {
-            Logger.error(ErrorConstants.CONFIG_ARGUMENTS_TYPE_ERROR);
+        try {
+            if (!data.get(index).get(0).equalsIgnoreCase(ConfigParameters.ETA)
+                    || !data.get(index + 1).get(0).equalsIgnoreCase(ConfigParameters.LAMBDA)
+                    || !data.get(index + 2).get(0).equalsIgnoreCase(ConfigParameters.NUM_OF_ITERATION)
+                    || !data.get(index + 3).get(0).equalsIgnoreCase(ConfigParameters.NOISE_ALL_VECTOR)
+                    || !data.get(index + 4).get(0).equalsIgnoreCase(ConfigParameters.MEAN)
+                    || !data.get(index + 5).get(0).equalsIgnoreCase(ConfigParameters.STD_DEV)) {
+                Logger.error(ErrorConstants.CONFIG_ARGUMENTS_TYPE_ERROR);
+                return false;
+            }
+            return true;
+        } catch (Exception e){
+            Logger.error("Problem with algorithm parameters, Probit");
             return false;
         }
-        return true;
     }
 }

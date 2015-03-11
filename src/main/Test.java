@@ -51,7 +51,7 @@ public class Test {
         try{
             //==============COPYRIGHT============//
             Logger.info("This program comes with ABSOLUTELY NO WARRANTY");
-            Logger.info("This is free software, and you are welcome to redistribute it under certain conditions, see LICENSE file for mire information.");
+            Logger.info("This is free software, and you are welcome to redistribute it under certain conditions, see LICENSE file for more information.");
             //===================================//
 
             //#############################################################################//
@@ -127,6 +127,7 @@ public class Test {
             Logger.infoTime("Loading test data...");
             Logger.infoTime("Test file: " + testPath+". ");
             Logger.info("");
+            Logger.infoTime("Model: " + w_path+". ");
             Logger.info("==============================================================");
 
             // read the test data and parse it

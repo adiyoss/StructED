@@ -25,5 +25,5 @@ import Data.Entities.Vector;
 //this interface enable us to set many update versions and compare between them
 public interface AlgorithmUpdateRule {
 	//the arguments would be different from update to update
-	public Vector update(Vector currentWeights, Example vector, ClassifierData classifierData);
+	public Vector update(Vector currentWeights, Example example, ClassifierData classifierData);
 }

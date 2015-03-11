@@ -16,6 +16,17 @@ All the source code for StructED is available to download StructED repository. T
 
 Very detailed tutorial about adding new task to StructED can be found under the docs/ directory.
 
+
+COMPILE
+======
+In order to install StructED package one needs to do the following:
+
+To use StructED to your own specific task you should implement the required interfaces before compiling.
+
+ - Download StructED package from GitHub.
+ - CD into the StructED path.
+ - Run sh install.sh in the terminal.
+
 CONFIG FILE - TRAIN
 ======
 
@@ -35,6 +46,7 @@ GENERAL PARAMETERS
  	- 3 - CRF
  	- 4 - Ramp Loss
  	- 5 - Probit Loss
+	- 6 - Structured Perceptron
  - task: the cost/loss function number - Mandatory
  - epoch: the number of epochs on the data - Mandatory
  - task_param: cost/loss parameters if needed, can store multiple parameters splited by (;) - optional
@@ -96,6 +108,10 @@ Probit Loss
  - noise_mean: the mean of the noise to be generated(we draw the noise from a normal distribution)
  - noise_std: the standard deviation of the noise to be generated(we draw the noise from a normal distribution)
 
+Structured Perceptron
+===
+ - The structured perceptron does not need any special parameters
+
 
 CONFIG FILE - PREDICT
 ======
@@ -117,6 +133,12 @@ CONFIG FILE - PREDICT
 	- for both reader and writer
 		- use 0 for standard reader(like mnist db or the dummy data)
  - size_of_vector: size of vector after the feature mapping functions - Mandatory
+
+USAGE
+=====
+Now:
+ - For train type: sh train.run.sh < config file path >
+ - For predict type: sh predict.run.sh < config file path >
 
 Examples
 ========

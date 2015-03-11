@@ -7,6 +7,6 @@ phi:1
 prediction:1
 reader:0
 writer:0
-size_of_vector:7800
+size_of_vector:7840
 lambda:0.000001
 eta:0.55

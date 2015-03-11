@@ -1,0 +1,11 @@
+train_path:data/db/dummy/train.txt
+w_output:data/weights/dummy.weights
+type:3
+task:3
+epoch:5
+task_param:1
+phi:3
+prediction:3
+size_of_vector:4
+eta:0.1
+lambda: 0.3

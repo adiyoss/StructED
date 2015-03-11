@@ -56,7 +56,7 @@ public class CRF implements AlgorithmUpdateRule {
 	@Override
 	//the first cell of the arguments attribute would be the mue value
 	//the second cell of the arguments attribute would be the lambda
-	public Vector update(Vector currentWeights, Example vector, ClassifierData classifierData) {
+	public Vector update(Vector currentWeights, Example example, ClassifierData classifierData) {
 
 		try{
             double algorithmIteration = classifierData.iteration;
@@ -67,7 +67,7 @@ public class CRF implements AlgorithmUpdateRule {
 
             //the parameter 1 at the end is used to get all the predicted labels and not only the max one
             //it can be anything but -1 = Consts.ERROR_NUMBER
-            PredictedLabels predictMap = classifierData.predict.predictForTest(vector,currentWeights,vector.getLabel(),classifierData,1);
+            PredictedLabels predictMap = classifierData.predict.predictForTest(example,currentWeights,example.getLabel(),classifierData,1);
 
 			for(Map.Entry<String, Double> entry : predictMap.entrySet())
 				denominator += Math.pow(Math.E,(entry.getValue()));
@@ -81,12 +81,12 @@ public class CRF implements AlgorithmUpdateRule {
 				prob = prob/denominator;
 				if(isFirst){
 					isFirst = false;
-					probExpectation = MathHelpers.mulScalarWithVectors(classifierData.phi.convert(vector, entry.getKey(), classifierData.kernel).getFeatures(), prob);
+					probExpectation = MathHelpers.mulScalarWithVectors(classifierData.phi.convert(example, entry.getKey(), classifierData.kernel).getFeatures(), prob);
 				} else
-					probExpectation = MathHelpers.add2Vectors(probExpectation, MathHelpers.mulScalarWithVectors(classifierData.phi.convert(vector,entry.getKey(),classifierData.kernel).getFeatures(), prob));
+					probExpectation = MathHelpers.add2Vectors(probExpectation, MathHelpers.mulScalarWithVectors(classifierData.phi.convert(example,entry.getKey(),classifierData.kernel).getFeatures(), prob));
 			}
 
-            Vector updateArg = MathHelpers.subtract2Vectors(classifierData.phi.convert(vector,vector.getLabel(),classifierData.kernel).getFeatures(), probExpectation);
+            Vector updateArg = MathHelpers.subtract2Vectors(classifierData.phi.convert(example,example.getLabel(),classifierData.kernel).getFeatures(), probExpectation);
 			updateArg = MathHelpers.mulScalarWithVectors(updateArg, newEta);
             Vector result = MathHelpers.mulScalarWithVectors(currentWeights, 1-lambda*newEta);
 

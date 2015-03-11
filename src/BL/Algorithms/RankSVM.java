@@ -57,7 +57,7 @@ public class RankSVM implements AlgorithmUpdateRule{
     @Override
     //in SVM the lambda value would be in the first cell of the arguments attribute
     //the second cell of the arguments attribute would be the eta
-    public Vector update(Vector currentWeights, Example vector, ClassifierData classifierData) {
+    public Vector update(Vector currentWeights, Example example, ClassifierData classifierData) {
 
         try{
             double algorithmIteration = classifierData.iteration;
@@ -66,7 +66,7 @@ public class RankSVM implements AlgorithmUpdateRule{
             PredictedLabels prediction;
             //if there's a problem with the predict return the previous weights
             try{
-                prediction = classifierData.predict.predictForTrain(vector,currentWeights,vector.getLabel(),classifierData,1);
+                prediction = classifierData.predict.predictForTrain(example,currentWeights,example.getLabel(),classifierData,1);
             }catch (Exception e){
                 return currentWeights;
             }
@@ -82,8 +82,8 @@ public class RankSVM implements AlgorithmUpdateRule{
                 if(predictLabels[0].equalsIgnoreCase("") || predictLabels[1].equalsIgnoreCase(""))
                     continue;
 
-                Example phiRealLabel = classifierData.phi.convert(vector, predictLabels[0], classifierData.kernel);
-                Example phiPrediction = classifierData.phi.convert(vector, predictLabels[1], classifierData.kernel);
+                Example phiRealLabel = classifierData.phi.convert(example, predictLabels[0], classifierData.kernel);
+                Example phiPrediction = classifierData.phi.convert(example, predictLabels[1], classifierData.kernel);
                 Vector phiDifference = MathHelpers.subtract2Vectors(phiRealLabel.getFeatures(), phiPrediction.getFeatures());
 
                 double newEta = eta/Math.sqrt(algorithmIteration);

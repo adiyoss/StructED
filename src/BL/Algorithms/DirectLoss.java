@@ -51,20 +51,20 @@ public class DirectLoss implements AlgorithmUpdateRule {
 	@Override
 	//the first cell of the arguments attribute would be the eta value
 	//the second cell of the arguments attribute would be the epsilon for the argmax
-	public Vector update(Vector currentWeights, Example vector, ClassifierData classifierData) {
+	public Vector update(Vector currentWeights, Example example, ClassifierData classifierData) {
 		
 		try{
             double algorithmIteration = classifierData.iteration;
             double newEta = eta/(Math.sqrt(algorithmIteration)*Math.abs(epsilonArgMax));
 
 			//get the prediction
-			String prediction = classifierData.predict.predictForTrain(vector, currentWeights, vector.getLabel(), classifierData, 0).firstKey();
+			String prediction = classifierData.predict.predictForTrain(example, currentWeights, example.getLabel(), classifierData, 0).firstKey();
 			//get the direct prediction
-			String predictionDirect = classifierData.predict.predictForTrain(vector, currentWeights, vector.getLabel(),classifierData, epsilonArgMax).firstKey();
+			String predictionDirect = classifierData.predict.predictForTrain(example, currentWeights, example.getLabel(),classifierData, epsilonArgMax).firstKey();
             Vector directLoss;
 
-            Example phiPredictionNoLoss = classifierData.phi.convert(vector,prediction,classifierData.kernel);
-            Example phiPredictionDirect = classifierData.phi.convert(vector,predictionDirect,classifierData.kernel);
+            Example phiPredictionNoLoss = classifierData.phi.convert(example,prediction,classifierData.kernel);
+            Example phiPredictionDirect = classifierData.phi.convert(example,predictionDirect,classifierData.kernel);
 
             //create the direct loss value by the epsilon sign
             if(epsilonArgMax < 0)

@@ -1,0 +1,11 @@
+test_path:data/db/dummy/test.txt
+output_file:res/dummy_scores.txt
+w_path:data/weights/dummy.weights
+examples_2_display:3
+task:3
+task_param:1
+phi:3
+prediction:3
+reader:0
+writer:0
+size_of_vector:6
