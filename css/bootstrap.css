@@ -12,6 +12,7 @@ html {
 }
 body {
   margin: 0;
+  font-weight: 200;
 }
 article,
 aside,
@@ -4838,10 +4839,9 @@ a.badge:focus {
   margin-left: 3px;
 }
 .jumbotron {
-  padding: 30px 15px;
+  
   margin-bottom: 30px;
   color: inherit;
-
 }
 .jumbotron h1,
 .jumbotron .h1 {
@@ -4849,7 +4849,7 @@ a.badge:focus {
 }
 .jumbotron p {
   margin-bottom: 15px;
-  font-size: 17px;
+  font-size: 15px;
   font-weight: 200;
 }
 .jumbotron > hr {
@@ -4864,7 +4864,7 @@ a.badge:focus {
 }
 @media screen and (min-width: 768px) {
   .jumbotron {
-    padding: 48px 0;
+    
   }
   .container .jumbotron,
   .container-fluid .jumbotron {
