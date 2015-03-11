@@ -85,15 +85,6 @@
       <h2 class="text-center">Introduction</h2>
       <hr>
       <div> 
-          <div>
-            <h3><u>StructED</u></h3> 
-            <p>
-              <p>
-              Most software packages in machine learning available today are designed to solve binary, regression or multiclass problems, where the input to such classifiers is a fixed-length vector and the output is an integer or a real number. Structured prediction is the case where both the input and the output are structured objects (a graph, an acoustic speech utterance, a sequence of words, an image, etc.). Consequently, the structured output space can be exponentially large (all possible phoneme or word sequences, all possible taxonomy graphs, all possible human poses, etc.) and the evaluation metric is not the 0-1 loss but rather a unique task-dependent metric (word error rate in speech recognition, the BLEU score in machine translation, the NDCG score in information retrieval, or the intersection-over-union score in visual object segmentation).</p>
-              <p>
-              Structured tasks are therefore distinctive: each task has a unique evaluation metric, its own set of feature functions, and in many cases a non-standard inference. Consequently, implementation of a machine learning system that utilizes structured prediction is complex and involved. </p>
-            <p>
-          </div>
           <h3><u>What is Structred Prediction?</u></h3> 
           <div>
             <p>The ultimate objective of discriminative learning is to train a system to optimize a  desired measure of performance. In binary classification we are interested in finding a function that assigns a binary label to a single object, and minimizes the error rate (correct or incorrect) on unseen data.</p> 
@@ -142,78 +133,82 @@
             </p>            
           </div>
 
-          <h3><u>Update rules</u></h3>            
-          <p>
-            Let us define the loss augmented function as follows:
-            <p class="text-center">              
-              \begin{equation}
-              \label{eq:loss-augmented}
-              \hat{y}^{\epsilon} = argmax_{\hat{y} \in \mathcal{Y}} ~ w^\top \phi(x, \hat{y}) + \epsilon \, \ell (y,\hat{y})
-              \end{equation}    
+          <h3><u>Modules</u></h3>  
+            <p>
+              Let us first define the loss augmented function as follows:
+              <p class="text-center">              
+                \begin{equation}
+                \label{eq:loss-augmented}
+                \hat{y}^{\epsilon} = argmax_{\hat{y} \in \mathcal{Y}} ~ w^\top \phi(x, \hat{y}) + \epsilon \, \ell (y,\hat{y})
+                \end{equation}    
+              </p>
+              where epsilon can be 0 if we wish to use a standard linnear decoder, 1 if we wish to use a loss-augmented or any other $\epsilon$ value (as used in DLM).
             </p>
 
-            where epsilon can be 0 if we wish to use a standard linnear decoder, 1 if we wish to use a loss-augmented or any other $\epsilon$ value (as used in DLM).
-          </p>
+          <p>We implemented six structured prediction algorithms in StructED, all the loss functions and update rules are summerized in the following table:</p>         
           <div>
-            <table class="table table-bordered">             
+            <table class="table table-bordered table-striped">             
              <thead>
-                <tr>
-                   <th>Algorithm</th>
-                   <th>Loss</th>
-                   <th>Update Rule</th>
+                <tr>                                    
+                  <th class="col-md-5">Loss</th>
+                  <th class="col-md-5">Update Rule</th>
                 </tr>
              </thead>
              <tbody>
                 <tr>
-                   <td>Structured Perceptron</td>
+                  <td colspan="2"><b>Structured Perceptron</b> <a href="http://www.cs.columbia.edu/~mcollins/papers/tagperc.pdf" target="blank">(SP; Collins, 2002).</td>
+                </tr>
+                <tr>                   
                    <td class="text-center"> - </td>
                    <td>$w_{t+1} = w_t + \phi(x_t, y_t) - \phi(x_t,\hat{y}^0_t)$</td>
                 </tr>
                 <tr>
-                   <td>Structured SVM</td>
-                   <td>$max_{\hat{y}} ~[ \ell(y,\hat{y}) - w^\top\phi(x,y) + w^\top\phi(x,\hat{y})]$</td>
+                  <td colspan="2"><b>Structured SVM</b> <a href="http://ttic.uchicago.edu/~nati/Publications/PegasosMPB.pdf" target="blank">(Shalev-Shwartz et al., 2011).</td>
+                </tr>
+                <tr>                   
+                   <td class="text-center">$max_{\hat{y}} ~[ \ell(y,\hat{y}) - w^\top\phi(x,y) + w^\top\phi(x,\hat{y})]$</td>
                    <td>$w_{t+1} = (1-\eta_t \lambda)w_t + \eta_t( \phi(x_t, y_t) - \phi(x_t,\hat{y}^1_t))$</td>
                 </tr>
                 <tr>
-                   <td>Passive Aggressive</td>
+                  <td colspan="2"><b>Passive Aggressive</b> <a href="http://webee.technion.ac.il/people/koby/publications/crammer06a.pdf" target="blank">(Crammer et al., 2006).</a></td>
+                </tr>
+                <tr>                   
                    <td class="text-center"> - </td>
                    <td>$w_{t+1} = w_{t} + \tau_{t}(\phi(x_t,y_t)) - \phi(x_t,\hat{y}^1_t))$</td>
                 </tr>
                 <tr>
-                   <td>DLM</td>
-                   <td></td>
+                  <td colspan="2"><b>CRF</b> <a href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.26.803&rep=rep1&type=pdf" target="blank">(Lafferty et al., 2001).</a></td>
+                </tr>
+                <tr>                   
+                   <td class="text-center">$-\ln P_{w}(y \,|\, x)$, where $P_{w}(y \,|\, x) = \frac{1}{Z_{w}(x)} \exp\{w^\top \phi(x, y)\}$</td>
+                   <td>$w_{t+1} = (1-\eta_t \lambda)\,w_{t} + \eta_t\Big( \phi(x_{j_t},y_{j_t}) - \mathbb{E}_{y'\sim P_{w}(y' \,|\, x)}[ \phi(x_{j_t},y')] \Big)$</td>
+                </tr>
+                <tr>
+                  <td colspan="2"><b>Direct Loss Minimization</b> <a href="http://u.cs.biu.ac.il/~jkeshet/papers/McAllesterHaKe10.pdf" target="blank">(McAllester et al., 2010).</a></td>
+                </tr>
+                <tr>                   
+                   <td class="text-center">$\ell (y,\hat{y})$</td>
                    <td>$w_{t+1} = w_{t} + \frac{\eta_t}{\epsilon}(\phi(x_t,\hat{y}^{-\epsilon}_t) - \phi(x_t,\hat{y}^1_{t}))$</td>
                 </tr>
                 <tr>
-                   <td>Structured Ramp Loss</td>
-                   <td></td>
+                  <td colspan="2"><b>Structured Ramp Loss</b> <a href="http://papers.nips.cc/paper/4268-generalization-bounds-and-consistency-for-latent-structural-probit-and-ramp-loss.pdf" target="blank">(McAllester and Keshet, 2011).</a></td>
+                </tr>
+                <tr>                   
+                   <td class="text-center">$\max_{\hat{y}} [ \ell(y,\hat{y}) +  w^\top \phi(x,\hat{y})] - \max_{\tilde{y}} [w^\top \phi(x,\tilde{y})]$</td>
                    <td>$w_{t+1} = (1-\eta_t\lambda)\,w_{t} + \eta_t(\phi(x_t,\hat{y}^0_t) - \phi(x_t,\hat{y}^1_t))$</td>
                 </tr>
                 <tr>
-                   <td>Probit Loss</td>
-                   <td></td>
-                   <td>$w_{t+1} = (1-\eta_t\lambda)\,w_t + \eta_t \mathbb{E}_{\epsilon}[ \epsilon \, \ell (y_t,\hat{y}^1_{w+\epsilon})]$</td>
+                  <td colspan="2"><b>Probit Loss</b> <a href="http://cs.haifa.ac.il/~tamir/papers/KeshetMcHa10.pdf" target="blank">(Keshet et al., 2011).</a></td>
                 </tr>
-                <tr>
-                   <td>CRF</td>
-                   <td></td>
-                   <td>$w_{t+1} = (1-\eta_t \lambda)\,w_{t} + \eta_t\Big( \phi(x_{j_t},y_{j_t}) - \mathbb{E}_{y'\sim P_{w}(y' \,|\, x)}[ \phi(x_{j_t},y')] \Big)$</td>
+                <tr>                   
+                   <td class="text-center">$\mathbb{E}[\ell (y,\hat{y})]$</td>
+                   <td>$w_{t+1} = (1-\eta_t\lambda)\,w_t + \eta_t \mathbb{E}_{\varepsilon}[ \varepsilon \, \ell (y_t,\hat{y}^0_{w+\varepsilon})]$</td>
                 </tr>
+
              </tbody>
           </table>
           </div>
-
-          <h3><u>Modules</u></h3>
           <div>
-            <p>We implemented six structured prediction algorithms in StructED:</p>
-            <ol>
-              <li>Structured SVM optimized with stochastic sub-gradient descent <a href="http://ttic.uchicago.edu/~nati/Publications/PegasosMPB.pdf" target="blank">(Shalev-Shwartz et al., 2011).</a></li>
-              <li>PA <a href="http://webee.technion.ac.il/people/koby/publications/crammer06a.pdf" target="blank">(Crammer et al., 2006).</a></li>
-              <li>CRF <a href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.26.803&rep=rep1&type=pdf" target="blank">(Lafferty et al., 2001).</a></li>
-              <li>Direct Loss Minimization <a href="http://u.cs.biu.ac.il/~jkeshet/papers/McAllesterHaKe10.pdf" target="blank">(McAllester et al., 2010).</a></li>            
-              <li>Ramp Loss <a href="http://papers.nips.cc/paper/4268-generalization-bounds-and-consistency-for-latent-structural-probit-and-ramp-loss.pdf" target="blank">(McAllester and Keshet, 2011).</a></li>            
-              <li>Probit Loss <a href="http://cs.haifa.ac.il/~tamir/papers/KeshetMcHa10.pdf" target="blank">(Keshet et al., 2011).</a></li>
-            </ol>
             <p>Although it is not so populare in structured prediction, we also implemented two kernel expansion functions:</p>
             <ol>
               <li>Polynomial.</li>
