@@ -156,14 +156,14 @@
              </thead>
              <tbody>
                 <tr>
-                  <td colspan="2"><b>Structured Perceptron</b> <a href="http://www.cs.columbia.edu/~mcollins/papers/tagperc.pdf" target="blank">(SP; Collins, 2002).</td>
+                  <td colspan="2"><b>Structured Perceptron</b> <a href="http://www.cs.columbia.edu/~mcollins/papers/tagperc.pdf" target="blank">(Collins, 2002).</td>
                 </tr>
                 <tr>                   
                    <td class="text-center"> - </td>
                    <td>$w_{t+1} = w_t + \phi(x_t, y_t) - \phi(x_t,\hat{y}^0_t)$</td>
                 </tr>
                 <tr>
-                  <td colspan="2"><b>Structured SVM</b> <a href="http://ttic.uchicago.edu/~nati/Publications/PegasosMPB.pdf" target="blank">(Shalev-Shwartz et al., 2011).</td>
+                  <td colspan="2"><b>Structured SVM</b> <a href="http://www.jmlr.org/papers/volume6/tsochantaridis05a/tsochantaridis05a.pdf" target="blank">(Tsochantaridis et al., 2005).</td>
                 </tr>
                 <tr>                   
                    <td class="text-center">$max_{\hat{y}} ~[ \ell(y,\hat{y}) - w^\top\phi(x,y) + w^\top\phi(x,\hat{y})]$</td>
@@ -201,8 +201,8 @@
                   <td colspan="2"><b>Probit Loss</b> <a href="http://cs.haifa.ac.il/~tamir/papers/KeshetMcHa10.pdf" target="blank">(Keshet et al., 2011).</a></td>
                 </tr>
                 <tr>                   
-                   <td class="text-center">$\mathbb{E}[\ell (y,\hat{y})]$</td>
-                   <td>$w_{t+1} = (1-\eta_t\lambda)\,w_t + \eta_t \mathbb{E}_{\varepsilon}[ \varepsilon \, \ell (y_t,\hat{y}^0_{w+\varepsilon})]$</td>
+                   <td class="text-center">$\mathbb{E}_{\gamma \sim \mathcal{N}(0,I)}[\ell (y,\hat{y}_{w+\gamma})]$</td>
+                   <td>$w_{t+1} = (1-\eta_t\lambda)\,w_t + \eta_t \mathbb{E}_{\gamma \sim \mathcal{N}(0,I)}[ \gamma \, \ell (y_t,\hat{y}^0_{w+\gamma})]$</td>
                 </tr>
 
              </tbody>
