@@ -192,6 +192,9 @@ public class Factory {
             case 7:
                 classifier.classifierData.algorithmUpdateRule = RankSVM.getInstance(arguments);
                 break;
+            case 8:
+                classifier.classifierData.algorithmUpdateRule = OrbitLoss.getInstance(arguments);
+                break;
 			default:
 				classifier.classifierData.algorithmUpdateRule = null;
 		}
