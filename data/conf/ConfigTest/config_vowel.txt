@@ -1,6 +1,6 @@
 test_path:data/db/vowel/test.results
 output_file:res/DL_vowel.txt
-w_path:data/weights/vowel.weights.DL
+w_path:data/weights/vowel.weights.Orbit
 examples_2_display:-1
 task:0
 task_param:2;3

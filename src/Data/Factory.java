@@ -190,6 +190,9 @@ public class Factory {
                 classifier.classifierData.algorithmUpdateRule = Perceptron.getInstance(arguments);
                 break;
             case 7:
+                classifier.classifierData.algorithmUpdateRule = OrbitLoss.getInstance(arguments);
+                break;
+            case 8:
                 classifier.classifierData.algorithmUpdateRule = RankSVM.getInstance(arguments);
                 break;
 			default:
