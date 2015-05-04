@@ -1,6 +1,6 @@
 train_path:data/db/vowel/train.results
 w_output:data/weights/vowel.weights.Orbit
-type:1
+type:7
 task:0
 epoch:1
 task_param:1;2

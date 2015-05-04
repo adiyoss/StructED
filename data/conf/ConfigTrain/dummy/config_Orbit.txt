@@ -1,6 +1,6 @@
 train_path:data/db/dummy/train.txt
 w_output:data/weights/dummy.orbit.weights
-type:8
+type:7
 task:3
 epoch:5
 task_param:1

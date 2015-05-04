@@ -47,6 +47,7 @@ GENERAL PARAMETERS
  	- 4 - Ramp Loss
  	- 5 - Probit Loss
 	- 6 - Structured Perceptron
+	- 7 - Orbit Loss
  - task: the cost/loss function number - Mandatory
  - epoch: the number of epochs on the data - Mandatory
  - task_param: cost/loss parameters if needed, can store multiple parameters splited by (;) - optional
@@ -112,6 +113,11 @@ Structured Perceptron
 ===
  - The structured perceptron does not need any special parameters
 
+Orbit Loss
+===
+
+ - lambda: lambda parameter for orbit loss
+ - eta: learning rate
 
 CONFIG FILE - PREDICT
 ======

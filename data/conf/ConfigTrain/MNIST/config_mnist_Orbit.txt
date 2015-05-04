@@ -1,6 +1,6 @@
 train_path:data/db/MNIST/train.data.txt
 w_output:data/weights/mnist.weights.Orbit
-type:8
+type:7
 task:1
 epoch:1
 phi:1
