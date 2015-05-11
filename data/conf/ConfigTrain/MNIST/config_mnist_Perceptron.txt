@@ -1,8 +1,9 @@
-train_path:data/db/MNIST/train.data.txt
+train_path:data/db/MNIST/small.train.txt
+validation_path:data/db/MNIST/val.data.txt
 w_output:data/weights/MNIST/mnist.weights.perceptron
 type:6
 task:1
-epoch:5
+epoch:1
 phi:1
 prediction:1
 reader:0

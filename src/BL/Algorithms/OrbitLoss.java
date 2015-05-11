@@ -74,14 +74,14 @@ public class OrbitLoss implements AlgorithmUpdateRule{
 
             // feature functions
             Example phiRealLabel = classifierData.phi.convert(example,example.getLabel(), classifierData.kernel);
-            Example phiPrediction = classifierData.phi.convert(example,prediction, classifierData.kernel);
+            Example phiPrediction = classifierData.phi.convert(example, prediction, classifierData.kernel);
 
             //compute the phi difference
             Vector phiDifference = MathHelpers.subtract2Vectors(phiRealLabel.getFeatures(), phiPrediction.getFeatures());
 
             // get the loss value and update the learning rate
             double loss = classifierData.taskLoss.computeTaskLoss(prediction, example.getLabel(), classifierData.arguments);
-            double newEta = eta/Math.sqrt(algorithmIteration);
+            double newEta = eta;
             double coefficientFirstArgument = (1-(lambda*newEta));
 
             // update the weights

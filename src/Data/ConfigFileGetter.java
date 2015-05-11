@@ -202,6 +202,10 @@ public class ConfigFileGetter {
                     // structured perceptron does not need any special parameters
                     break;
                 case 7:
+                    if(!validateOrbit(data, index)) // Orbit-Loss
+                        return null;
+                    break;
+                case 8:
                     if(!validateSVM(data, index)) // Rank-SVM
                         return null;
                     break;
@@ -376,6 +380,21 @@ public class ConfigFileGetter {
             return true;
         } catch (Exception e){
             Logger.error("Problem with algorithm parameters, SVM");
+            return false;
+        }
+    }
+
+    public boolean validateOrbit(ArrayList<ArrayList<String>> data, int index)
+    {
+        try {
+            if (!data.get(index).get(0).equalsIgnoreCase(ConfigParameters.LAMBDA)
+                    || !data.get(index + 1).get(0).equalsIgnoreCase(ConfigParameters.ETA)) {
+                Logger.error(ErrorConstants.CONFIG_ARGUMENTS_TYPE_ERROR);
+                return false;
+            }
+            return true;
+        } catch (Exception e){
+            Logger.error("Problem with algorithm parameters, Orbit");
             return false;
         }
     }

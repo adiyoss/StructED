@@ -31,6 +31,7 @@ import Data.Entities.Vector;
 import DataAccess.Reader;
 import DataAccess.Writer;
 import Helpers.ModelHandler;
+import view.Graph;
 
 public class Train {
     //parameters
@@ -47,6 +48,7 @@ public class Train {
     private final static int IS_AVERAGE = 10;
 
 	public static void main(String[] args) {
+
 		try{
             //==============COPYRIGHT============//
             Logger.info("This program comes with ABSOLUTELY NO WARRANTY");
@@ -188,6 +190,15 @@ public class Train {
                 writer.writeHashMap2File(Paths.getInstance().OUTPUT_WEIGHTS_PATH, W);
             //=============================================================================//
 
+            //#############################################################################//
+            //============== DRAW THE CUMULATIVE LOSS OF THE VALIDATION SET ===============//
+            //#############################################################################//
+            if (classifier.validationCuumulativeLoss.size() != 0) {
+                Graph graph = new Graph();
+                graph.drawGraph(classifier.validationCuumulativeLoss);
+            }
+
+            //=============================================================================//
 		} catch (Exception e) {
             Logger.error(e.getMessage());
             e.printStackTrace();

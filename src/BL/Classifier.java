@@ -28,6 +28,8 @@ import Data.Entities.PredictedLabels;
 import Data.Entities.Vector;
 import Data.Logger;
 import DataAccess.Reader;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -35,6 +37,7 @@ public class Classifier {
 
 	public ClassifierData classifierData;
     private Vector avgWeights = new Vector();
+    public ArrayList<Double> validationCuumulativeLoss = new ArrayList<Double>();
 
 	//train the algorithm and return the final weights
 	public Vector train(Vector W, InstancesContainer data, List<Double> params, Reader reader, int isAvg) throws Exception
@@ -67,29 +70,6 @@ public class Classifier {
             Logger.info("**********************************");
             //****************************************//
 
-            if(x_train == null)
-                continue;
-			//update W
-			W = classifierData.algorithmUpdateRule.update(W, x_train, classifierData);
-			if(W == null)
-				return null;
-
-            //############################################################################################################//
-            //######################################  UPDATE AVERAGE WEIGHTS  ############################################//
-            if(isAvg == 1) {
-                if (avgWeights.size() != 0) {
-                    for (Map.Entry<Integer, Double> entry : avgWeights.entrySet())
-                        avgWeights.put(entry.getKey(), (entry.getValue() * (classifierData.iteration - 1) + W.get(entry.getKey())) / classifierData.iteration);
-                    for (Map.Entry<Integer, Double> entry : W.entrySet()) {
-                        if (!avgWeights.containsKey(entry.getKey()))
-                            avgWeights.put(entry.getKey(), entry.getValue() / classifierData.iteration);
-                    }
-                } else
-                    avgWeights = (Vector) W.clone();
-            }
-            //############################################################################################################//
-
-
             //############################################################################################################//
             //##############################################  VALIDATION  ################################################//
             if(!Paths.getInstance().VALIDATION_PATH.equalsIgnoreCase("")) {
@@ -111,12 +91,34 @@ public class Classifier {
                 //#########################################################################################################//
 
                 //************* PRINTINGS ****************//
+                validationCuumulativeLoss.add(cumulative_loss);
                 Logger.info("Cumulative loss on validation set: " + cumulative_loss + ", Best cumulative loss on validation set: " + bestCumulativeLoss);
                 Logger.info("==================================");
                 Logger.info("");
             }
             //****************************************//
 
+            if(x_train == null)
+                continue;
+			//update W
+			W = classifierData.algorithmUpdateRule.update(W, x_train, classifierData);
+			if(W == null)
+				return null;
+
+            //############################################################################################################//
+            //######################################  UPDATE AVERAGE WEIGHTS  ############################################//
+            if(isAvg == 1) {
+                if (avgWeights.size() != 0) {
+                    for (Map.Entry<Integer, Double> entry : avgWeights.entrySet())
+                        avgWeights.put(entry.getKey(), (entry.getValue() * (classifierData.iteration - 1) + W.get(entry.getKey())) / classifierData.iteration);
+                    for (Map.Entry<Integer, Double> entry : W.entrySet()) {
+                        if (!avgWeights.containsKey(entry.getKey()))
+                            avgWeights.put(entry.getKey(), entry.getValue() / classifierData.iteration);
+                    }
+                } else
+                    avgWeights = (Vector) W.clone();
+            }
+            //############################################################################################################//
             CacheVowelData.clearCacheValues();
             //===================================//
 		}
