@@ -37,7 +37,8 @@ Examples of config files can be found under data/conf/algorithms_example directo
 GENERAL PARAMETERS
 =====
 	
- - train_path: the path to the training set data - Mandatory 
+ - train_path: the path to the training set data - Mandatory
+ - validation_path: the path to the validation set (by adding a validation set the system will plot and save a graph containing the validation error as function of the training example number) - Optional 
  - w_output: the path to save the weights vector (model)	
  - type: the algorithm type - Mandatory
  	- 0 - Passive Aggressive
