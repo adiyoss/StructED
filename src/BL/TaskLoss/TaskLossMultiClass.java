@@ -21,7 +21,7 @@ package BL.TaskLoss;
 import java.util.List;
 
 //Task loss 4 the OCR
-public class TaskLossMultiClass implements TaskLoss {
+public class TaskLossMultiClass implements ITaskLoss {
 
 	@Override
 	public double computeTaskLoss(String predictClass, String actualClass, List<Double> params) {

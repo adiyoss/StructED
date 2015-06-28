@@ -20,7 +20,8 @@ package Constants;
 
 //this class holds all the program constants
 public class Consts {
-    //GERERALS
+
+    //GENERALS
 	public static final String SPACE = " ";
 	public static final String CLASSIFICATION_SPLITTER = "-";
 	public static final String COLON_SPLITTER = ":";
@@ -32,7 +33,6 @@ public class Consts {
     //DUMMY
     public static final int MIN_GAP_START_DUMMY = 3;
     public static final int MIN_GAP_END_DUMMY = 3;
-
 
     //VOWEL DURATION
     public static final int MIN_VOWEL = 9;  //min training set: 45 frames

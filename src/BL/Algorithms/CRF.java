@@ -31,27 +31,22 @@ import Data.Logger;
 import Helpers.MathHelpers;
 
 //Conditional Random Fields
-public class CRF implements AlgorithmUpdateRule {
-
-    //Singleton
-    private static CRF ourInstance = new CRF();
-    public static CRF getInstance(ArrayList<Double> arguments) {
-        if(arguments.size() != ConfigParameters.CRF_PARAMS_SIZE){
-            Logger.error(ErrorConstants.UPDATE_ARGUMENTS_ERROR);
-            return null;
-        }
-        //initialize the parameters
-        ourInstance.eta = arguments.get(0);
-        ourInstance.lambda = arguments.get(1);
-
-        return ourInstance;
-    }
-    private CRF() {
-    }
+public class CRF implements IUpdateRule {
 
     //Data members
     double eta;
     double lambda;
+
+	@Override
+	public void init(ArrayList<Double> args) {
+		if(args.size() != ConfigParameters.CRF_PARAMS_SIZE){
+            Logger.error(ErrorConstants.UPDATE_ARGUMENTS_ERROR);
+            return;
+        }
+        //initialize the parameters
+        this.eta = args.get(0);
+        this.lambda = args.get(1);
+	}
 
 	@Override
 	//the first cell of the arguments attribute would be the mue value
@@ -67,7 +62,7 @@ public class CRF implements AlgorithmUpdateRule {
 
             //the parameter 1 at the end is used to get all the predicted labels and not only the max one
             //it can be anything but -1 = Consts.ERROR_NUMBER
-            PredictedLabels predictMap = classifierData.predict.predictForTest(example,currentWeights,example.getLabel(),classifierData,1);
+            PredictedLabels predictMap = classifierData.inference.predictForTest(example,currentWeights,example.getLabel(),classifierData,1);
 
 			for(Map.Entry<String, Double> entry : predictMap.entrySet())
 				denominator += Math.pow(Math.E,(entry.getValue()));

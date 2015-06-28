@@ -18,20 +18,20 @@
 
 package Data.FeatureFunctions;
 
-import BL.Kernels.Kernel;
+import BL.Kernels.IKernel;
 import Constants.Consts;
 import Constants.ErrorConstants;
 import Data.Entities.Example;
 import Data.Entities.Vector;
 import Data.Factory;
 
-public class PhiDummyConverter implements PhiConverter {
+public class FeatureFunctionsDummy implements IFeatureFunctions {
 
     int sizeOfVector = 6;
 
 	@Override
 	//return null on error
-	public Example convert(Example vector, String label, Kernel kernel) {
+	public Example convert(Example vector, String label, IKernel kernel) {
 
         try{
             Example newVector = Factory.getExample(0);
@@ -81,7 +81,7 @@ public class PhiDummyConverter implements PhiConverter {
             tmpVector.put(4, avg-gapStart);
             tmpVector.put(5,avg-gapEnd);
 
-            if(kernel!=null)
+            if(kernel !=null)
                 tmpVector = kernel.convertVector(tmpVector, sizeOfVector);
 
             newVector.setFeatures(tmpVector);

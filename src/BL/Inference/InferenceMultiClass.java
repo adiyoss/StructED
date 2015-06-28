@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package BL.Prediction;
+package BL.Inference;
 
 import BL.ClassifierData;
 import Constants.Consts;
@@ -28,7 +28,7 @@ import Data.Logger;
 import Helpers.Comperators.MapValueComparatorDescending;
 import Helpers.MathHelpers;
 
-public class PredictionMultiClass implements Prediction{
+public class InferenceMultiClass implements IInference {
 
     int numOfClass = 10;
     //predict function

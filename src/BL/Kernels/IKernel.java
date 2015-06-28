@@ -16,11 +16,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package Data.FeatureFunctions;
+package BL.Kernels;
 
-import BL.Kernels.Kernel;
-import Data.Entities.Example;
+import Data.Entities.Vector;
 
-public interface PhiConverter {
-	public Example convert(Example vector, String label, Kernel kernel);
+public interface IKernel {
+    Vector convertVector(Vector vector, int vectorSize);
 }

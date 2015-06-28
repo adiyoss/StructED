@@ -22,7 +22,7 @@ import Constants.Consts;
 
 import java.util.List;
 
-public class TaskLossVowelDuration implements TaskLoss {
+public class TaskLossVowelDuration implements ITaskLoss {
 
 	@Override
 	//max{0,|ys-ye - y's-y'e|-epsilon}

@@ -5,7 +5,7 @@ StructED 1.0.0
 
 Copyright (C) Adiyoss
 
-StructED is a collection of machine learning algorithms for structured prediction. Structured tasks are distinctive: each task has a unique evaluation metric, its own set of feature functions, and in many cases a non-standard inference. Consequently, implementation of a machine learning system that utilizes structured prediction is complex and involved. The package handles this inherent complexity by introducing specially-designed interfaces for an evaluation function, a set of feature functions, and a decoder. The collection of all the training algorithms is implemented using the same interfaces, and adding a new training algorithm is straightforward. The library is written in Java, hence is platform independent. It is available at http://adiyoss.github.io/StructED/.
+StructED is a collection of machine learning algorithms for structured prediction. Structured tasks are distinctive: each task has a unique evaluation metric, its own set of feature functions, and in many cases a non-standard IInference. Consequently, implementation of a machine learning system that utilizes structured prediction is complex and involved. The package handles this inherent complexity by introducing specially-designed interfaces for an evaluation function, a set of feature functions, and a decoder. The collection of all the training algorithms is implemented using the same interfaces, and adding a new training algorithm is straightforward. The library is written in Java, hence is platform independent. It is available at http://adiyoss.github.io/StructED/.
 
 Keywords: structured prediction, structured SVM, CRF, direct loss minimization, structured ramp loss, structured probit Loss, structured passive aggressive
 
@@ -52,10 +52,10 @@ GENERAL PARAMETERS
  - task: the cost/loss function number - Mandatory
  - epoch: the number of epochs on the data - Mandatory
  - task_param: cost/loss parameters if needed, can store multiple parameters splited by (;) - optional
- - kernel: kernel type, and parameters(i.e sigma) - Optional
+ - IKernel: IKernel type, and parameters(i.e sigma) - Optional
  	- 0 - poly 2 degree
-	- 1 - 2nd taylor approximation for RBF - setting the sigma value can be done like that: kernel:1:19
-	- 2 - 3rd taylor approximation for RBF - setting the sigma value can be done like that: kernel:2:19
+	- 1 - 2nd taylor approximation for RBF - setting the sigma value can be done like that: IKernel:1:19
+	- 2 - 3rd taylor approximation for RBF - setting the sigma value can be done like that: IKernel:2:19
  - init_w: the path for the initial weights - Optional
  - phi: feature function type - Mandatory
  - prediction: prediction function, should implement also the loss-augmented function - Mandatory
@@ -129,10 +129,10 @@ CONFIG FILE - PREDICT
  - examples_2_display: how many examples to display in the scores file - Mandatory
  - task: the loss(cost) function, the same as the train - Mandatory
  - task_param: task loss parameters if needed
- - kernel: kernel type, and parameters(i.e sigma) - Optional
+ - IKernel: IKernel type, and parameters(i.e sigma) - Optional
  	- 0 - poly 2 degree
-	- 1 - RBF 2nd taylor approximation - setting the sigma value can be done like that: kernel:1:19
-	- 2 - RBF 3rd taylor approximation - setting the sigma value can be done like that: kernel:2:19
+	- 1 - RBF 2nd taylor approximation - setting the sigma value can be done like that: IKernel:1:19
+	- 2 - RBF 3rd taylor approximation - setting the sigma value can be done like that: IKernel:2:19
  - phi: feature function type - Mandatory
  - prediction: prediction function, should implement the inferences - Mandatory
  - reader: reader type - Mandatory

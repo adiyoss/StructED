@@ -27,6 +27,8 @@ import com.xeiam.xchart.BitmapEncoder;
 import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.QuickChart;
 import com.xeiam.xchart.SwingWrapper;
+
+import java.io.File;
 import java.util.ArrayList;
 
 public class Graph {
@@ -37,7 +39,7 @@ public class Graph {
     final String SERIES_NAME = "y(x)";
     final String IMG_PATH = "img/validation_error";
 
-    public void drawGraph(ArrayList<Double> scores) {
+    public void drawGraph(ArrayList<Double> scores, boolean save) {
         try {
             // setting the data fit for the plotting
             double[] xData = new double[scores.size()];
@@ -52,11 +54,29 @@ public class Graph {
             Chart chart = QuickChart.getChart(TITLE, X_TITLE, Y_TITLE, SERIES_NAME, xData, yData);
             // Show it
             new SwingWrapper(chart).displayChart();
-            // or save it in high-res
-            Logger.info("=========================");
-            Logger.info("Image saved to: "+IMG_PATH);
-            Logger.info("=========================");
-            BitmapEncoder.saveBitmapWithDPI(chart, IMG_PATH, BitmapEncoder.BitmapFormat.PNG.PNG, 300);
+            if (save) {
+                // or save it in high-res
+                Logger.info("=========================");
+                Logger.info("Saving image: " + IMG_PATH);
+                Logger.info("=========================");
+
+                File imgDir = new File("img/");
+                // if the directory does not exist, create it
+                if (!imgDir.exists()) {
+                    Logger.info("creating directory: img/");
+                    boolean result = false;
+                    try{
+                        result = imgDir.mkdir();
+                    }
+                    catch(SecurityException se){
+                        Logger.error("There is no permission to write the error image.");
+                    }
+                    if(result) {
+                        Logger.info("DIR created");
+                        BitmapEncoder.saveBitmapWithDPI(chart, IMG_PATH, BitmapEncoder.BitmapFormat.PNG.PNG, 300);
+                    }
+                }
+            }
         }catch (Exception e){
             e.printStackTrace();
         }

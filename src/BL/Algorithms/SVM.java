@@ -28,28 +28,22 @@ import Data.Entities.Vector;
 import Data.Logger;
 import Helpers.MathHelpers;
 
-public class SVM_Pegasos implements AlgorithmUpdateRule {
-
-    //Singleton
-    private static SVM_Pegasos ourInstance = new SVM_Pegasos();
-    public static SVM_Pegasos getInstance(ArrayList<Double> arguments) {
-        if(arguments.size() != ConfigParameters.SVM_PARAMS_SIZE){
-            Logger.error(ErrorConstants.UPDATE_ARGUMENTS_ERROR);
-            return null;
-        }
-        //initialize the parameters
-        ourInstance.lambda = arguments.get(0);
-        ourInstance.eta = arguments.get(1);
-
-        return ourInstance;
-    }
-
-    private SVM_Pegasos() {
-    }
+public class SVM implements IUpdateRule {
 
     //Data members
     double lambda;
     double eta;
+
+    @Override
+    public void init(ArrayList<Double> args) {
+        if(args.size() != ConfigParameters.SVM_PARAMS_SIZE){
+            Logger.error(ErrorConstants.UPDATE_ARGUMENTS_ERROR);
+            return;
+        }
+        //initialize the parameters
+        this.eta = args.get(0);
+        this.lambda = args.get(1);
+    }
 
 	@Override
 	//in SVM the lambda value would be in the first cell of the arguments attribute
@@ -64,7 +58,7 @@ public class SVM_Pegasos implements AlgorithmUpdateRule {
 
             //if there's a problem with the predict return the previous weights
             try{
-			    prediction = classifierData.predict.predictForTrain(example,currentWeights,example.getLabel(),classifierData,1).firstKey();
+			    prediction = classifierData.inference.predictForTrain(example,currentWeights,example.getLabel(),classifierData,1).firstKey();
             } catch (Exception e){
                 return currentWeights;
             }

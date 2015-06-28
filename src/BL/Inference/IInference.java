@@ -16,35 +16,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package Data.FeatureFunctions;
+package BL.Inference;
 
-import BL.Kernels.Kernel;
+import BL.ClassifierData;
 import Data.Entities.Example;
-import Data.Factory;
+import Data.Entities.PredictedLabels;
 import Data.Entities.Vector;
 
-public class PhiRankConverter implements PhiConverter{
-
-    public Example convert(Example vector, String label, Kernel kernel)
-    {
-        try{
-            //initialize result object
-            Example phiData = Factory.getExample(0);
-
-            int intLabel = Integer.parseInt(label);
-            phiData.setLabel(label);
-            Vector features;
-            features = vector.getFeatures2D().get(intLabel);
-
-            if(kernel != null)
-                features = kernel.convertVector(vector.getFeatures2D().get(intLabel), vector.getFeatures2D().get(intLabel).size());
-
-            phiData.setFeatures(features);
-            return phiData;
-
-        } catch(Exception e){
-            e.printStackTrace();
-            return null;
-        }
-    }
+public interface IInference {
+    PredictedLabels predictForTrain(Example vector, Vector W, String realClass, ClassifierData classifierData, double epsilonArgMax);
+    PredictedLabels predictForTest(Example vector, Vector W, String realClass, ClassifierData classifierData, int returnAll);
 }

@@ -31,28 +31,22 @@ import Helpers.MathHelpers;
 import java.util.ArrayList;
 import java.util.Map;
 
-public class RankSVM implements AlgorithmUpdateRule{
-
-    //Singleton
-    private static RankSVM ourInstance = new RankSVM();
-    public static RankSVM getInstance(ArrayList<Double> arguments) {
-        if(arguments.size() != ConfigParameters.SVM_PARAMS_SIZE){
-            Logger.error(ErrorConstants.UPDATE_ARGUMENTS_ERROR);
-            return null;
-        }
-        //initialize the parameters
-        ourInstance.lambda = arguments.get(0);
-        ourInstance.eta = arguments.get(1);
-
-        return ourInstance;
-    }
-
-    private RankSVM() {
-    }
+public class RankSVM implements IUpdateRule {
 
     //Data members
     double lambda;
     double eta;
+    
+    @Override
+    public void init(ArrayList<Double> args) {
+        if(args.size() != ConfigParameters.SVM_PARAMS_SIZE){
+            Logger.error(ErrorConstants.UPDATE_ARGUMENTS_ERROR);
+            return;
+        }
+        //initialize the parameters
+        this.lambda = args.get(0);
+        this.eta = args.get(1);
+    }
 
     @Override
     //in SVM the lambda value would be in the first cell of the arguments attribute
@@ -66,7 +60,7 @@ public class RankSVM implements AlgorithmUpdateRule{
             PredictedLabels prediction;
             //if there's a problem with the predict return the previous weights
             try{
-                prediction = classifierData.predict.predictForTrain(example,currentWeights,example.getLabel(),classifierData,1);
+                prediction = classifierData.inference.predictForTrain(example,currentWeights,example.getLabel(),classifierData,1);
             }catch (Exception e){
                 return currentWeights;
             }

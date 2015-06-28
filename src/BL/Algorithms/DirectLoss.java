@@ -28,25 +28,23 @@ import Data.Entities.Vector;
 import Data.Logger;
 import Helpers.MathHelpers;
 
-public class DirectLoss implements AlgorithmUpdateRule {
-
-    //Singleton
-    private static DirectLoss ourInstance = new DirectLoss();
-    public static DirectLoss getInstance(ArrayList<Double> arguments) {
-        if(arguments.size() != ConfigParameters.DL_PARAMS_SIZE){
-            Logger.error(ErrorConstants.UPDATE_ARGUMENTS_ERROR);
-            return null;
-        }
-        //initialize the parameters
-        ourInstance.eta = arguments.get(0);
-        ourInstance.epsilonArgMax = arguments.get(1);
-        return ourInstance;
-    }
-    private DirectLoss(){}
+public class DirectLoss implements IUpdateRule {
 
     //Data members
     double eta;
     double epsilonArgMax;
+
+    @Override
+    public void init(ArrayList<Double> args) {
+        if(args.size() != ConfigParameters.DL_PARAMS_SIZE){
+            Logger.error(ErrorConstants.UPDATE_ARGUMENTS_ERROR);
+            return;
+        }
+        //initialize the parameters
+        this.eta = args.get(0);
+        this.epsilonArgMax = args.get(1);
+    }
+
 
 	@Override
 	//the first cell of the arguments attribute would be the eta value
@@ -58,9 +56,9 @@ public class DirectLoss implements AlgorithmUpdateRule {
             double newEta = eta/(Math.sqrt(algorithmIteration)*Math.abs(epsilonArgMax));
 
 			//get the prediction
-			String prediction = classifierData.predict.predictForTrain(example, currentWeights, example.getLabel(), classifierData, 0).firstKey();
+			String prediction = classifierData.inference.predictForTrain(example, currentWeights, example.getLabel(), classifierData, 0).firstKey();
 			//get the direct prediction
-			String predictionDirect = classifierData.predict.predictForTrain(example, currentWeights, example.getLabel(),classifierData, epsilonArgMax).firstKey();
+			String predictionDirect = classifierData.inference.predictForTrain(example, currentWeights, example.getLabel(),classifierData, epsilonArgMax).firstKey();
             Vector directLoss;
 
             Example phiPredictionNoLoss = classifierData.phi.convert(example,prediction,classifierData.kernel);

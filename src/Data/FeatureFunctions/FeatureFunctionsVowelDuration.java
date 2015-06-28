@@ -18,7 +18,7 @@
 
 package Data.FeatureFunctions;
 
-import BL.Kernels.Kernel;
+import BL.Kernels.IKernel;
 import Constants.Consts;
 import Data.CacheVowelData;
 import Data.Entities.Example;
@@ -29,7 +29,7 @@ import Helpers.ConverterHelplers;
 import Helpers.MathHelpers;
 import jsc.distributions.Gamma;
 
-public class PhiVowelDurationConverter implements PhiConverter {
+public class FeatureFunctionsVowelDuration implements IFeatureFunctions {
 
     int sizeOfVector = 42;
     final int win_size_1 = 1;
@@ -76,7 +76,7 @@ public class PhiVowelDurationConverter implements PhiConverter {
 
     @Override
     //return null on error
-    public Example convert(Example example, String label, Kernel kernel) {
+    public Example convert(Example example, String label, IKernel kernel) {
 
         try{
             Example newExample = Factory.getExample(0);

@@ -16,18 +16,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package Data.Entities;
+package Data.FeatureFunctions;
 
-public class VowelExample extends Example2D{
+import BL.Kernels.IKernel;
+import Data.Entities.Example;
 
-    private String label_2;
-
-    //getters and setters
-    public String getLabel_2() {
-        return label_2;
-    }
-
-    public void setLabel_2(String label_2) {
-        this.label_2 = label_2;
-    }
+public interface IFeatureFunctions {
+	Example convert(Example vector, String label, IKernel kernel);
 }

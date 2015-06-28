@@ -18,18 +18,18 @@
 
 package Data.FeatureFunctions;
 
-import BL.Kernels.Kernel;
+import BL.Kernels.IKernel;
 import Constants.ConfigParameters;
 import Data.Entities.Example;
 import Data.Factory;
 import Data.Entities.Vector;
 
-public class PhiSparseConverter implements PhiConverter {
+public class FeatureFunctionsSparse implements IFeatureFunctions {
 
     int maxFeatures = 780;
 
 	@Override
-	public Example convert(Example vector, String label, Kernel kernel) {
+	public Example convert(Example vector, String label, IKernel kernel) {
         try{
             //parse the label
             int intLabel = Integer.parseInt(label);
@@ -40,7 +40,7 @@ public class PhiSparseConverter implements PhiConverter {
             for(Integer feature : vector.getFeatures().keySet())
                 tmpVector.put(feature+intLabel*maxFeatures,vector.getFeatures().get(feature));
 
-            if(kernel!=null)
+            if(kernel !=null)
                 tmpVector = kernel.convertVector(tmpVector, ConfigParameters.getInstance().VECTOR_SIZE);
 
             newVector.setFeatures(tmpVector);

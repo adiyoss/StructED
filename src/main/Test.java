@@ -19,7 +19,7 @@
 package main;
 
 import BL.Classifier;
-import BL.TaskLoss.TaskLoss;
+import BL.TaskLoss.ITaskLoss;
 import BL.TaskLoss.TaskLossVowelDuration;
 import Constants.Consts;
 import Constants.ErrorConstants;
@@ -33,8 +33,6 @@ import DataAccess.Writer;
 import Helpers.ModelHandler;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.concurrent.TimeUnit;
 
 public class Test {
@@ -131,7 +129,7 @@ public class Test {
             Logger.infoTime("Loading test data...");
             Logger.infoTime("Test file: " + testPath+". ");
             Logger.info("");
-            Logger.infoTime("Model: " + w_path+". ");
+            Logger.infoTime("StructEDModel: " + w_path+". ");
             Logger.info("==============================================================");
 
             // read the test data and parse it
@@ -155,9 +153,9 @@ public class Test {
             ArrayList<Double> params_2_3 = new ArrayList<Double>(){{add(2.0); add(3.0);}};
             ArrayList<Double> params_4_7 = new ArrayList<Double>(){{add(4.0); add(7.0);}};
             ArrayList<Double> params_6_10 = new ArrayList<Double>(){{add(6.0); add(10.0);}};
-            TaskLoss t_2_3 = new TaskLossVowelDuration();
-            TaskLoss t_4_7 = new TaskLossVowelDuration();
-            TaskLoss t_6_10 = new TaskLossVowelDuration();
+            ITaskLoss t_2_3 = new TaskLossVowelDuration();
+            ITaskLoss t_4_7 = new TaskLossVowelDuration();
+            ITaskLoss t_6_10 = new TaskLossVowelDuration();
             // ================= //
 
             writer.clearPrevResult(outputFile);
@@ -174,7 +172,7 @@ public class Test {
                     break;
 
                 String y = x.getLabel();
-                String message = "Processing example number: "+(i+1)+", Real Label = "+y+", Prediction: "+y_hat;
+                String message = "Processing example number: "+(i+1)+", Real Label = "+y+", IInference: "+y_hat;
 
                 Logger.info(message);
                 Logger.log2File(message);

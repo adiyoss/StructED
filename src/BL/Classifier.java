@@ -18,63 +18,56 @@
 
 package BL;
 
-import Constants.Consts;
 import Constants.ErrorConstants;
-import Constants.Paths;
 import Data.CacheVowelData;
 import Data.Entities.Example;
 import Data.InstancesContainer;
 import Data.Entities.PredictedLabels;
 import Data.Entities.Vector;
 import Data.Logger;
-import DataAccess.Reader;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class Classifier {
+public class Classifier{
 
-	public ClassifierData classifierData;
+    public ClassifierData classifierData;
     private Vector avgWeights = new Vector();
-    public ArrayList<Double> validationCuumulativeLoss = new ArrayList<Double>();
+    public ArrayList<Double> validationCumulativeLoss = new ArrayList<Double>();
 
 	//train the algorithm and return the final weights
-	public Vector train(Vector W, InstancesContainer data, List<Double> params, Reader reader, int isAvg) throws Exception
+	public Vector train(Vector W, InstancesContainer trainInstances, List<Double> params, InstancesContainer developInstances, int isAvg) throws Exception
 	{
+        //validation
+        if(trainInstances == null){
+            Logger.error(ErrorConstants.PHI_DATA_ERROR);
+            return null;
+        }
+
         //counter - used for debug
         Vector best_W = new Vector(W);
         double bestCumulativeLoss = -1;
-
-		//validation
-		if(data == null){
-            Logger.error(ErrorConstants.PHI_DATA_ERROR);
-			return null;
-		}
-
         classifierData.arguments = params;
 
         Logger.infoTime("Start Training...");
 		//loop over all the training set
-        for(int i=0 ; i<data.getSize() ; i++)
+        for(int i=0 ; i<trainInstances.getSize() ; i++)
 		{
             //************* PRINTINGS ****************//
-            //print the start time of the program//
+            String output = "";
             classifierData.iteration++;
-            Example x_train = data.getInstance(i);
-            Logger.info("==================================");
+            Example x_train = trainInstances.getInstance(i);
+            if(x_train == null) continue;
             if(x_train.path != null)
-                Logger.timeExample("Processing example: "+x_train.path+", Number: ",(i+1));
+                output += "Processing example: " + x_train.path + ", Number: " + (i + 1)+" ";
             else
-                Logger.timeExample("Processing example number: ",(i+1));
-            Logger.info("**********************************");
+                output += "Processing example number: " + (i + 1)+" ";
             //****************************************//
 
             //############################################################################################################//
             //##############################################  VALIDATION  ################################################//
-            if(!Paths.getInstance().VALIDATION_PATH.equalsIgnoreCase("")) {
-                InstancesContainer developInstances;
-                developInstances = reader.readData(Paths.getInstance().VALIDATION_PATH, Consts.SPACE, Consts.COLON_SPLITTER);
+            if(developInstances != null) {
                 double cumulative_loss = 0;
                 for (int idx = 0; idx < developInstances.getSize(); idx++) {
                     Example x_validate = developInstances.getInstance(idx);
@@ -88,20 +81,14 @@ public class Classifier {
                     bestCumulativeLoss = cumulative_loss;
                     best_W = (Vector) W.clone();
                 }
-                //#########################################################################################################//
-
                 //************* PRINTINGS ****************//
-                validationCuumulativeLoss.add(cumulative_loss);
-                Logger.info("Cumulative loss on validation set: " + cumulative_loss + ", Best cumulative loss on validation set: " + bestCumulativeLoss);
-                Logger.info("==================================");
-                Logger.info("");
+                validationCumulativeLoss.add(cumulative_loss);
+                output += "Cumulative loss on validation set: " + (Math.floor(cumulative_loss * 100) / 100) + ", Best cumulative loss on validation set: " + (Math.floor(bestCumulativeLoss * 100) / 100);
             }
-            //****************************************//
+            //#########################################################################################################//
 
-            if(x_train == null)
-                continue;
 			//update W
-			W = classifierData.algorithmUpdateRule.update(W, x_train, classifierData);
+			W = classifierData.updateRule.update(W, x_train, classifierData);
 			if(W == null)
 				return null;
 
@@ -121,15 +108,17 @@ public class Classifier {
             //############################################################################################################//
             CacheVowelData.clearCacheValues();
             //===================================//
+
+            Logger.progressMessage(output);
 		}
 
-        if(!Paths.getInstance().VALIDATION_PATH.equalsIgnoreCase(""))
+        if(developInstances != null)
 		    return best_W;
         return W;
 	}
 
     public PredictedLabels test(Vector W, Example example, int returnAll) {
-        return classifierData.predict.predictForTest(example, W, "", classifierData, returnAll);
+        return classifierData.inference.predictForTest(example, W, "", classifierData, returnAll);
     }
 
     public Vector getAvgWeights() {

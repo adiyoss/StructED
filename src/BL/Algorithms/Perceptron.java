@@ -31,19 +31,12 @@ import java.util.ArrayList;
 /**
  * Created by adiyoss on 3/4/15.
  */
-public class Perceptron implements AlgorithmUpdateRule{
+public class Perceptron implements IUpdateRule {
 
-    //Singleton
-    private static Perceptron ourInstance = new Perceptron();
-    public static Perceptron getInstance(ArrayList<Double> arguments) {
-        if(arguments.size() != ConfigParameters.P_PARAMS_SIZE){
+    @Override
+    public void init(ArrayList<Double> args) {
+        if(args.size() != ConfigParameters.P_PARAMS_SIZE)
             Logger.error(ErrorConstants.UPDATE_ARGUMENTS_ERROR);
-            return null;
-        }
-
-        return ourInstance;
-    }
-    private Perceptron() {
     }
 
     @Override
@@ -53,7 +46,7 @@ public class Perceptron implements AlgorithmUpdateRule{
             String prediction;
             //if there's a problem with the predict return the previous weights
             try{
-                prediction = classifierData.predict.predictForTrain(example,currentWeights,example.getLabel(),classifierData,1).firstKey();
+                prediction = classifierData.inference.predictForTrain(example,currentWeights,example.getLabel(),classifierData,1).firstKey();
             } catch (Exception e){
                 return currentWeights;
             }

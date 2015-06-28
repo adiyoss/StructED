@@ -33,6 +33,10 @@ import DataAccess.Writer;
 import Helpers.ModelHandler;
 import view.Graph;
 
+import static Constants.Paths.getInstance;
+import static Data.Factory.getClassifier;
+import static Data.Factory.getReader;
+
 public class Train {
     //parameters
     private final static int TYPE = 0;
@@ -63,10 +67,10 @@ public class Train {
                 Logger.error("Error with argument parameters.");
                 return;
             }
-            Paths.getInstance().CONFIG_PATH_TRAIN = args[0];
+            getInstance().CONFIG_PATH_TRAIN = args[0];
 
 			ConfigFileGetter configGetter = Factory.getConfigGetter(0);
-			ArrayList<String> arguments = configGetter.getConfigDataTrain(Factory.getReader(0));
+			ArrayList<String> arguments = configGetter.getConfigDataTrain(getReader(0));
 			if(arguments == null){
                 Logger.error(ErrorConstants.CONFIG_ERROR);
 				return;
@@ -122,17 +126,19 @@ public class Train {
             //==================LOADING THE TRAIN DATA AND THE MODEL=======================//
             //#############################################################################//
             //init the weights by the user choice and the best_W parameter, existing ones or just 0's
-            Vector W = ModelHandler.setWeights(isW, Paths.getInstance().INIT_WEIGHTS_PATH);
+            Vector W = ModelHandler.setWeights(isW, getInstance().INIT_WEIGHTS_PATH);
             Logger.infoTime("Loading train data...");
-            Logger.infoTime("Train file: " + Paths.getInstance().TRAIN_PATH+". ");
-            Logger.infoTime("Validation file: " + Paths.getInstance().VALIDATION_PATH+". ");
+            Logger.infoTime("Train file: " + getInstance().TRAIN_PATH+". ");
+            Logger.infoTime("Validation file: " + getInstance().VALIDATION_PATH+". ");
 
             //read the data and parse it
-            Reader reader = Factory.getReader(readerType);
+            Reader reader = getReader(readerType);
             InstancesContainer instances;
-            instances = reader.readData(Paths.getInstance().TRAIN_PATH, Consts.SPACE, Consts.COLON_SPLITTER);
-            if ( instances.getSize() == 0 )
-                return;
+            instances = reader.readData(getInstance().TRAIN_PATH, Consts.SPACE, Consts.COLON_SPLITTER);
+            InstancesContainer developInstances;
+            developInstances = reader.readData(Paths.getInstance().VALIDATION_PATH, Consts.SPACE, Consts.COLON_SPLITTER);
+            if ( instances.getSize() == 0 ) return;
+
             //=============================================================================//
 
             //#############################################################################//
@@ -147,7 +153,7 @@ public class Train {
             //===================================//
 
             //create the classifier
-            Classifier classifier = Factory.getClassifier(task, type, prediction, kernel, phi, algorithmParameters);
+            Classifier classifier = getClassifier(task, type, prediction, kernel, phi, algorithmParameters);
 
             //loop over the training set epoch time
             for(int size = 0 ; size<epoch ; size++)
@@ -156,15 +162,17 @@ public class Train {
                 //print the start time of the program//
                 Logger.info("");
                 Logger.info("==================================");
-                Logger.timeExample("Epoch: ", (size+1));
+                Logger.progressMessage("Epoch: " + (size + 1));
                 Logger.info("==================================");
                 Logger.info("");
                 //===================================//
 
                 //preform random shuffle for the next epoch
                 instances = ModelHandler.randomShuffle(instances);
+
                 //train the algorithm
-                W = classifier.train(W, instances, task_param, reader,isAvg);
+                if (classifier == null) throw new AssertionError();
+                W = classifier.train(W, instances, task_param, developInstances, isAvg);
                 if(W == null)
                     return;
             }
@@ -185,17 +193,17 @@ public class Train {
             //write the final weights to output file
             Writer writer = Factory.getWriter(writerType);
             if(isAvg == 1)
-                writer.writeHashMap2File(Paths.getInstance().OUTPUT_WEIGHTS_PATH, classifier.getAvgWeights());
+                writer.writeHashMap2File(getInstance().OUTPUT_WEIGHTS_PATH, classifier.getAvgWeights());
             else
-                writer.writeHashMap2File(Paths.getInstance().OUTPUT_WEIGHTS_PATH, W);
+                writer.writeHashMap2File(getInstance().OUTPUT_WEIGHTS_PATH, W);
             //=============================================================================//
 
             //#############################################################################//
             //============== DRAW THE CUMULATIVE LOSS OF THE VALIDATION SET ===============//
             //#############################################################################//
-            if (classifier.validationCuumulativeLoss.size() != 0) {
+            if (classifier.validationCumulativeLoss.size() != 0) {
                 Graph graph = new Graph();
-                graph.drawGraph(classifier.validationCuumulativeLoss);
+                graph.drawGraph(classifier.validationCumulativeLoss, true);
             }
 
             //=============================================================================//

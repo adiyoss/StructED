@@ -52,11 +52,15 @@ public class Logger {
         System.out.println(dateFormat.format(date));
     }
 
-    public static void timeExample(String msg, int example){
+    public static void timeExampleStandard(String msg, int example){
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         //get current date time with Date()
         Date date = new Date();
         System.out.println(msg+example+", "+dateFormat.format(date));
+    }
+
+    public static void progressMessage(String msg){
+        System.out.print("\r" + msg + " ");
     }
 
     public static void error(String message){

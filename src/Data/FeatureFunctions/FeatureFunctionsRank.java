@@ -16,14 +16,35 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package BL.Algorithms;
+package Data.FeatureFunctions;
 
-import BL.ClassifierData;
+import BL.Kernels.IKernel;
 import Data.Entities.Example;
+import Data.Factory;
 import Data.Entities.Vector;
 
-//this interface enable us to set many update versions and compare between them
-public interface AlgorithmUpdateRule {
-	//the arguments would be different from update to update
-	public Vector update(Vector currentWeights, Example example, ClassifierData classifierData);
+public class FeatureFunctionsRank implements IFeatureFunctions {
+
+    public Example convert(Example vector, String label, IKernel kernel)
+    {
+        try{
+            //initialize result object
+            Example phiData = Factory.getExample(0);
+
+            int intLabel = Integer.parseInt(label);
+            phiData.setLabel(label);
+            Vector features;
+            features = vector.getFeatures2D().get(intLabel);
+
+            if(kernel != null)
+                features = kernel.convertVector(vector.getFeatures2D().get(intLabel), vector.getFeatures2D().get(intLabel).size());
+
+            phiData.setFeatures(features);
+            return phiData;
+
+        } catch(Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

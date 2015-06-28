@@ -16,21 +16,17 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package Data.Entities;
+package BL.Algorithms;
 
-public class ExampleStandard extends Example {
+import BL.ClassifierData;
+import Data.Entities.Example;
+import Data.Entities.Vector;
 
-    private Vector features;
+import java.util.ArrayList;
 
-    public ExampleStandard(){
-        features = new Vector();
-    }
-
-    //Current functions
-    public Vector getFeatures() {
-        return features;
-    }
-    public void setFeatures(Vector features) {
-        this.features = features;
-    }
+//this interface enable us to set many update versions and compare between them
+public interface IUpdateRule {
+	//the arguments would be different from update to update
+	Vector update(Vector currentWeights, Example example, ClassifierData classifierData);
+	void init(ArrayList<Double> args);
 }

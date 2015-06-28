@@ -22,7 +22,7 @@ import Constants.Consts;
 
 import java.util.List;
 
-public class TaskLossDummyData implements TaskLoss {
+public class TaskLossDummyData implements ITaskLoss {
 
 	@Override
 	//max{0,|ys-ye - y's-y'e|-epsilon}

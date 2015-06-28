@@ -28,26 +28,20 @@ import Data.Entities.Vector;
 import Data.Logger;
 import Helpers.MathHelpers;
 
-public class PassiveAggressive implements AlgorithmUpdateRule {
-
-    //Singleton
-    private static PassiveAggressive ourInstance = new PassiveAggressive();
-    public static PassiveAggressive getInstance(ArrayList<Double> arguments) {
-        if(arguments.size() != ConfigParameters.PA_PARAMS_SIZE){
-            Logger.error(ErrorConstants.UPDATE_ARGUMENTS_ERROR);
-            return null;
-        }
-        //initialize the parameters
-        ourInstance.cValue = arguments.get(0);
-
-        return ourInstance;
-    }
-
-    private PassiveAggressive() {
-    }
-
+public class PassiveAggressive implements IUpdateRule {
+    
     //Data members
     double cValue;
+
+    @Override
+    public void init(ArrayList<Double> args){
+        if(args.size() != ConfigParameters.PA_PARAMS_SIZE){
+            Logger.error(ErrorConstants.UPDATE_ARGUMENTS_ERROR);
+            return;
+        }
+        //initialize the parameters
+        this.cValue = args.get(0);
+    }
 
     @Override
 	//the first cell of the arguments attribute would be the C value
@@ -55,7 +49,7 @@ public class PassiveAggressive implements AlgorithmUpdateRule {
 		
 		try{
 			//get the prediction
-			String prediction = classifierData.predict.predictForTrain(example, currentWeights, example.getLabel(), classifierData,1).firstKey();
+			String prediction = classifierData.inference.predictForTrain(example, currentWeights, example.getLabel(), classifierData,1).firstKey();
 
             Example phiRealLabel = classifierData.phi.convert(example, example.getLabel(), classifierData.kernel);
             Example phiPrediction = classifierData.phi.convert(example, prediction, classifierData.kernel);

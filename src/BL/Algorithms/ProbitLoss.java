@@ -29,26 +29,7 @@ import Data.Entities.Vector;
 import Data.Logger;
 import Helpers.MathHelpers;
 
-public class ProbitLoss implements AlgorithmUpdateRule {
-
-    //Singleton
-    private static ProbitLoss ourInstance = new ProbitLoss();
-    public static ProbitLoss getInstance(ArrayList<Double> arguments) {
-        if(arguments.size() != ConfigParameters.PL_PARAMS_SIZE){
-            Logger.error(ErrorConstants.UPDATE_ARGUMENTS_ERROR);
-            return null;
-        }
-        //initialize the parameters
-        ourInstance.eta = arguments.get(0);
-        ourInstance.lambda = arguments.get(1);
-        ourInstance.numOfIteration = arguments.get(2);
-        ourInstance.noiseAllVector = arguments.get(3);
-        ourInstance.mean = arguments.get(4);
-        ourInstance.stDev = arguments.get(5);
-
-        return ourInstance;
-    }
-    private ProbitLoss(){}
+public class ProbitLoss implements IUpdateRule {
 
     //Data members
     double lambda;
@@ -57,6 +38,21 @@ public class ProbitLoss implements AlgorithmUpdateRule {
     double noiseAllVector; //indicates whether to noise all the weights vector or just one random element from it
     double mean; //indicates the mean to the noise to be generated
     double stDev; //indicates the standard deviation to the noise to be generated
+    
+    @Override
+    public void init(ArrayList<Double> args) {
+        if(args.size() != ConfigParameters.PL_PARAMS_SIZE){
+            Logger.error(ErrorConstants.UPDATE_ARGUMENTS_ERROR);
+            return;
+        }
+        //initialize the parameters
+        this.eta = args.get(0);
+        this.lambda = args.get(1);
+        this.numOfIteration = args.get(2);
+        this.noiseAllVector = args.get(3);
+        this.mean = args.get(4);
+        this.stDev = args.get(5);
+    }
 
 	@Override
 	//eta would be at the first cell
@@ -93,7 +89,7 @@ public class ProbitLoss implements AlgorithmUpdateRule {
 				//W+EpsilonVector
                 Vector U = MathHelpers.add2Vectors(currentWeights, epsilonVector);
                 //get the noisy prediction
-				String noisyPrediction = classifierData.predict.predictForTrain(example, U, example.getLabel(), classifierData, 1).firstKey();
+				String noisyPrediction = classifierData.inference.predictForTrain(example, U, example.getLabel(), classifierData, 1).firstKey();
 				//calculate loss
                 double taskLossValue = classifierData.taskLoss.computeTaskLoss(example.getLabel(), noisyPrediction, classifierData.arguments);
 				//update the expectation

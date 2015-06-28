@@ -18,10 +18,13 @@
 
 package Data.Entities;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 //this class is used for name alias
-public class Vector extends HashMap<Integer, Double> {
+public class Vector extends HashMap<Integer, Double> implements Serializable{
+
+    private static final long serialVersionUID = 1L;
 
     public Vector(){}
     public Vector(Vector v){

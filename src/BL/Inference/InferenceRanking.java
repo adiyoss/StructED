@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package BL.Prediction;
+package BL.Inference;
 
 import BL.ClassifierData;
 import Constants.Consts;
@@ -29,7 +29,7 @@ import Helpers.MathHelpers;
 
 import java.util.TreeMap;
 
-public class PredictionRanking implements Prediction{
+public class InferenceRanking implements IInference {
 
     public PredictedLabels predictForTrain(Example vector, Vector W, String realClass, ClassifierData classifierData, double epsilonArgMax)
     {
@@ -107,7 +107,7 @@ public class PredictionRanking implements Prediction{
 
             double loss_1 = classifierData.taskLoss.computeTaskLoss(String.valueOf(min_score_2),String.valueOf(max_score_1),classifierData.arguments);
             double loss_2 = classifierData.taskLoss.computeTaskLoss(String.valueOf(min_score_1),String.valueOf(max_score_0),classifierData.arguments);
-//            double loss_3 = classifierData.taskLoss.computeTaskLoss(String.valueOf(min_score_2),String.valueOf(max_score_0),0);
+//            double loss_3 = classifierData.ITaskLoss.computeTaskLoss(String.valueOf(min_score_2),String.valueOf(max_score_0),0);
 
             Logger.info("Before: " + loss_1);
             Logger.info("Before: "+loss_2);

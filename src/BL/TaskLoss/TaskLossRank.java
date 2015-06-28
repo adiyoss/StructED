@@ -20,7 +20,7 @@ package BL.TaskLoss;
 
 import java.util.List;
 
-public class TaskLossRank implements TaskLoss {
+public class TaskLossRank implements ITaskLoss {
     @Override
     public double computeTaskLoss(String predictClass, String actualClass, List<Double> params) {
         try {

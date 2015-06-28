@@ -16,14 +16,21 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package BL.Prediction;
+package Data.Entities;
 
-import BL.ClassifierData;
-import Data.Entities.Example;
-import Data.Entities.PredictedLabels;
-import Data.Entities.Vector;
+public class Example1D extends Example {
 
-public interface Prediction {
-    public PredictedLabels predictForTrain(Example vector, Vector W, String realClass, ClassifierData classifierData, double epsilonArgMax);
-    public PredictedLabels predictForTest(Example vector, Vector W, String realClass, ClassifierData classifierData, int returnAll);
+    private Vector features;
+
+    public Example1D(){
+        features = new Vector();
+    }
+
+    //Current functions
+    public Vector getFeatures() {
+        return features;
+    }
+    public void setFeatures(Vector features) {
+        this.features = features;
+    }
 }

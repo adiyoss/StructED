@@ -39,7 +39,7 @@ public class ConfigParameters {
     public static final String TASK = "task";
     public static final String EPOCH = "epoch";
     public static final String TASK_PARAM = "task_param";
-    public static final String KERNEL = "kernel";
+    public static final String KERNEL = "IKernel";
     public static final String W_INIT = "init_w";
     public static final String PHI = "phi";
     public static final String PREDICTION = "prediction";

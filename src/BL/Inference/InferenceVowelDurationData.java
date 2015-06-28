@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package BL.Prediction;
+package BL.Inference;
 
 import BL.ClassifierData;
 import Constants.Consts;
@@ -24,10 +24,10 @@ import Constants.ErrorConstants;
 import Data.Entities.Example;
 import Data.Entities.PredictedLabels;
 import Data.Entities.Vector;
-import Helpers.Comperators.MapValueComparatorDescending;
+import Data.Logger;
 import Helpers.MathHelpers;
 
-public class PredictionDummyData implements Prediction {
+public class InferenceVowelDurationData implements IInference {
 
     //predict function
     //argmax(yS,yE) (W*Phi(Xi,yS,yE)) + Task Loss
@@ -36,37 +36,48 @@ public class PredictionDummyData implements Prediction {
     public PredictedLabels predictForTrain(Example vector, Vector W, String realClass, ClassifierData classifierData, double epsilonArgMax)
     {
         try{
-            PredictedLabels tree = new PredictedLabels();
+            double maxVal = 0;
+            String maxLabel = "";
+            boolean isFirst = true;
 
             //validation
             if(vector.sizeOfVector<=0)
             {
-                System.err.println(ErrorConstants.PHI_VECTOR_DATA);
+                Logger.error(ErrorConstants.PHI_VECTOR_DATA);
                 return null;
             }
 
             //loop over all the classifications of this specific example
-            for(int i=Consts.MIN_GAP_START_DUMMY-1 ; i<vector.sizeOfVector-Consts.MIN_GAP_END_DUMMY ; i++)
+            for(int i=Consts.MIN_GAP_START ; i<vector.sizeOfVector-(Consts.MIN_GAP_END) ; i++)
             {
-                for(int j=i+1 ; j<vector.sizeOfVector- Consts.MIN_GAP_END_DUMMY ; j++)
+                for(int j=i+Consts.MIN_VOWEL ; j<i+Consts.MAX_VOWEL ; j++)
                 {
-                    Example phiData = classifierData.phi.convert(vector,(i+1)+ Consts.CLASSIFICATION_SPLITTER+(j+1),classifierData.kernel);
+                    if(j>vector.sizeOfVector-(Consts.MIN_GAP_END))
+                        break;
+
+                    Example phiData = classifierData.phi.convert(vector,(i+1)+Consts.CLASSIFICATION_SPLITTER+(j+1),classifierData.kernel);
                     //multiple the vectors
                     double tmp = MathHelpers.multipleVectors(W, phiData.getFeatures());
 
                     if(epsilonArgMax != 0){
                         //add the task loss
-                        tmp += epsilonArgMax*classifierData.taskLoss.computeTaskLoss((i+1)+ Consts.CLASSIFICATION_SPLITTER+(j+1), realClass, classifierData.arguments);
+                        tmp += epsilonArgMax*classifierData.taskLoss.computeTaskLoss((i+1)+Consts.CLASSIFICATION_SPLITTER+(j+1), realClass, classifierData.arguments);
                     }
 
-                    //get the max value for the max classification
-                    tree.put((i+1)+ Consts.CLASSIFICATION_SPLITTER+(j+1),tmp);
+                    if(isFirst) {
+                        maxLabel = (i + 1) + Consts.CLASSIFICATION_SPLITTER + (j + 1);
+                        maxVal = tmp;
+                        isFirst = false;
+                    }
+                    else if(tmp > maxVal) {
+                        maxLabel = (i + 1) + Consts.CLASSIFICATION_SPLITTER + (j + 1);
+                        maxVal = tmp;
+                    }
                 }
             }
 
-            MapValueComparatorDescending vc = new MapValueComparatorDescending(tree);
-            PredictedLabels result = new PredictedLabels(vc);
-            result.putAll(tree);
+            PredictedLabels result = new PredictedLabels();
+            result.put(maxLabel, maxVal);
 
             return result;
 
@@ -78,6 +89,6 @@ public class PredictionDummyData implements Prediction {
 
     public PredictedLabels predictForTest(Example vector, Vector W, String realClass, ClassifierData classifierData, int returnAll)
     {
-        return predictForTrain(vector,W,realClass,classifierData,0);
+        return predictForTrain(vector, W, realClass, classifierData ,0);
     }
 }

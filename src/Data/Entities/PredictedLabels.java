@@ -25,7 +25,7 @@ import Helpers.Comperators.MapValueComparatorDescending;
 import java.util.TreeMap;
 
 //this class is used for name alias
-public class PredictedLabels extends TreeMap<String,Double>{
+public class PredictedLabels extends TreeMap<String, Double>{
 
     //default c'tor
     public PredictedLabels(){

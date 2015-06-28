@@ -20,7 +20,7 @@ package BL.Kernels;
 
 import Data.Entities.Vector;
 
-public class Poly2Kernel implements Kernel {
+public class Poly2Kernel implements IKernel {
 
     //new dimension = d + d*(d-1)/2.0
     public Vector convertVector(Vector vector, int vectorSize)

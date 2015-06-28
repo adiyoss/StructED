@@ -21,7 +21,7 @@ package BL.Kernels;
 import Constants.ConfigParameters;
 import Data.Entities.Vector;
 
-public class RBF2Kernel implements Kernel {
+public class RBF2Kernel implements IKernel {
 
     private double sigma = ConfigParameters.getInstance().SIGMA;//default value
 

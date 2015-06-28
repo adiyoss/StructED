@@ -23,7 +23,7 @@ import BL.Algorithms.*;
 import BL.Kernels.Poly2Kernel;
 import BL.Kernels.RBF2Kernel;
 import BL.Kernels.RBF3Kernel;
-import BL.Prediction.*;
+import BL.Inference.*;
 import BL.TaskLoss.*;
 import Data.Entities.*;
 import Data.FeatureFunctions.*;
@@ -73,16 +73,13 @@ public class Factory {
 	public static Example getExample(int type){
         switch(type){
             case 0:
-                return new ExampleStandard();
+                return new Example1D();
 
             case 1:
                 return new Example2D();
 
-            case 2:
-                return new VowelExample();
-
             default:
-                return new ExampleStandard();
+                return new Example1D();
         }
 	}
 
@@ -121,16 +118,16 @@ public class Factory {
 
         switch (predictType) {
             case 0:
-                classifier.classifierData.predict = new PredictionVowelDurationData();
+                classifier.classifierData.inference = new InferenceVowelDurationData();
                 break;
             case 1:
-                classifier.classifierData.predict = new PredictionMultiClass();
+                classifier.classifierData.inference = new InferenceMultiClass();
                 break;
             case 2:
-                classifier.classifierData.predict = new PredictionRanking();
+                classifier.classifierData.inference = new InferenceRanking();
                 break;
             case 3:
-                classifier.classifierData.predict = new PredictionDummyData();
+                classifier.classifierData.inference = new InferenceDummyData();
                 break;
             default:
                 return null;
@@ -138,16 +135,16 @@ public class Factory {
 
         switch (phi) {
             case 0:
-                classifier.classifierData.phi = new PhiVowelDurationConverter();
+                classifier.classifierData.phi = new FeatureFunctionsVowelDuration();
                 break;
             case 1:
-                classifier.classifierData.phi = new PhiSparseConverter();
+                classifier.classifierData.phi = new FeatureFunctionsSparse();
                 break;
             case 2:
-                classifier.classifierData.phi = new PhiRankConverter();
+                classifier.classifierData.phi = new FeatureFunctionsRank();
                 break;
             case 3:
-                classifier.classifierData.phi = new PhiDummyConverter();
+                classifier.classifierData.phi = new FeatureFunctionsDummy();
                 break;
             default:
                 return null;
@@ -166,39 +163,43 @@ public class Factory {
             default:
                 classifier.classifierData.kernel = null;
         }
-		
+
+        IUpdateRule cls;
 		switch (updateType) {
 			case 0:
-                classifier.classifierData.algorithmUpdateRule = PassiveAggressive.getInstance(arguments);
+                cls = new PassiveAggressive();
 				break;
 			case 1:
-                classifier.classifierData.algorithmUpdateRule = SVM_Pegasos.getInstance(arguments);
+                cls = new SVM();
 				break;
 			case 2:
-                classifier.classifierData.algorithmUpdateRule = DirectLoss.getInstance(arguments);
+                cls = new DirectLoss();
 				break;
 			case 3:
-                classifier.classifierData.algorithmUpdateRule = CRF.getInstance(arguments);
+                cls = new CRF();
 				break;
 			case 4:
-                classifier.classifierData.algorithmUpdateRule = RampLoss.getInstance(arguments);
+                cls = new RampLoss();
 				break;
 			case 5:
-                classifier.classifierData.algorithmUpdateRule = ProbitLoss.getInstance(arguments);
+                cls = new ProbitLoss();
 				break;
             case 6:
-                classifier.classifierData.algorithmUpdateRule = Perceptron.getInstance(arguments);
+                cls = new Perceptron();
                 break;
             case 7:
-                classifier.classifierData.algorithmUpdateRule = OrbitLoss.getInstance(arguments);
+                cls = new OrbitLoss();
                 break;
             case 8:
-                classifier.classifierData.algorithmUpdateRule = RankSVM.getInstance(arguments);
+                cls = new RankSVM();
                 break;
 			default:
-				classifier.classifierData.algorithmUpdateRule = null;
+                cls = null;
 		}
 
+        classifier.classifierData.updateRule = cls;
+        if (cls == null) throw new AssertionError();
+        cls.init(arguments);
 		return classifier;
 	}
 
