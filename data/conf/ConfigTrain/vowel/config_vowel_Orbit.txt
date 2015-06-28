@@ -1,5 +1,5 @@
 train_path:data/db/vowel/train.results
-w_output:data/weights/vowel.weights.Orbit
+w_output:data/weights/vowel.weights.Orbit_new
 type:7
 task:0
 epoch:1
@@ -10,5 +10,5 @@ reader:2
 writer:0
 isAvg:1
 size_of_vector:15
-lambda:0
+lambda:0.1
 eta:1

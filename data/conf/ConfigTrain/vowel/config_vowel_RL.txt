@@ -1,6 +1,6 @@
 train_path:data/db/vowel/train.results
-w_output:data/weights/vowel.weights.DL
-type:2
+w_output:data/weights/vowel.weights.RL
+type:4
 task:0
 epoch:1
 task_param:1;2
@@ -12,4 +12,4 @@ writer:0
 isAvg:1
 size_of_vector:15
 eta:0.1
-epsilon:-1.52
+lambda:0.8

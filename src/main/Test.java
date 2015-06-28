@@ -19,6 +19,8 @@
 package main;
 
 import BL.Classifier;
+import BL.TaskLoss.TaskLoss;
+import BL.TaskLoss.TaskLossVowelDuration;
 import Constants.Consts;
 import Constants.ErrorConstants;
 import Constants.Paths;
@@ -31,6 +33,8 @@ import DataAccess.Writer;
 import Helpers.ModelHandler;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.concurrent.TimeUnit;
 
 public class Test {
@@ -143,6 +147,19 @@ public class Test {
             //#############################################################################//
             // run over all test instances and predict
             double cumulative_loss = 0;
+
+            // ================= //
+            double cum_los_2_3 = 0;
+            double cum_los_4_7 = 0;
+            double cum_los_6_10 = 0;
+            ArrayList<Double> params_2_3 = new ArrayList<Double>(){{add(2.0); add(3.0);}};
+            ArrayList<Double> params_4_7 = new ArrayList<Double>(){{add(4.0); add(7.0);}};
+            ArrayList<Double> params_6_10 = new ArrayList<Double>(){{add(6.0); add(10.0);}};
+            TaskLoss t_2_3 = new TaskLossVowelDuration();
+            TaskLoss t_4_7 = new TaskLossVowelDuration();
+            TaskLoss t_6_10 = new TaskLossVowelDuration();
+            // ================= //
+
             writer.clearPrevResult(outputFile);
 
             for(int i=0 ; i<instances.getSize() ; i++){
@@ -162,7 +179,9 @@ public class Test {
                 Logger.info(message);
                 Logger.log2File(message);
                 cumulative_loss += classifier.classifierData.taskLoss.computeTaskLoss(y, y_hat, task_param);
-
+                cum_los_2_3 += t_2_3.computeTaskLoss(y, y_hat, params_2_3);
+                cum_los_4_7 += t_4_7.computeTaskLoss(y, y_hat, params_4_7);
+                cum_los_6_10 += t_6_10.computeTaskLoss(y, y_hat, params_6_10);
                 CacheVowelData.clearCacheValues();
             }
 
@@ -182,7 +201,22 @@ public class Test {
             Logger.info("");
             Logger.info("==============================================================");
             Logger.info("Total files predicted: "+instances.getSize());
-            Logger.info("Cumulative task loss: " + (cumulative_loss / (double) (instances.getSize())));
+            Logger.info("Cumulative task loss 0,0: " + (cumulative_loss / (double) (instances.getSize())));
+            Logger.info("==============================================================");
+            Logger.info("");
+            Logger.info("==============================================================");
+            Logger.info("Total files predicted: "+instances.getSize());
+            Logger.info("Cumulative task loss 10,15: " + (cum_los_2_3 / (double) (instances.getSize())));
+            Logger.info("==============================================================");
+            Logger.info("");
+            Logger.info("==============================================================");
+            Logger.info("Total files predicted: "+instances.getSize());
+            Logger.info("Cumulative task loss 20,35: " + (cum_los_4_7 / (double) (instances.getSize())));
+            Logger.info("==============================================================");
+            Logger.info("");
+            Logger.info("==============================================================");
+            Logger.info("Total files predicted: "+instances.getSize());
+            Logger.info("Cumulative task loss 30,50: " + (cum_los_6_10 / (double) (instances.getSize())));
             Logger.info("==============================================================");
 
             Logger.log2File("==============================================================");

@@ -1,9 +1,9 @@
 test_path:data/db/vowel/test.results
-output_file:res/orbit_vowel.txt
-w_path:data/weights/vowel.weights.Orbit
+output_file:res/vowel_probit_new.txt
+w_path:data/weights/vowel.weights.RL
 examples_2_display:-1
 task:0
-task_param:2;3
+task_param:0;0
 phi:0
 prediction:0
 reader:2

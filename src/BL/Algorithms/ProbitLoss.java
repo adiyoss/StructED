@@ -107,7 +107,7 @@ public class ProbitLoss implements AlgorithmUpdateRule {
             Vector updateArgument = MathHelpers.mulScalarWithVectors(expectation, newEta);
             //perform the update
             Vector W_Next = MathHelpers.add2Vectors(oldWeights, updateArgument);
-
+            Logger.info(W_Next.toString());
             return W_Next;
 
 		} catch (Exception e) {
