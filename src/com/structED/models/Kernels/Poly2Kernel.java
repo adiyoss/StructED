@@ -28,6 +28,9 @@ package com.structed.models.kernels;
 
 import com.structed.data.entities.Vector;
 
+/**
+ * Poly 2 kernel
+ */
 public class Poly2Kernel implements IKernel {
 
     //new dimension = d + d*(d-1)/2.0

@@ -38,6 +38,7 @@ import com.structed.data.InstancesContainer;
 import com.structed.data.Logger;
 import com.structed.utils.ModelHandler;
 import com.structed.view.Graph;
+import com.sun.tools.javac.util.Version;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -46,6 +47,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by yossiadi on 6/28/15.
  */
+
 public class StructEDModel implements Serializable{
 
     // data members

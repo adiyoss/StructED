@@ -28,7 +28,9 @@ package com.structed.models.loss;
 
 import java.util.List;
 
-//Task loss 4 the OCR
+/**
+ * MNIST Task Loss example
+ */
 public class TaskLossMultiClass implements ITaskLoss {
 
 	@Override

@@ -28,6 +28,10 @@ package com.structed.data.entities;
 
 import java.util.ArrayList;
 
+/**
+ * this class will store the raw data and the desired label
+ * the raw data here will be presented as 2D array
+ */
 public class Example2D extends Example {
 
     private ArrayList<Vector> features2D;

@@ -38,6 +38,9 @@ import com.structed.utils.MathHelpers;
 import java.util.ArrayList;
 import java.util.Map;
 
+/**
+ * TBD
+ */
 public class RankSVM implements IUpdateRule {
 
     //data members

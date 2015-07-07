@@ -29,6 +29,9 @@ package com.structed.models.kernels;
 import com.structed.constants.Consts;
 import com.structed.data.entities.Vector;
 
+/**
+ * RBF 3rd approximation
+ */
 public class RBF3Kernel implements IKernel {
 
     private double sigma = Consts.SIGMA;//default value

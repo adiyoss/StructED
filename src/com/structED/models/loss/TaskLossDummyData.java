@@ -31,6 +31,9 @@ import com.structed.data.Logger;
 
 import java.util.List;
 
+/**
+ * Dummy Task Loss example
+ */
 public class TaskLossDummyData implements ITaskLoss {
 
 	@Override

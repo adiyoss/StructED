@@ -35,6 +35,9 @@ import com.structed.data.entities.Vector;
 import com.structed.data.Logger;
 import com.structed.utils.MathHelpers;
 
+/**
+ * Vowel Duration inference example
+ */
 public class InferenceVowelDurationData implements IInference {
 
     //predict function

@@ -30,6 +30,9 @@ import com.structed.constants.Consts;
 
 import java.util.List;
 
+/**
+ * Vowel Duration Task Loss example
+ */
 public class TaskLossVowelDuration implements ITaskLoss {
 
 	@Override

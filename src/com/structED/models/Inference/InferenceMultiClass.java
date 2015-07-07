@@ -36,6 +36,9 @@ import com.structed.data.Logger;
 import com.structed.utils.comperators.MapValueComparatorDescending;
 import com.structed.utils.MathHelpers;
 
+/**
+ * Multi class inference (used for MNIST for 10 classes)
+ */
 public class InferenceMultiClass implements IInference {
 
     int numOfClass = 10;

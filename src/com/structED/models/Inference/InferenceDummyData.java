@@ -35,6 +35,9 @@ import com.structed.data.entities.Vector;
 import com.structed.utils.comperators.MapValueComparatorDescending;
 import com.structed.utils.MathHelpers;
 
+/**
+ * Dummy data inference example
+ */
 public class InferenceDummyData implements IInference {
 
     // predict function
