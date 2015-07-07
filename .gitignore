@@ -3,3 +3,5 @@ StructED_Package-github.iml
 data/
 out/
 src/
+.DS_Store
+lib/
