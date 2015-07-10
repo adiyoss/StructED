@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="StructED, structured prediction learning package">
+    <meta name="author" content="adiyoss yossi adi joseph keshet">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>StructED</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+
+   <!-- Custom styles for this template -->
+    <link href="css/navbar-fixed-top.css" rel="stylesheet">
+    <link href="css/sticky-footer-navbar.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/jumbotron.css" rel="stylesheet">
+
+    <link href="css/style.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="assets/ie-emulation-modes-warning.js"></script>
+
+    <!-- Custom Fonts -->
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <!-- USED FOR LATEX CODE INSIDE THE HTML -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        extensions: ["tex2jax.js"],
+        jax: ["input/TeX","output/HTML-CSS"],
+        tex2jax: {inlineMath: [["$","$"],["\\(","\\)"]]}
+      });
+    </script>
+    <script type="text/javascript" src="js/MathJax.js"></script> 
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="index.html">StrcutED</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">            
+            <li><a href="introduction.html">Introduction</a></li>
+            <li><a href="tutorial.html">Tutorial</a></li>
+            <li role="presentation" class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+              Examples <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu">                  
+                  <li><a href="multiclass.html">Multiclass</a></li>
+                  <li><a href="ocr.html">OCR</a></li>
+                  <li><a href="vowel.html">Vowel Duration Measurement</a></li>                  
+              </ul>
+            </li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="api/index.html" target="blank">API</a></li>
+            <li><a href="https://github.com/adiyoss/StructED" target="blank"><i class="fa fa-github fa-fw fa-lg"></i></a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="container">
+      <div>      
+        <h2 class="text-center">Vowel Duration Measurement</h2>
+        <hr>
+        <div>                  
+          <div>
+            In this tutorial we will demonstrate how to use and add new task to the StructED package. We will give code examples for the Task-Loss, Predict - Inference and Feature Functions interfaces. For this tutorial we will use a structured prediction problem called the Vowel Duration Measurement. We provide a small subset from the original data we use in our experiments.
+          </div>
+
+          <h3>The Task</h3>    
+          <hr>
+          <div>
+
+              In the problem of vowel duration measurement we are provided with speech signal which includes exactly one vowel, preceded and followed by consonants. 
+
+              Our goal is to predict the start and end time of the vowel as accurate as possible. We represent each speech signal as a set of acoustic features $\overline{x}$ = ($x_1$, $x_2$,...,$x_T$) where each $x_i$ (1 $\leq$ i $\leq$ T) is a $d$-dimensional vector. We denote the domain of the feature vectors by $X \subset \mathbb{R}^d$. Since we are dealing with speech, the length of the signals varies from one file to another, thus T is not fixed. We denote by $X^*$ the set of all finite lengths over $X$. More detailed information about the features and the feature functions is descried later on this paper. 
+
+              In addition, each speech segment is accompanied with the vowel start and end time, we denote by the pair $t_{onset}\subset \mathcal{T}$ and $t_{offset}\subset \mathcal{T}$ the onset and offset times of the vowel respectively, where $\mathcal{T} = \{1,...,T\}$, for brevity let us denote ($t_{onset}, t_{offset}$) as $\hat{t}$. 
+
+              To sum up, our goal is to learn a function, denoted $f$, which takes as input a speech signal $\overline{x}$ and returns the sequence $\hat{t}$ which is the start and end time of the vowel. Meaning, $f$ is a function from the domain of all possible CVC speech segments $X^*$ to the domain of all possible onset and offset pairs $\mathcal{T}^2$.
+
+              We provide a small subset from the data set we use in our experiment, it can be found under db/ directory.
+          </div>
+
+          <h3>The Code</h3>    
+          <hr>
+          <div>
+              Here, we present what classes do we need to add and what interfaces do we need to implement. We provide the source code for each class and interface.
+              <br><br>
+              First, before we getting into the code, you should open a java project and add StructED jar file to your build path. You can download all StructED source codes and jar files from <a href="https://github.com/adiyoss/StructED" target="blank">GitHub.</a>
+              <br><br>
+              Now let's begin!
+              <br><br>
+          </div>
+          <h4>Task Loss</h4>
+          <div>              
+              We now add a task loss class. Every task loss class should implement the TaskLoss interface. In our problem settings we define the task loss as:
+              <br>
+              <p class="text-center">              
+                  \begin{equation}
+                  \label{eq:loss}
+                  \gamma (\hat{t},\hat{t}^{'}) =  max\{0,|\hat{t}_{onset} -  \hat{t}^{'}_{onset}| \geq \epsilon_{onset}\} + max\{0, |\hat{t}_{offset} -  \hat{t}^{'}_{offset}| \geq \epsilon_{offset}\}
+                  \end{equation}   
+              </p><br>
+              In other words, the loss will be one if y not equal to $\hat{y}$, otherwise it will be zero. <br><br>
+
+              For this we create new java class that implements the ITaskLoss interface. The code for the implementation of this class is attached to this tutorial.
+          </div>
+          <h4>Inference</h4>
+          <div>
+            Now we create the inference class. Every inference class should implement the IInference interface. In our problem settings the prediction will be a brute force, we will run over all the possible onsets and offsets and predict the one that maximizes $\
+            w^\top \phi(x, y)$, but we still make a few assumptions to make our code go faster.
+            <br><br>
+            We assume that there is a minimum and maximum vowel length possible, denoted by MIN_VOWEL and MAX_VOWEL respectively. Moreover we assume that the vowel is never placed at the start of the signal, hence we start searching after a gap, denote MIN_GAP_END.
+            <br><br>
+            For this we create new java class that implements the IInference interface. The code for the implementation of this class is attached to this tutorial.
+          </div>
+          <h4>Feature Functions</h4>
+          We now add the feature functions. We can divide our feature functions into three types:
+          <div>
+              <ol>
+                <li>Type 1: $\Delta(location, window-size, feature)$</li>
+                  While exploring the data we noticed a rapid increase in certain features when the vowel onset occurs and rapid decrease when the vowel offset occurs. As a result we implemented the $\Delta$ feature function to collect this data. This function computes the difference between the mean of the signal of the given feature, before and after the location parameter in range of window-size parameter.<br><br>
+                <li>Type 2: $\mu(location_{start}, location_{end}, window-size, feature)$</li>
+                  Besides the rapid change in the vowel onset and offset, we've also notice that the mean of signal in certain features between the onset and offset is greater then the mean of signal before and after. Hence, we implemented the $\mu$ function. This function computes the difference between the mean of the signal of a given feature from $location_{start}$ to $location_{end}$, to the mean of a signal before $location_{start}$ or after $location_{end}$ in range of window-size parameter.
+                <br><br>
+                <li>Type 3: Gamma and Gaussian Distribution over the data</li>
+                  Since our data is distributed somewhere between Gamma and Gaussian distribution, we competed the probability of a given vowel length to occur as for Gamma and Gaussian distributions.
+                  <br><br>
+              </ol>
+          </div>
+
+          <h3>Running The Code</h3>    
+          <hr>
+          <div>
+            Now we can create the StructEDModel with the interfaces we have just implemented, all we have left to do is to choose the model (learning algorithm). The code should look like this: <br><br>
+            <div>
+              <pre class="prettyprint">
+
+      // create the model 
+      StructEDModel vowel_model = new StructEDModel(W, new DirectLoss(), new TaskLossVowelDuration(), 
+                new InferenceVowelDurationData(), null, new FeatureFunctionsVowelDuration(), arguments); 
+
+      // train
+      vowel_model.train(vowelTrainInstances, task_loss_params, null, epochNum, isAvg);
+
+      // predict
+      vowel_model.predict(vowelTestInstances, null, numExamples2Display); 
+
+              </pre>
+              <br><br>
+              In this case, we used a different reader, we called it LazyInstanceContainer, this container gets the pathes to all the data and read the actual data on demand. Moreover, we store the raw data here as a 2D-Array, hence we create a new data structure called Examle2D which support this kind of data.
+            </div>  
+          </div>
+        </div>              
+      </div>
+    </div> <!-- /container -->    
+    
+    <footer class="footer">
+      <div class="container">        
+      </div>
+    </footer>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="assets/ie10-viewport-bug-workaround.js"></script>
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+  </body>
+</html>

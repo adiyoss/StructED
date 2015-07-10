@@ -53,10 +53,19 @@
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">            
             <li><a href="introduction.html">Introduction</a></li>
-            <li><a href="installation.html">Installation</a></li>
-            <li><a href="tut_general.html">Tutorials</a></li>
-            <li><a href="https://github.com/adiyoss/StructED/issues" target="blank">Issues</a></li>
+            <li><a href="tutorial.html">Tutorial</a></li>
+            <li role="presentation" class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+              Examples <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu">                  
+                  <li><a href="multiclass.html">Multiclass</a></li>
+                  <li><a href="ocr.html">OCR</a></li>
+                  <li><a href="vowel.html">Vowel Duration Measurement</a></li>                  
+              </ul>
+            </li>
             <li><a href="contact.html">Contact</a></li>
+            <li><a href="api/index.html" target="blank">API</a></li>
             <li><a href="https://github.com/adiyoss/StructED" target="blank"><i class="fa fa-github fa-fw fa-lg"></i></a></li>
           </ul>
         </div><!--/.nav-collapse -->
@@ -72,19 +81,24 @@
           <div class="col-md-6">
             <img src="img/STRUCTED-LOGO.png" class="img-responsive" style="width:460px; padding-left:50px;">
          </div>
-          <div class="col-md-3">
-          </div>
         </div>
-        <hr>
-        <div class="row">
-            <div class="col-md-7">
+        <hr>      
+        <div>              
+          <div class="col-md-2">
+            <div class="text-center">
+              <h4>Citing</h4>
+              <p style="font-size:12.5px">If you like our work and find it usfull for you, please cite our paper:</p>  
+              <p>TBD</p>  
+            </div>
+          </div>
+            <div class="col-md-8">
               <p>
-                StructED is a software packages that implements a collection of machine learning algorithms for large scale structured prediction. The package was written in Java, and was released under the GNU GPL v3.0 license.</p>                       
+                StructED is a software packages that implements a collection of machine learning algorithms for large scale structured prediction. The package was written in Java, and was released under the MIT license.</p>                       
                 <p>
                   Most software packages in machine learning available today are designed to solve binary, regression or multiclass problems, where the input to such classifiers is a fixed-length vector and the output is an integer or a real number. Structured prediction is the case where both the input and the output are structured objects (a graph, an acoustic speech utterance, a sequence of words, an image, etc.). Consequently, the structured output space can be exponentially large (all possible phoneme or word sequences, all possible taxonomy graphs, all possible human poses, etc.) and the evaluation metric is not the 0-1 loss but rather a unique task-dependent metric (<a href="http://en.wikipedia.org/wiki/Word_error_rate">word error rate</a> in speech recognition, the <a href="http://en.wikipedia.org/wiki/BLEU">BLEU</a> score in machine translation, the <a href="http://en.wikipedia.org/wiki/Discounted_cumulative_gain">NDCG</a> score in information retrieval, or the intersection-over-union score in visual object segmentation).
                 </p>
                 <p>
-                  Structured tasks are therefore distinctive: each task has a unique evaluation metric, its own set of feature functions, and in many cases a non-standard inference. Consequently, implementation of a machine learning system that utilizes structured prediction is complex and involved.
+                  Structured tasks are therefore distinctive: each task has a unique evaluation metric, its own set of feature functions, and in many cases a non-standard inference.
                 </p>
                 <p> 
                   StructED handles this inherent complexity by providing the user a set of interfaces for easy implementation of the evaluation metric, the set of feature functions and the decoder.
@@ -92,25 +106,18 @@
                 <div class="row text-center">
                   <p><a class="btn btn-primary btn-md" href="introduction.html" role="button">More about structred prediction &raquo;</a></p>
                 </div>
-              </div>
-              <div class="col-md-1"></div>
-              <div class="col-md-4">
-                <div class="row">
+              </div>              
+              <div class="col-md-2">
+                <div class="text-center">
                   <h4>Installation</h4>
-                  <p>StructED package was written in Java hence installation is very easy and straightforward. All the details about how to install and use StructED can be found in the following link.</p>         
+                  <p style="font-size:12.5px">StructED package was written in Java hence installation is very easy and straightforward.</p>         
                   <p><a class="btn btn-default btn-sm" href="installation.html" role="button">Learn more &raquo;</a></p>
                 </div>
-                <div class="row">
+                <div class="text-center">
                   <h4>Examples</h4>
-                  <p>Here we provide three examples for using StructED for different tasks. The first one is the MNIST benchmark, the second one is 
-                  the Vowel Duration Measurement and the last one is an example on synthetic data we generated. 
+                  <p style="font-size:12.5px">We provide a few examples for using StructED for a few different tasks, including multiclass problems.
                   </p>
                   <p><a class="btn btn-default btn-sm" href="tut_general.html" role="button">Learn more &raquo;</a></p>
-                </div>
-                <div class="row">
-                  <h4>Citing</h4>
-                  <p>If you like our work and find it usfull for you, please cite our paper:</p>  
-                  <p>TBD</p>  
                 </div>
               </div>
             </p>          

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="StructED, structured prediction learning package">
+    <meta name="author" content="adiyoss yossi adi joseph keshet">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>StructED</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+
+   <!-- Custom styles for this template -->
+    <link href="css/navbar-fixed-top.css" rel="stylesheet">
+    <link href="css/sticky-footer-navbar.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/jumbotron.css" rel="stylesheet">
+
+    <link href="css/style.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="assets/ie-emulation-modes-warning.js"></script>
+
+    <!-- Custom Fonts -->
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        extensions: ["tex2jax.js"],
+        jax: ["input/TeX","output/HTML-CSS"],
+        tex2jax: {inlineMath: [["$","$"],["\\(","\\)"]]}
+      });
+    </script>
+    <script type="text/javascript" src="js/MathJax.js"></script> 
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="index.html">StrcutED</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">            
+            <li><a href="introduction.html">Introduction</a></li>
+            <li><a href="tutorial.html">Tutorial</a></li>
+            <li role="presentation" class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+              Examples <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu">                  
+                  <li><a href="multiclass.html">Multiclass</a></li>
+                  <li><a href="ocr.html">OCR</a></li>
+                  <li><a href="vowel.html">Vowel Duration Measurement</a></li>                  
+              </ul>
+            </li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="api/index.html" target="blank">API</a></li>
+            <li><a href="https://github.com/adiyoss/StructED" target="blank"><i class="fa fa-github fa-fw fa-lg"></i></a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+    
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="container">
+      <div>      
+      <h2 class="text-center">Multiclass</h2>
+      <hr>
+        <div>                    
+          <div>
+            In this tutorial we will demonstrate how to use StructED for multi-class problems. For this tutorial we will use a multi-class problem, the standard benchmark MNIST, we supply a small subset from this dataset, you can download the full data set from <a href="http://yann.lecun.com/exdb/mnist/">mnist</a>. <br>
+            This tutorial is also suitable for any other multi-class problem, at the end it we demonstrate how use it also with the <a href="https://archive.ics.uci.edu/ml/datasets/Iris"> Iris flower data set</a>.
+          </div>
+
+          <h3>MNIST</h3>    
+          <hr>
+          <div>
+
+            MNIST is a dataset of handwritten digits labeled from 0 to 9, and contains 60,000 training examples and 10,000 test examples. Each example has been size-normalized and centered in a fixed-size image of 28 $\times$ 28. <br><br>
+
+            Notice that when downloading MNIST db from the web we get a compressed files, so we need to make a little bit of preprocessing before using StructED. <br>
+            StructED should get as input the db from the following format, <br><br>
+
+            Each example should be in a different line (meaning each example should end with \n). Each feature/value pair should be separated by a space character and a: between the feature number and its value. Features with value zero can be skipped. The label(target value) should be the first value in each example. 
+            <br><br>
+            For example, the line: 3 1:0.55 8:0.07 2293:0.11
+            <br><br>
+            specifies an example of class 3 for which feature number 1 has the value 0.55, feature number 8 has the value 0.07, feature number 2293 has the value 0.11, all the other features have value 0.
+            <br><br>
+            We provide a sample from the MNIST data set with this tutorial.
+          </div>
+
+          <h3>The Code</h3>
+          <hr>
+          <div>
+              Here, we present what classes do we need to use/change in order to use StructED as multi-class classifier.
+              <br><br>
+              First, before we getting into the code, you should open a java project and add StructED jar file to your build path. You can download all StructED source codes and jar files from <a href="https://github.com/adiyoss/StructED" target="blank">GitHub.</a>
+              <br><br>
+              Now let's begin!
+              <br><br>
+          </div>
+          <h4>Task Loss</h4>
+          <div>
+              In order to add new loss/cost function one needs to implement the ITaskLoss interface. In our package we implemented a 0-1 loss function: <br>
+              <p class="text-center">              
+                \begin{equation}
+                \label{eq:loss}
+                  \ell (y,\hat{y}) = {\mathcal{1}\!\left[y \ne \hat{y}\right]}
+                \end{equation}   
+              </p><br>
+              In other words, the loss will be one if y not equal to $\hat{y}$, otherwise it will be zero. <br><br>            
+          </div>
+          <h4>Inference</h4>
+          <div>
+            In the multi-class cases our inference will be to go over all the possiable classes. In case we would like to use another inference functions all we need to do is just implement the IInference interface and use it with the desired learning algorithm.          
+          </div>
+          <h4>Feature Functions</h4>
+          <div>
+            In multi-class problems there is no real need for feature functions, but we need to store as many weight vectors as the number of classes defined by the task settings. To solve that we just concatenate all the vectors one after the other into a single weight vector.
+
+            Thus, the feature functions is just putting the right vector in his place according to its class number. 
+
+            In case we would like to use another feature functions all we need to do is just implement the IFeatureFunctions interface and use it with the desired learning algorithm. 
+          </div>
+          
+          <h3>Running The Code</h3>    
+          <hr>
+          <div>
+            Now we now can create a StructEDModel with the interfaces we have just defined, all we have left to do is to choose the model (learning algorithm). The code should look like this: <br><br>
+            <div>
+              <pre class="prettyprint">
+
+    // create the model
+    StructEDModel mnist_model = new StructEDModel(W, new SVM(), new TaskLossMultiClass(),
+                new InferenceMultiClass(), null, new FeatureFunctionsSparse(), arguments);
+    // train
+    mnist_model.train(mnistTrainInstances, task_loss_params, mnistDevelopInstances, epochNum, isAvg);
+    
+    // predict
+    mnist_model.predict(mnistTestInstances, null, numExamples2Display);
+
+              </pre>
+            </div>  
+          </div>
+        </div>        
+      </div>
+    </div> <!-- /container -->    
+    
+    <footer class="footer">
+      <div class="container">        
+      </div>
+    </footer>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="assets/ie10-viewport-bug-workaround.js"></script>
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+  </body>
+</html>

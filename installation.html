@@ -51,172 +51,36 @@
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">            
             <li><a href="introduction.html">Introduction</a></li>
-            <li class="active"><a href="installation.html">Installation</a></li>
-            <li><a href="tut_general.html">Tutorials</a></li>
-            <li><a href="https://github.com/adiyoss/StructED/issues" target="blank">Issues</a></li>
+            <li><a href="installation.html">Installation</a></li>
+            <li role="presentation" class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+              Examples <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu">
+                  <li><a href="tut_general.html">Tutorial</a></li>
+                  <li><a href="mnist_example.html">Multiclass</a></li>
+                  <li><a href="ocr_example.html">OCR</a></li>
+                  <li><a href="vowel_example.html">Vowel Duration Measurement</a></li>                  
+              </ul>
+            </li>
             <li><a href="contact.html">Contact</a></li>
+            <li><a href="api/index.html" target="blank">API</a></li>
             <li><a href="https://github.com/adiyoss/StructED" target="blank"><i class="fa fa-github fa-fw fa-lg"></i></a></li>
           </ul>
         </div><!--/.nav-collapse -->
+      </div>
     </nav>
 
     <div class="container">
       <div>
-          <h2 class="text-center">Installation</h2>
+          <h2 class="text-center">User Guide</h2>
           <hr>
           <div>
-            <h3><u>Compile</u></h3>
             <div>
-              <p>In order to install StructED package one needs to do the following: </p>
-<!--               <p style="font-size:12px">* To use StructED to your own specific task you should implement the required interfaces before compiling.</p>
- -->              <ol>
-                <li>Download StructED package from <a href="https://github.com/adiyoss/StructED" target="blank">GitHub.</a></li>
-                <li>Change directory into the StructED path.</li>
-                <li>Execute <font face="Courier New, Courier, monospace">sh install.sh</font>.</li>                              
-              </ol>
+              One can use StructED with its jar file or with the source code itself. You can find both of them at the <a href="https://github.com/adiyoss/StructED" target="blank">GitHub</a> reposetory.
+
+              If you would like to use         
             </div>
-          </div>
-
-          <div>
-            <h3><u>Config File</u></h3>
-            <p>In order to use the package one must first implement the required interfaces for his specific task, more details about the adding new task can be found in <a href="tut_general.html">tutorials.</a></p>
-            <p>After implementing the above functions we need to chose the algorithm, for that we need to define a config file. The file should be from the following format: (All the parameters in the config file should be as follows: parameter type, colon(:), parameter value) Examples of config files can be found in the package source code under data/conf/algorithms_example directory.</p>
-            <h4>Config File - Train</h4>
-            <p>Every train config file should include both general and algorithm dependent parameters:</p>
-            <h5>General Parameters: </h5>
-            <ul>
-              <li><b>train_path</b>: the path to the training set data - Mandatory </li>
-              <li><b>w_output</b>: the path to save the weights vector (model)</li>
-              <li><b>type</b>: the algorithm type - Mandatory
-                <ul>
-                  <li>0 - Passive Aggressive</li>
-                  <li>1 - SVM</li>
-                  <li>2 - Direct Loss</li>
-                  <li>3 - CRF</li>
-                  <li>4 - Ramp Loss</li>
-                  <li>5 - Probit Loss</li>
-                  <li>6 - Structured Perceptron</li>
-                </ul>
-              </li>
-              <li><b>task</b>: the cost/loss function number - Mandatory</li>
-              <li><b>epoch</b>: the number of epochs on the data - Mandatory</li>
-              <li><b>task_param</b>: cost/loss parameters if needed, can store multiple parameters splited by (;) - optional</li>
-              <li><b>kernel</b>: kernel type, and parameters(i.e sigma) - Optional
-                <ul>
-                  <li>0 - poly 2 degree</li>
-                  <li>1 - 2nd taylor approximation for RBF - setting the sigma value can be done like that: kernel:1:19</li>
-                  <li>2 - 3rd taylor approximation for RBF - setting the sigma value can be done like that: kernel:2:19</li>
-                </ul>
-              </li>
-              <li><b>init_w</b>: the path for the initial weights - Optional</li>
-              <li><b>phi</b>: feature function type - Mandatory</li>
-              <li><b>prediction</b>: prediction function, should implement also the loss-augmented function - Mandatory</li>
-              <li><b>reader</b>: db reader type - Mandatory</li>
-              <li><b>writer</b>: db writer type - Mandatory
-                <ul>
-                  <li>for both reader and writer
-                <ul>
-                  <li>use 0 for standard reader(like mnist db or the dummy data)</li>
-                </ul>
-                </li>
-                </ul>
-              </li>
-              <li><b>isAvg</b>: boolean that indicates whether to average the weights vector - optional, default is 0</li>
-              <li><b>size_of_vector</b>: size of vector after the feature mapping functions - Mandatory</li>
-            </ul>
-            <h5>Algorithm Dependent: </h5>           
-              <li>
-                <b>Passive Aggressive</b>
-                <ul>
-                  <li><b>c</b>: parameter for the PA algorithm<br></li>
-                </ul>
-              </li>
-              <li>
-                <b>SVM</b>
-                <ul>
-                  <li><b>lambda</b>: lambda parameter for the SVM<br></li>
-                  <li><b>eta</b>: learning rate</li>
-                </ul>
-              </li>            
-              <li>
-                <b>Direct Loss</b>
-                <ul>
-                  <li><b>eta</b>: learning rate</li>
-                  <li><b>epsilon</b>: epsilon parameter for the DL<br></li>
-                </ul>
-              </li>
-              <li>
-                <b>CRF</b>
-                <ul>
-                  <li><b>eta</b>: learning rate</li>
-                  <li><b>lambda</b>: lambda parameter for the CRF</li>
-                </ul>
-              </li>                            
-              <li>
-                <b>Ramp Loss</b>
-                <ul>
-                  <li><b>eta</b>: learning rate</li>
-                  <li><b>lambda</b>: lambda parameter for the RL<br></li>
-                </ul>
-              </li>
-              <li>
-                <b>Probit Loss</b>
-                <ul>
-                  <li><b>eta</b>: learning rate</li>
-                  <li><b>lambda</b>: lambda parameter for the PL</li>
-                  <li><b>num_of_iteration</b>: the number of times to generation noise for the weights vector</li>
-                  <li><b>noise_all_vector</b>: boolean(1/0) indicates whether to generate noise through all the weight vector or just in one random place</li>
-                  <li><b>noise_mean</b>: the mean of the noise to be generated(we draw the noise from a normal distribution)</li>
-                  <li><b>noise_std</b>: the standard deviation of the noise to be generated(we draw the noise from a normal distribution)<br></li>
-                </ul>
-              </li>
-              <li>
-                <b>Structured Perceptron</b>
-                <ul>
-                  <li>The structured perceptron does not need any special parameters</li>
-                </ul>
-              </li>
-
-            <h4>Config File - Test</h4>
-            <p>Every test config file should include the following parameters as specified:</p>
-            <ul>
-              <li><b>test_path</b>: the path to the test set data - Mandatory </li>
-              <li><b>output_file</b>: the path to output the scores file - Mandatory</li>
-              <li><b>w_path</b>: the path to the weights vector (model) - Mandatory </li>
-              <li><b>examples_2_display</b>: how many examples to display in the scores file - Mandatory</li>
-              <li><b>task</b>: the loss(cost) function, the same as the train - Mandatory</li>
-              <li><b>task_param</b>: task loss parameters if needed</li>
-              <li><b>kernel</b>: kernel type, and parameters(i.e sigma) - Optional
-
-              <ul>
-              <li>0 - poly 2 degree</li>
-              <li>1 - RBF 2nd taylor approximation - setting the sigma value can be done like that: kernel:1:19</li>
-              <li>2 - RBF 3rd taylor approximation - setting the sigma value can be done like that: kernel:2:19</li>
-              </ul>
-              </li>
-              <li><b>phi</b>: feature function type - Mandatory</li>
-              <li><b>prediction</b>: prediction function, should implement the inferences - Mandatory</li>
-              <li><b>reader</b>: reader type - Mandatory</li>
-              <li><b>writer</b>: writer type - Mandatory
-
-              <ul>
-              <li>for both reader and writer
-
-              <ul>
-              <li>use 0 for standard reader(like mnist db or the dummy data)</li>
-              </ul>
-              </li>
-              </ul>
-              </li>
-              <li><b>size_of_vector</b>: size of vector after the feature mapping functions - Mandatory</li>
-            </ul>
-
-            <h3><u>Usage</u></h3>
-              <li>Now: </li>              
-                <ul>
-                  <li><p>For train type: <font face="Courier New, Courier, monospace">sh train.run.sh &ltconfig file path&gt</font></p></li>
-                  <li>For predict type: <font face="Courier New, Courier, monospace">sh predict.run.sh &ltconfig file path&gt</font></li>
-                </ul>  
           </div>
       </div>
     </div> <!-- /container -->
