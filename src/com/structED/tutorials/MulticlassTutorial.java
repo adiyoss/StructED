@@ -44,12 +44,14 @@ import static com.structed.data.Factory.getReader;
 
 /**
  * Created by yossiadi on 6/29/15.
- * Tutorial about the MNIST data
+ * Tutorial about the multiclass classifications using MNIST and Iris datasets
  */
-public class MNISTTutorial {
+public class MulticlassTutorial {
     public static void main(String[] args) throws Exception {
         // ============================ MNIST DATA ============================ //
         Logger.info("MNIST data example.");
+
+        // === PARAMETERS === //
         String trainPath = "data/db/MNIST/train.txt";
         String testPath = "data/db/MNIST/test.data.txt";
         String valPath = "data/db/MNIST/val.data.txt";
@@ -57,7 +59,10 @@ public class MNISTTutorial {
         int readerType = 0;
         int isAvg = 1;
         int numExamples2Display = 3;
+        int numOfClasses = 10;
+        int maxFeatures = 784;
         Reader reader = getReader(readerType);
+        // ================== //
 
         // load the data
         InstancesContainer mnistTrainInstances = reader.readData(trainPath, Consts.SPACE, Consts.COLON_SPLITTER);
@@ -70,10 +75,38 @@ public class MNISTTutorial {
         ArrayList<Double> arguments = new ArrayList<Double>() {{add(0.1);add(0.1);}}; // model parameters
 
         StructEDModel mnist_model = new StructEDModel(W, new SVM(), new TaskLossMultiClass(),
-                new InferenceMultiClass(), null, new FeatureFunctionsSparse(), arguments); // create the model
+                new InferenceMultiClass(numOfClasses), null, new FeatureFunctionsSparse(numOfClasses, maxFeatures), arguments); // create the model
         mnist_model.train(mnistTrainInstances, null, mnistDevelopInstances, epochNum, isAvg); // train
-        ArrayList<PredictedLabels> labels = mnist_model.predict(mnistTestInstances, null, numExamples2Display); // predict
-        mnist_model.plotValidationError(true); // plot the error on the validation set
+        mnist_model.predict(mnistTestInstances, null, numExamples2Display); // predict
+        mnist_model.plotValidationError(false); // plot the error on the validation set
+        // ==================================================================== //
+
+        // ============================ IRIS DATA ============================= //
+        // === PARAMETERS === //
+        trainPath = "data/db/iris/iris.train.txt";
+        testPath = "data/db/iris/iris.test.txt";
+        epochNum = 10;
+        isAvg = 1;
+        numExamples2Display = 3;
+        numOfClasses = 3;
+        maxFeatures = 4;
+        // ================== //
+
+        // load the data
+        InstancesContainer irisTrainInstances = reader.readData(trainPath, Consts.COMMA_NOTE, Consts.COLON_SPLITTER);
+        InstancesContainer irisTestInstances = reader.readData(testPath, Consts.COMMA_NOTE, Consts.COLON_SPLITTER);
+        // ======= SVM ====== //
+        W = new Vector() {{put(0, 0.0);}}; // init the first weight vector to be zeros
+        arguments = new ArrayList<Double>() {{add(0.1);add(0.1);}}; // model parameters
+
+        StructEDModel iris_model = new StructEDModel(W, new SVM(), new TaskLossMultiClass(),
+                new InferenceMultiClass(numOfClasses), null, new FeatureFunctionsSparse(numOfClasses, maxFeatures), arguments); // create the model
+        iris_model.train(irisTrainInstances, null, null, epochNum, isAvg); // train
+        ArrayList<PredictedLabels> iris_labels = iris_model.predict(irisTestInstances, null, numExamples2Display); // predict
+
+        // printing the predictions
+        for(int i=0 ; i<iris_labels.size() ; i++)
+            Logger.info("Desire Label: "+irisTestInstances.getInstance(i).getLabel()+", Predicted Label: "+iris_labels.get(i).firstKey());
         // ==================================================================== //
     }
 }

@@ -107,6 +107,8 @@ public class APITest {
         testPath = "data/db/MNIST/test.data.txt";
         String valPath = "data/db/MNIST/val.data.txt";
         epochNum = 1;
+        int numOfClasses = 10;
+        int maxFeatures = 784;
 
         // load the data
         InstancesContainer mnistTrainInstances = reader.readData(trainPath, Consts.SPACE, Consts.COLON_SPLITTER);
@@ -119,7 +121,7 @@ public class APITest {
         arguments = new ArrayList<Double>(){{add(0.1); add(0.1);}}; // model parameters
 
         StructEDModel mnist_model = new StructEDModel(W, new SVM(), new TaskLossMultiClass(),
-                new InferenceMultiClass(), null, new FeatureFunctionsSparse(), arguments); // create the model
+                new InferenceMultiClass(numOfClasses), null, new FeatureFunctionsSparse(numOfClasses, maxFeatures), arguments); // create the model
         mnist_model.train(mnistTrainInstances, task_loss_params, mnistDevelopInstances, epochNum, isAvg); // train
         mnist_model.predict(mnistTestInstances, null, numExamples2Display); // predict
         mnist_model.plotValidationError(false); // plot the error on the validation set

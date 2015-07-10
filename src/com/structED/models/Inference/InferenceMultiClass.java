@@ -37,11 +37,20 @@ import com.structed.utils.comperators.MapValueComparatorDescending;
 import com.structed.utils.MathHelpers;
 
 /**
- * Multi class inference (used for MNIST for 10 classes)
+ * Multi class inference
  */
 public class InferenceMultiClass implements IInference {
 
-    int numOfClass = 10;
+    private int numOfClass = 10; //default MNIST
+
+    /**
+     * Constructor
+     * @param numOfClasses - the number of classes
+     */
+    public InferenceMultiClass(int numOfClasses){
+        this.numOfClass = numOfClasses;
+    }
+
     //predict function
     //argmax(yS,yE) (W*Phi(Xi,yS,yE)) + Task Loss
     //this function assumes that the argument vector has already been converted to phi vector
@@ -119,4 +128,5 @@ public class InferenceMultiClass implements IInference {
         } else
             return predictForTrain(vector, W, realClass, classifierData ,0);
     }
+
 }

@@ -35,7 +35,7 @@ import com.structed.data.featurefunctions.IFeatureFunctions;
 import java.util.List;
 
 /**
- * Data structure class
+ * data structure class
  * this class contains all the relevant data to the classifier
  */
 public class ClassifierData {

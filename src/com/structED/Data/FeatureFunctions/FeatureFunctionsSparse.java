@@ -33,9 +33,21 @@ import com.structed.data.entities.Vector;
 
 public class FeatureFunctionsSparse implements IFeatureFunctions {
 
-    int maxFeatures = 784;
-    int numOfClasses = 10;
-    int sizeOfVector = maxFeatures*numOfClasses;
+    // data members
+    private int maxFeatures;
+    private int numOfClasses;
+    private int sizeOfVector;
+
+    /**
+     * Constructor
+     * @param numOfClasses - the number target of classes
+     * @param maxNumFeatures - the number of features
+     */
+    public FeatureFunctionsSparse(int numOfClasses, int maxNumFeatures){
+        this.numOfClasses = numOfClasses;
+        this.maxFeatures = maxNumFeatures;
+        this.sizeOfVector = this.maxFeatures*this.numOfClasses;
+    }
 
 	@Override
 	public Example convert(Example vector, String label, IKernel kernel) {
@@ -66,10 +78,5 @@ public class FeatureFunctionsSparse implements IFeatureFunctions {
     @Override
     public int getSizeOfVector() {
         return this.sizeOfVector;
-    }
-
-    //setter for the max feature parameter
-    public void setMaxFeatures(int maxFeatures){
-        this.maxFeatures = maxFeatures;
     }
 }
