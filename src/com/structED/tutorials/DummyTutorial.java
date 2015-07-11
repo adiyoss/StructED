@@ -28,11 +28,11 @@ package com.structed.tutorials;
 
 import com.structed.constants.Consts;
 import com.structed.dal.Reader;
-import com.structed.data.InstancesContainer;
-import com.structed.data.Logger;
-import com.structed.data.entities.PredictedLabels;
-import com.structed.data.entities.Vector;
-import com.structed.data.featurefunctions.FeatureFunctionsDummy;
+import com.structed.data1.InstancesContainer;
+import com.structed.data1.Logger;
+import com.structed.data1.entities.PredictedLabels;
+import com.structed.data1.entities.Vector;
+import com.structed.data1.featurefunctions.FeatureFunctionsDummy;
 import com.structed.models.StructEDModel;
 import com.structed.models.algorithms.CRF;
 import com.structed.models.algorithms.PassiveAggressive;
@@ -41,25 +41,25 @@ import com.structed.models.loss.TaskLossDummyData;
 
 import java.util.ArrayList;
 
-import static com.structed.data.Factory.getReader;
+import static com.structed.data1.Factory.getReader;
 
 /**
  * Created by yossiadi on 6/29/15.
- * Tutorial about the dummy data
+ * Tutorial about the dummy data1
  */
 public class DummyTutorial {
 
     public static void main(String[] args) throws Exception {
         // ============================ DUMMY DATA ============================ //
-        Logger.info("Dummy data example.");
+        Logger.info("Dummy data1 example.");
         int readerType = 0;
         int epochNum = 3;
         int isAvg = 1;
         int numExamples2Display = 3;
-        String trainPath = "data/db/dummy/train.txt";
-        String testPath = "data/db/dummy/test.txt";
+        String trainPath = "data1/db/dummy/train.txt";
+        String testPath = "data1/db/dummy/test.txt";
 
-        // load the data
+        // load the data1
         Reader reader = getReader(readerType);
         InstancesContainer dummyTrainInstances = reader.readData(trainPath, Consts.SPACE, Consts.COLON_SPLITTER);
         InstancesContainer dummyTestInstances = reader.readData(testPath, Consts.SPACE, Consts.COLON_SPLITTER);

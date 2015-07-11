@@ -24,21 +24,25 @@
  * THE SOFTWARE.
  */
 
-package com.structed.data.entities;
-
-import java.io.Serializable;
-import java.util.HashMap;
+package com.structed.data1.entities;
 
 /**
- * this class is used for name alias
- * this Vector class represents a HashMap between the feature index to its value
+ * this class will store the raw data1 and the desired label
+ * the raw data1 here will be presented as 1D array
  */
-public class Vector extends HashMap<Integer, Double> implements Serializable{
+public class Example1D extends Example {
 
-    private static final long serialVersionUID = 1L;
+    private Vector features;
 
-    public Vector(){}
-    public Vector(Vector v){
-        super(v);
+    public Example1D(){
+        features = new Vector();
+    }
+
+    //Current functions
+    public Vector getFeatures() {
+        return features;
+    }
+    public void setFeatures(Vector features) {
+        this.features = features;
     }
 }

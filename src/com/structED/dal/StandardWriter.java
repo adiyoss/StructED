@@ -35,7 +35,7 @@ import java.util.Map;
 
 import com.structed.constants.Consts;
 import com.structed.constants.ErrorConstants;
-import com.structed.data.Logger;
+import com.structed.data1.Logger;
 
 public class StandardWriter implements Writer {
 
@@ -45,7 +45,7 @@ public class StandardWriter implements Writer {
 			FileWriter fstream = new FileWriter(path);
 			BufferedWriter out = new BufferedWriter(fstream);
 
-			//write the data
+			//write the data1
 			for(Integer key : data.keySet())
 				out.write(key+Consts.COLON_SPLITTER +data.get(key)+Consts.SPACE);
 			out.write(System.getProperty(Consts.NEW_LINE));
@@ -71,7 +71,7 @@ public class StandardWriter implements Writer {
                 maxElements2Display = 1;
             }
 
-            //write the data
+            //write the data1
             for(Map.Entry key : data.entrySet()){
                 iteration++;
                 if(iteration>maxElements2Display)
@@ -96,7 +96,7 @@ public class StandardWriter implements Writer {
 
             out.write(label+System.getProperty(Consts.NEW_LINE));
 
-            //write the data
+            //write the data1
             for(String key : data.keySet()){
                 out.write(key+Consts.SPACE);
                 for(Integer pixel : data.get(key).keySet())
@@ -118,7 +118,7 @@ public class StandardWriter implements Writer {
             FileWriter fstream = new FileWriter(path,true);
             BufferedWriter out = new BufferedWriter(fstream);
 
-            //write the data
+            //write the data1
             for(int i=0 ; i<data.size()-1 ; i++)
             {
                 if(!isNewLine)

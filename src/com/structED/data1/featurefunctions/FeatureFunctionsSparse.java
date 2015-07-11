@@ -24,16 +24,16 @@
  * THE SOFTWARE.
  */
 
-package com.structed.data.featurefunctions;
+package com.structed.data1.featurefunctions;
 
 import com.structed.models.kernels.IKernel;
-import com.structed.data.entities.Example;
-import com.structed.data.Factory;
-import com.structed.data.entities.Vector;
+import com.structed.data1.entities.Example;
+import com.structed.data1.Factory;
+import com.structed.data1.entities.Vector;
 
 public class FeatureFunctionsSparse implements IFeatureFunctions {
 
-    // data members
+    // data1 members
     private int maxFeatures;
     private int numOfClasses;
     private int sizeOfVector;

@@ -24,33 +24,38 @@
  * THE SOFTWARE.
  */
 
-package com.structed.data.entities;
+package com.structed.data1.entities;
 
-import com.structed.utils.comperators.MapKeyComparatorAscending;
-import com.structed.utils.comperators.MapValueComparatorAscending;
-import com.structed.utils.comperators.MapValueComparatorDescending;
-
-import java.util.TreeMap;
+import java.util.ArrayList;
 
 /**
- * this class is used for name alias
- * this PredictedLabels class represents a TreeMap between the label to its score
+ * this class will store the raw data1 and the desired label
  */
-public class PredictedLabels extends TreeMap<String, Double>{
+public abstract class Example {
 
-    //default c'tor
-    public PredictedLabels(){
+    public String path;
+    private String label;
+    public int sizeOfVector;
+
+	//C'tor
+	public Example() {
+        label = "";
+        sizeOfVector = 0;
+	}
+
+	//===========GETTERS AND SETTERS=========//
+	public Vector getFeatures(){return null;}
+	public void setFeatures(Vector features){}
+
+    public ArrayList<Vector> getFeatures2D(){return null;}
+    public void setFeatures2D(ArrayList<Vector> features){}
+    public ArrayList<Integer> getLabels2D(){return null;}
+    public void setLabels2D(ArrayList<Integer> rankLabels){}
+
+    public String getLabel() {
+        return label;
     }
-
-    public PredictedLabels(MapValueComparatorAscending vc){
-        super(vc);
-    }
-
-    public PredictedLabels(MapValueComparatorDescending vc){
-        super(vc);
-    }
-
-    public PredictedLabels(MapKeyComparatorAscending vc){
-        super(vc);
+    public void setLabel(String label) {
+        this.label = label;
     }
 }

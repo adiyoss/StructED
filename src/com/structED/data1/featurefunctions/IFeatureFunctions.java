@@ -24,25 +24,15 @@
  * THE SOFTWARE.
  */
 
-package com.structed.data.entities;
+package com.structed.data1.featurefunctions;
+
+import com.structed.models.kernels.IKernel;
+import com.structed.data1.entities.Example;
 
 /**
- * this class will store the raw data and the desired label
- * the raw data here will be presented as 1D array
+ * IFeatureFunctions interface - inorder to add new feature functions in you own task you should implement this interface
  */
-public class Example1D extends Example {
-
-    private Vector features;
-
-    public Example1D(){
-        features = new Vector();
-    }
-
-    //Current functions
-    public Vector getFeatures() {
-        return features;
-    }
-    public void setFeatures(Vector features) {
-        this.features = features;
-    }
+public interface IFeatureFunctions {
+	Example convert(Example vector, String label, IKernel kernel);
+	int getSizeOfVector();
 }

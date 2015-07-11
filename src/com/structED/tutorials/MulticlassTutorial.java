@@ -28,11 +28,11 @@ package com.structed.tutorials;
 
 import com.structed.constants.Consts;
 import com.structed.dal.Reader;
-import com.structed.data.InstancesContainer;
-import com.structed.data.Logger;
-import com.structed.data.entities.PredictedLabels;
-import com.structed.data.entities.Vector;
-import com.structed.data.featurefunctions.FeatureFunctionsSparse;
+import com.structed.data1.InstancesContainer;
+import com.structed.data1.Logger;
+import com.structed.data1.entities.PredictedLabels;
+import com.structed.data1.entities.Vector;
+import com.structed.data1.featurefunctions.FeatureFunctionsSparse;
 import com.structed.models.StructEDModel;
 import com.structed.models.algorithms.PassiveAggressive;
 import com.structed.models.algorithms.SVM;
@@ -41,7 +41,7 @@ import com.structed.models.loss.TaskLossMultiClass;
 
 import java.util.ArrayList;
 
-import static com.structed.data.Factory.getReader;
+import static com.structed.data1.Factory.getReader;
 
 /**
  * Created by yossiadi on 6/29/15.
@@ -50,12 +50,12 @@ import static com.structed.data.Factory.getReader;
 public class MulticlassTutorial {
     public static void main(String[] args) throws Exception {
         // ============================ MNIST DATA ============================ //
-        Logger.info("MNIST data example.");
+        Logger.info("MNIST data1 example.");
 
         // === PARAMETERS === //
-        String trainPath = "data/db/MNIST/train.txt";
-        String testPath = "data/db/MNIST/test.data.txt";
-        String valPath = "data/db/MNIST/val.data.txt";
+        String trainPath = "data1/db/MNIST/train.txt";
+        String testPath = "data1/db/MNIST/test.data1.txt";
+        String valPath = "data1/db/MNIST/val.data1.txt";
         int epochNum = 1;
         int readerType = 0;
         int isAvg = 1;
@@ -65,7 +65,7 @@ public class MulticlassTutorial {
         Reader reader = getReader(readerType);
         // ================== //
 
-        // load the data
+        // load the data1
         InstancesContainer mnistTrainInstances = reader.readData(trainPath, Consts.SPACE, Consts.COLON_SPLITTER);
         InstancesContainer mnistDevelopInstances = reader.readData(valPath, Consts.SPACE, Consts.COLON_SPLITTER);
         InstancesContainer mnistTestInstances = reader.readData(testPath, Consts.SPACE, Consts.COLON_SPLITTER);
@@ -84,8 +84,8 @@ public class MulticlassTutorial {
 
         // ============================ IRIS DATA ============================= //
         // === PARAMETERS === //
-        trainPath = "data/db/iris/iris.train.txt";
-        testPath = "data/db/iris/iris.test.txt";
+        trainPath = "data1/db/iris/iris.train.txt";
+        testPath = "data1/db/iris/iris.test.txt";
         epochNum = 10;
         isAvg = 1;
         numExamples2Display = 3;
@@ -93,7 +93,7 @@ public class MulticlassTutorial {
         maxFeatures = 4;
         // ================== //
 
-        // load the data
+        // load the data1
         InstancesContainer irisTrainInstances = reader.readData(trainPath, Consts.COMMA_NOTE, Consts.COLON_SPLITTER);
         InstancesContainer irisTestInstances = reader.readData(testPath, Consts.COMMA_NOTE, Consts.COLON_SPLITTER);
         // ======= SVM ====== //

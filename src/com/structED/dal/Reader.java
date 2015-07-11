@@ -26,14 +26,14 @@
 
 package com.structed.dal;
 
-import com.structed.data.InstancesContainer;
+import com.structed.data1.InstancesContainer;
 
 import java.util.ArrayList;
 
 /**
  * An interface for reader type
- * The interface contains two functions: 1) read the data as an two dimensional array of strings
- *                                       2) read the data as an Instance Container (one of the package data structure)
+ * The interface contains two functions: 1) read the data1 as an two dimensional array of strings
+ *                                       2) read the data1 as an Instance Container (one of the package data1 structure)
  */
 public interface Reader {
     ArrayList<ArrayList<String>> readFile(String path, String spliter);

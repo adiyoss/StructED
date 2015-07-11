@@ -24,18 +24,21 @@
  * THE SOFTWARE.
  */
 
-package com.structed.data.entities;
+package com.structed.data1.entities;
 
-public class VowelExample extends Example2D{
+import java.io.Serializable;
+import java.util.HashMap;
 
-    private String label_2;
+/**
+ * this class is used for name alias
+ * this Vector class represents a HashMap between the feature index to its value
+ */
+public class Vector extends HashMap<Integer, Double> implements Serializable{
 
-    //getters and setters
-    public String getLabel_2() {
-        return label_2;
-    }
+    private static final long serialVersionUID = 1L;
 
-    public void setLabel_2(String label_2) {
-        this.label_2 = label_2;
+    public Vector(){}
+    public Vector(Vector v){
+        super(v);
     }
 }

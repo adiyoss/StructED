@@ -27,7 +27,7 @@
 package com.structed.models.kernels;
 
 import com.structed.constants.Consts;
-import com.structed.data.entities.Vector;
+import com.structed.data1.entities.Vector;
 
 /**
  * RBF 2nd approximation

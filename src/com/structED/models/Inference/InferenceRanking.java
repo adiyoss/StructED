@@ -28,10 +28,10 @@ package com.structed.models.inference;
 
 import com.structed.models.ClassifierData;
 import com.structed.constants.Consts;
-import com.structed.data.entities.Example;
-import com.structed.data.entities.PredictedLabels;
-import com.structed.data.entities.Vector;
-import com.structed.data.Logger;
+import com.structed.data1.entities.Example;
+import com.structed.data1.entities.PredictedLabels;
+import com.structed.data1.entities.Vector;
+import com.structed.data1.Logger;
 import com.structed.utils.comperators.MapValueComparatorAscending;
 import com.structed.utils.MathHelpers;
 

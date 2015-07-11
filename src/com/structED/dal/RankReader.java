@@ -27,11 +27,11 @@
 package com.structed.dal;
 
 import com.structed.constants.ErrorConstants;
-import com.structed.data.entities.Example;
-import com.structed.data.Factory;
-import com.structed.data.InstancesContainer;
-import com.structed.data.entities.Vector;
-import com.structed.data.Logger;
+import com.structed.data1.entities.Example;
+import com.structed.data1.Factory;
+import com.structed.data1.InstancesContainer;
+import com.structed.data1.entities.Vector;
+import com.structed.data1.Logger;
 
 import java.io.BufferedReader;
 import java.io.DataInputStream;

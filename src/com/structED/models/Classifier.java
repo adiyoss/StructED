@@ -27,12 +27,12 @@
 package com.structed.models;
 
 import com.structed.constants.ErrorConstants;
-import com.structed.data.CacheVowelData;
-import com.structed.data.entities.Example;
-import com.structed.data.InstancesContainer;
-import com.structed.data.entities.PredictedLabels;
-import com.structed.data.entities.Vector;
-import com.structed.data.Logger;
+import com.structed.data1.CacheVowelData;
+import com.structed.data1.entities.Example;
+import com.structed.data1.InstancesContainer;
+import com.structed.data1.entities.PredictedLabels;
+import com.structed.data1.entities.Vector;
+import com.structed.data1.Logger;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -28,9 +28,9 @@ package com.structed.tests.utils;
 
 import com.structed.constants.Consts;
 import com.structed.dal.Reader;
-import com.structed.data.Factory;
-import com.structed.data.InstancesContainer;
-import com.structed.data.entities.Vector;
+import com.structed.data1.Factory;
+import com.structed.data1.InstancesContainer;
+import com.structed.data1.entities.Vector;
 import com.structed.utils.ModelHandler;
 import junit.framework.TestCase;
 
@@ -60,8 +60,8 @@ public class ModelHandlerTest extends TestCase {
         InstancesContainer instances;
         Reader reader =  Factory.getReader(2);
 
-        instances = reader.readData("data/tests/db/test2.txt", Consts.SPACE, Consts.COLON_SPLITTER);
-        InstancesContainer randInstances = ModelHandler.randomShuffle(reader.readData("data/tests/db/test2.txt", Consts.SPACE, Consts.COLON_SPLITTER));
+        instances = reader.readData("data1/tests/db/test2.txt", Consts.SPACE, Consts.COLON_SPLITTER);
+        InstancesContainer randInstances = ModelHandler.randomShuffle(reader.readData("data1/tests/db/test2.txt", Consts.SPACE, Consts.COLON_SPLITTER));
 
         // Test 1
         assertEquals("Container sizes must be equal", instances.getSize(), randInstances.getSize());

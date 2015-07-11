@@ -27,8 +27,8 @@
 package com.structed.utils;
 
 import com.structed.constants.ErrorConstants;
-import com.structed.data.entities.Vector;
-import com.structed.data.Logger;
+import com.structed.data1.entities.Vector;
+import com.structed.data1.Logger;
 
 /**
  * Helper class for all the math operations

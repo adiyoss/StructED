@@ -35,17 +35,17 @@ import com.structed.models.StructEDModel;
 import com.structed.models.loss.TaskLossDummyData;
 import com.structed.models.loss.TaskLossMultiClass;
 import com.structed.constants.Consts;
-import com.structed.data.entities.PredictedLabels;
-import com.structed.data.entities.Vector;
-import com.structed.data.featurefunctions.FeatureFunctionsDummy;
-import com.structed.data.featurefunctions.FeatureFunctionsSparse;
+import com.structed.data1.entities.PredictedLabels;
+import com.structed.data1.entities.Vector;
+import com.structed.data1.featurefunctions.FeatureFunctionsDummy;
+import com.structed.data1.featurefunctions.FeatureFunctionsSparse;
 import com.structed.dal.Reader;
-import com.structed.data.InstancesContainer;
-import com.structed.data.Logger;
+import com.structed.data1.InstancesContainer;
+import com.structed.data1.Logger;
 
 import java.util.ArrayList;
 
-import static com.structed.data.Factory.getReader;
+import static com.structed.data1.Factory.getReader;
 
 /**
  * Created by yossiadi on 6/28/15.
@@ -56,15 +56,15 @@ public class APITest {
     public static void main(String[] args) throws Exception {
 
         // ============================ DUMMY DATA ============================ //
-        Logger.info("Dummy data example.");
+        Logger.info("Dummy data1 example.");
         int readerType = 0;
         int epochNum = 3;
         int isAvg = 1;
         int numExamples2Display = 3;
-        String trainPath = "data/db/dummy/train.txt";
-        String testPath = "data/db/dummy/test.txt";
+        String trainPath = "data1/db/dummy/train.txt";
+        String testPath = "data1/db/dummy/test.txt";
 
-        // load the data
+        // load the data1
         Reader reader = getReader(readerType);
         InstancesContainer dummyTrainInstances = reader.readData(trainPath, Consts.SPACE, Consts.COLON_SPLITTER);
         InstancesContainer dummyTestInstances = reader.readData(testPath, Consts.SPACE, Consts.COLON_SPLITTER);
@@ -102,15 +102,15 @@ public class APITest {
 
 
         // ============================ MNIST DATA ============================ //
-        Logger.info("MNIST data example.");
-        trainPath = "data/db/MNIST/train.txt";
-        testPath = "data/db/MNIST/test.data.txt";
-        String valPath = "data/db/MNIST/val.data.txt";
+        Logger.info("MNIST data1 example.");
+        trainPath = "data1/db/MNIST/train.txt";
+        testPath = "data1/db/MNIST/test.data1.txt";
+        String valPath = "data1/db/MNIST/val.data1.txt";
         epochNum = 1;
         int numOfClasses = 10;
         int maxFeatures = 784;
 
-        // load the data
+        // load the data1
         InstancesContainer mnistTrainInstances = reader.readData(trainPath, Consts.SPACE, Consts.COLON_SPLITTER);
         InstancesContainer mnistDevelopInstances = reader.readData(valPath, Consts.SPACE, Consts.COLON_SPLITTER);
         InstancesContainer mnistTestInstances = reader.readData(testPath, Consts.SPACE, Consts.COLON_SPLITTER);
@@ -132,7 +132,7 @@ public class APITest {
         // ======================= LOAD & SAVE THE MODEL ====================== //
         Logger.info("Save and Load Dummy model.");
 
-        dummy_model.saveModel("dummy.model"); // save the pa model of the dummy data
+        dummy_model.saveModel("dummy.model"); // save the pa model of the dummy data1
         arguments = new ArrayList<Double>(){{add(3.0);}}; // model parameters
 
         StructEDModel loaded_model = new StructEDModel(null, new PassiveAggressive(), new TaskLossDummyData(),

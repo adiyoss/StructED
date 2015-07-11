@@ -24,35 +24,60 @@
  * THE SOFTWARE.
  */
 
-package com.structed.data.entities;
+package com.structed.data1;
+
+import com.structed.data1.entities.Example;
 
 import java.util.ArrayList;
 
 /**
- * this class will store the raw data and the desired label
- * the raw data here will be presented as 2D array
+ * this class will store the raw data1 and the desired label
+ * the raw data1 here will be presented as 2D array
  */
-public class Example2D extends Example {
+public class InstancesContainer {
 
-    private ArrayList<Vector> features2D;
-    private ArrayList<Integer> labels2D;
+    ArrayList<Example> instances;
+    ArrayList<ArrayList<String>> paths;
+    int size;
 
-
-    public Example2D(){
-        features2D = new ArrayList<Vector>();
-        labels2D = new ArrayList<Integer>();
-
+    //C'tor
+    public InstancesContainer() {
+        instances = new ArrayList<Example>();
+        paths = new ArrayList<ArrayList<String>>();
+        size = 0;
     }
 
-    public ArrayList<Vector> getFeatures2D() {
-        return features2D;
+    //get the requested example
+    public Example getInstance(int index)
+    {
+        try{
+            return instances.get(index);
+        } catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
     }
 
-    public void setFeatures2D(ArrayList<Vector> features) {
-        this.features2D = features;
+    //======Setters and getters=====//
+    public ArrayList<Example> getInstances() {
+        return instances;
     }
 
-    public ArrayList<Integer> getLabels2D() { return labels2D; }
+    public void setInstances(ArrayList<Example> instances) {
+        this.instances = instances;
+        this.size = instances.size();
+    }
 
-    public void setLabels2D(ArrayList<Integer> labels2D) { this.labels2D = labels2D; }
+    public ArrayList<ArrayList<String>> getPaths() {
+        return paths;
+    }
+
+    public void setPaths(ArrayList<ArrayList<String>> paths) {
+        this.paths = paths;
+        this.size = paths.size();
+    }
+
+    public int getSize() {
+        return size;
+    }
 }

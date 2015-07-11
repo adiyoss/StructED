@@ -24,60 +24,33 @@
  * THE SOFTWARE.
  */
 
-package com.structed.data;
+package com.structed.data1.entities;
 
-import com.structed.data.entities.Example;
+import com.structed.utils.comperators.MapKeyComparatorAscending;
+import com.structed.utils.comperators.MapValueComparatorAscending;
+import com.structed.utils.comperators.MapValueComparatorDescending;
 
-import java.util.ArrayList;
+import java.util.TreeMap;
 
 /**
- * this class will store the raw data and the desired label
- * the raw data here will be presented as 2D array
+ * this class is used for name alias
+ * this PredictedLabels class represents a TreeMap between the label to its score
  */
-public class InstancesContainer {
+public class PredictedLabels extends TreeMap<String, Double>{
 
-    ArrayList<Example> instances;
-    ArrayList<ArrayList<String>> paths;
-    int size;
-
-    //C'tor
-    public InstancesContainer() {
-        instances = new ArrayList<Example>();
-        paths = new ArrayList<ArrayList<String>>();
-        size = 0;
+    //default c'tor
+    public PredictedLabels(){
     }
 
-    //get the requested example
-    public Example getInstance(int index)
-    {
-        try{
-            return instances.get(index);
-        } catch (Exception e){
-            e.printStackTrace();
-            return null;
-        }
+    public PredictedLabels(MapValueComparatorAscending vc){
+        super(vc);
     }
 
-    //======Setters and getters=====//
-    public ArrayList<Example> getInstances() {
-        return instances;
+    public PredictedLabels(MapValueComparatorDescending vc){
+        super(vc);
     }
 
-    public void setInstances(ArrayList<Example> instances) {
-        this.instances = instances;
-        this.size = instances.size();
-    }
-
-    public ArrayList<ArrayList<String>> getPaths() {
-        return paths;
-    }
-
-    public void setPaths(ArrayList<ArrayList<String>> paths) {
-        this.paths = paths;
-        this.size = paths.size();
-    }
-
-    public int getSize() {
-        return size;
+    public PredictedLabels(MapKeyComparatorAscending vc){
+        super(vc);
     }
 }

@@ -24,15 +24,18 @@
  * THE SOFTWARE.
  */
 
-package com.structed.data.featurefunctions;
+package com.structed.data1.entities;
 
-import com.structed.models.kernels.IKernel;
-import com.structed.data.entities.Example;
+public class VowelExample extends Example2D{
 
-/**
- * IFeatureFunctions interface - inorder to add new feature functions in you own task you should implement this interface
- */
-public interface IFeatureFunctions {
-	Example convert(Example vector, String label, IKernel kernel);
-	int getSizeOfVector();
+    private String label_2;
+
+    //getters and setters
+    public String getLabel_2() {
+        return label_2;
+    }
+
+    public void setLabel_2(String label_2) {
+        this.label_2 = label_2;
+    }
 }

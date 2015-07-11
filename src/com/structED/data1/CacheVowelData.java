@@ -24,9 +24,9 @@
  * THE SOFTWARE.
  */
 
-package com.structed.data;
+package com.structed.data1;
 
-import com.structed.data.entities.Example;
+import com.structed.data1.entities.Example;
 
 import java.util.ArrayList;
 import java.util.HashMap;

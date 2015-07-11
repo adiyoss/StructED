@@ -28,11 +28,11 @@ package com.structed.dal;
 
 import com.structed.constants.Consts;
 import com.structed.constants.ErrorConstants;
-import com.structed.data.entities.Example;
-import com.structed.data.Factory;
-import com.structed.data.InstancesContainer;
-import com.structed.data.entities.Vector;
-import com.structed.data.Logger;
+import com.structed.data1.entities.Example;
+import com.structed.data1.Factory;
+import com.structed.data1.InstancesContainer;
+import com.structed.data1.entities.Vector;
+import com.structed.data1.Logger;
 import com.structed.utils.ConverterHelplers;
 
 import java.io.BufferedReader;
@@ -45,12 +45,12 @@ import java.util.ArrayList;
 public class LazyReader implements Reader {
 
     /**
-     * a Lazy reader, it reads only the paths to the data and not the data itself
-     * this reader will read the actual data on demand
-     * @param path the path to the data
-     * @param dataSpliter the splitter between the data values
+     * a Lazy reader, it reads only the paths to the data1 and not the data1 itself
+     * this reader will read the actual data1 on demand
+     * @param path the path to the data1
+     * @param dataSpliter the splitter between the data1 values
      * @param valueSpliter the separator between the index of the feature to the feature value
-     * @return an InstanceContainer object which contains all the data
+     * @return an InstanceContainer object which contains all the data1
      */
     public InstancesContainer readData(String path, String dataSpliter, String valueSpliter)
     {
@@ -62,8 +62,8 @@ public class LazyReader implements Reader {
 
     /**
      * read only one example and it's labels
-     * @param paths the paths to the data and to the label files
-     * @return an Example object contains the data
+     * @param paths the paths to the data1 and to the label files
+     * @return an Example object contains the data1
      * @throws Exception
      */
     public Example readExample(ArrayList<String> paths) throws Exception{

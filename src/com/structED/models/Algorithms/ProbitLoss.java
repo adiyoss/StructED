@@ -30,12 +30,11 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import com.structed.constants.Consts;
-import com.structed.models.Classifier;
 import com.structed.models.ClassifierData;
 import com.structed.constants.ErrorConstants;
-import com.structed.data.entities.Example;
-import com.structed.data.entities.Vector;
-import com.structed.data.Logger;
+import com.structed.data1.entities.Example;
+import com.structed.data1.entities.Vector;
+import com.structed.data1.Logger;
 import com.structed.utils.MathHelpers;
 
 /**
@@ -44,7 +43,7 @@ import com.structed.utils.MathHelpers;
  */
 public class ProbitLoss implements IUpdateRule {
 
-    //data members
+    //data1 members
     double lambda;
     double eta;
     double numOfIteration; //indicates the number of iterations

@@ -27,9 +27,9 @@
 package com.structed.models.inference;
 
 import com.structed.models.ClassifierData;
-import com.structed.data.entities.Example;
-import com.structed.data.entities.PredictedLabels;
-import com.structed.data.entities.Vector;
+import com.structed.data1.entities.Example;
+import com.structed.data1.entities.PredictedLabels;
+import com.structed.data1.entities.Vector;
 
 /**
  * IInference interface - inorder to add new inference in you own task you should implement this interface

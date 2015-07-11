@@ -24,37 +24,35 @@
  * THE SOFTWARE.
  */
 
-package com.structed.data;
+package com.structed.data1.entities;
 
-import com.structed.data.entities.Example;
-import com.structed.dal.LazyReader;
+import java.util.ArrayList;
 
-import java.io.File;
+/**
+ * this class will store the raw data1 and the desired label
+ * the raw data1 here will be presented as 2D array
+ */
+public class Example2D extends Example {
 
-public class LazyInstancesContainer extends InstancesContainer{
+    private ArrayList<Vector> features2D;
+    private ArrayList<Integer> labels2D;
 
-    LazyReader reader = new LazyReader();
 
-    //C'tor
-    public LazyInstancesContainer(){
-        super();
+    public Example2D(){
+        features2D = new ArrayList<Vector>();
+        labels2D = new ArrayList<Integer>();
+
     }
 
-    @Override
-    //get the requested example
-    public Example getInstance(int index) {
-        try {
-            File file = new File(paths.get(index).get(0));
-            if(file.exists()) {
-                Example example = reader.readExample(paths.get(index));
-                CacheVowelData.updateCache(example);
-                example.path = paths.get(index).get(0);
-                return example;
-            }
-            return null;
-        } catch (Exception e){
-            e.printStackTrace();
-            return null;
-        }
+    public ArrayList<Vector> getFeatures2D() {
+        return features2D;
     }
+
+    public void setFeatures2D(ArrayList<Vector> features) {
+        this.features2D = features;
+    }
+
+    public ArrayList<Integer> getLabels2D() { return labels2D; }
+
+    public void setLabels2D(ArrayList<Integer> labels2D) { this.labels2D = labels2D; }
 }

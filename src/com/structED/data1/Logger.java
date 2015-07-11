@@ -24,7 +24,7 @@
  * THE SOFTWARE.
  */
 
-package com.structed.data;
+package com.structed.data1;
 
 import com.structed.constants.Consts;
 

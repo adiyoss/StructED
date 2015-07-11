@@ -24,38 +24,37 @@
  * THE SOFTWARE.
  */
 
-package com.structed.data.entities;
+package com.structed.data1;
 
-import java.util.ArrayList;
+import com.structed.data1.entities.Example;
+import com.structed.dal.LazyReader;
 
-/**
- * this class will store the raw data and the desired label
- */
-public abstract class Example {
+import java.io.File;
 
-    public String path;
-    private String label;
-    public int sizeOfVector;
+public class LazyInstancesContainer extends InstancesContainer{
 
-	//C'tor
-	public Example() {
-        label = "";
-        sizeOfVector = 0;
-	}
+    LazyReader reader = new LazyReader();
 
-	//===========GETTERS AND SETTERS=========//
-	public Vector getFeatures(){return null;}
-	public void setFeatures(Vector features){}
-
-    public ArrayList<Vector> getFeatures2D(){return null;}
-    public void setFeatures2D(ArrayList<Vector> features){}
-    public ArrayList<Integer> getLabels2D(){return null;}
-    public void setLabels2D(ArrayList<Integer> rankLabels){}
-
-    public String getLabel() {
-        return label;
+    //C'tor
+    public LazyInstancesContainer(){
+        super();
     }
-    public void setLabel(String label) {
-        this.label = label;
+
+    @Override
+    //get the requested example
+    public Example getInstance(int index) {
+        try {
+            File file = new File(paths.get(index).get(0));
+            if(file.exists()) {
+                Example example = reader.readExample(paths.get(index));
+                CacheVowelData.updateCache(example);
+                example.path = paths.get(index).get(0);
+                return example;
+            }
+            return null;
+        } catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
     }
 }

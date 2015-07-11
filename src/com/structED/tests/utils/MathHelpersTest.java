@@ -26,7 +26,7 @@
 
 package com.structed.tests.utils;
 
-import com.structed.data.entities.Vector;
+import com.structed.data1.entities.Vector;
 import com.structed.utils.MathHelpers;
 import junit.framework.TestCase;
 

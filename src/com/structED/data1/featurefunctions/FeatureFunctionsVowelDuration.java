@@ -24,15 +24,15 @@
  * THE SOFTWARE.
  */
 
-package com.structed.data.featurefunctions;
+package com.structed.data1.featurefunctions;
 
 import com.structed.models.kernels.IKernel;
 import com.structed.constants.Consts;
-import com.structed.data.CacheVowelData;
-import com.structed.data.entities.Example;
-import com.structed.data.Factory;
-import com.structed.data.entities.Vector;
-import com.structed.data.Logger;
+import com.structed.data1.CacheVowelData;
+import com.structed.data1.entities.Example;
+import com.structed.data1.Factory;
+import com.structed.data1.entities.Vector;
+import com.structed.data1.Logger;
 import com.structed.utils.ConverterHelplers;
 import com.structed.utils.MathHelpers;
 import jsc.distributions.Gamma;

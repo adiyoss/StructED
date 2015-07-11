@@ -33,11 +33,11 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 import com.structed.constants.ErrorConstants;
-import com.structed.data.entities.Example;
-import com.structed.data.Factory;
-import com.structed.data.InstancesContainer;
-import com.structed.data.entities.Vector;
-import com.structed.data.Logger;
+import com.structed.data1.entities.Example;
+import com.structed.data1.Factory;
+import com.structed.data1.InstancesContainer;
+import com.structed.data1.entities.Vector;
+import com.structed.data1.Logger;
 
 public class StandardReader implements Reader{
 
@@ -98,11 +98,11 @@ public class StandardReader implements Reader{
 	}
 
     /**
-     * reads the data and returns an InstanceContainer object
-     * @param path the path to the data
-     * @param dataSpliter the splitter between the data values
+     * reads the data1 and returns an InstanceContainer object
+     * @param path the path to the data1
+     * @param dataSpliter the splitter between the data1 values
      * @param valueSpliter the separator between the index of the feature to the feature value
-     * @return an InstanceContainer object which contains all the data
+     * @return an InstanceContainer object which contains all the data1
      */
     public InstancesContainer readData(String path, String dataSpliter, String valueSpliter)
     {
@@ -179,7 +179,7 @@ public class StandardReader implements Reader{
     }
 
     /**
-     * this functions reads the paths from an input file of paths to the data
+     * this functions reads the paths from an input file of paths to the data1
      * @param path: the path to the input file
      * @return an array list of string
      */

@@ -30,7 +30,7 @@ package com.structed.view;
  * Created by yossiadi on 5/11/15.
  */
 
-import com.structed.data.Logger;
+import com.structed.data1.Logger;
 import com.xeiam.xchart.BitmapEncoder;
 import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.QuickChart;
@@ -57,7 +57,7 @@ public class Graph {
      */
     public void drawGraph(ArrayList<Double> scores, boolean save) {
         try {
-            // setting the data fit for the plotting
+            // setting the data1 fit for the plotting
             double[] xData = new double[scores.size()];
             double[] yData = new double[scores.size()];
 

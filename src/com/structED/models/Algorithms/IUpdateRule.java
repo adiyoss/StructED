@@ -27,8 +27,8 @@
 package com.structed.models.algorithms;
 
 import com.structed.models.ClassifierData;
-import com.structed.data.entities.Example;
-import com.structed.data.entities.Vector;
+import com.structed.data1.entities.Example;
+import com.structed.data1.entities.Vector;
 
 import java.util.ArrayList;
 

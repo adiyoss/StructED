@@ -26,7 +26,7 @@
 
 package com.structed.models.kernels;
 
-import com.structed.data.entities.Vector;
+import com.structed.data1.entities.Vector;
 
 /**
  * IKernel interface - inorder to add new kernel in you own task you should implement this interface

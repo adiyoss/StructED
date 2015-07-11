@@ -24,34 +24,14 @@
  * THE SOFTWARE.
  */
 
-package com.structed.data;
+package com.structed.data1;
 
 
 import com.structed.dal.*;
-import com.structed.models.algorithms.*;
-import com.structed.models.Classifier;
-import com.structed.models.ClassifierData;
-import com.structed.models.inference.InferenceDummyData;
-import com.structed.models.inference.InferenceMultiClass;
-import com.structed.models.inference.InferenceRanking;
-import com.structed.models.inference.InferenceVowelDurationData;
-import com.structed.models.kernels.Poly2Kernel;
-import com.structed.models.kernels.RBF2Kernel;
-import com.structed.models.kernels.RBF3Kernel;
 
-import com.structed.data.entities.Example;
-import com.structed.data.entities.Example1D;
-import com.structed.data.entities.Example2D;
-import com.structed.data.featurefunctions.FeatureFunctionsDummy;
-import com.structed.data.featurefunctions.FeatureFunctionsRank;
-import com.structed.data.featurefunctions.FeatureFunctionsSparse;
-import com.structed.data.featurefunctions.FeatureFunctionsVowelDuration;
-import com.structed.models.loss.TaskLossDummyData;
-import com.structed.models.loss.TaskLossMultiClass;
-import com.structed.models.loss.TaskLossRank;
-import com.structed.models.loss.TaskLossVowelDuration;
-
-import java.util.ArrayList;
+import com.structed.data1.entities.Example;
+import com.structed.data1.entities.Example1D;
+import com.structed.data1.entities.Example2D;
 
 public class Factory {
 	
@@ -86,7 +66,7 @@ public class Factory {
 	//=======================================//
 	//===============DATA TYPES==============//
 	//type is not supported
-	//data vector getter object
+	//data1 vector getter object
 	public static Example getExample(int type){
         switch(type){
             case 0:

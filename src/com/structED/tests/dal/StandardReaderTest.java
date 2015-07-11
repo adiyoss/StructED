@@ -27,8 +27,8 @@
 package com.structed.tests.dal;
 
 import com.structed.constants.Consts;
-import com.structed.data.Factory;
-import com.structed.data.InstancesContainer;
+import com.structed.data1.Factory;
+import com.structed.data1.InstancesContainer;
 import com.structed.dal.Reader;
 import junit.framework.TestCase;
 
@@ -42,10 +42,10 @@ public class StandardReaderTest extends TestCase{
         Reader reader =  Factory.getReader(0);
 
         // Test 1
-        instances = reader.readData("data/tests/db/test1.txt", Consts.SPACE, Consts.COLON_SPLITTER);
+        instances = reader.readData("data1/tests/db/test1.txt", Consts.SPACE, Consts.COLON_SPLITTER);
         assertEquals("Number of examples must be: 6", 6, instances.getSize());
         // Test 2
-        instances = reader.readData("data/tests/db/test3.txt", Consts.SPACE, Consts.COLON_SPLITTER);
+        instances = reader.readData("data1/tests/db/test3.txt", Consts.SPACE, Consts.COLON_SPLITTER);
         assertEquals("Number of examples must be: 14",14,instances.getSize());
     }
 }
