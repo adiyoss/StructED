@@ -28,29 +28,29 @@ package com.structed.tutorials;
 
 import com.structed.constants.Consts;
 import com.structed.dal.Reader;
-import com.structed.data1.InstancesContainer;
-import com.structed.data1.Logger;
-import com.structed.data1.entities.Vector;
-import com.structed.data1.featurefunctions.FeatureFunctionsVowelDuration;
+import com.structed.data.InstancesContainer;
+import com.structed.data.Logger;
+import com.structed.data.entities.Vector;
+import com.structed.data.featurefunctions.FeatureFunctionsVowelDuration;
 import com.structed.models.StructEDModel;
-import com.structed.models.algorithms.DirectLoss;
-import com.structed.models.inference.InferenceVowelDurationData;
+import com.structed.models.algorithms1.DirectLoss;
+import com.structed.models.inference1.InferenceVowelDurationData;
 import com.structed.models.loss.TaskLossVowelDuration;
 
 import java.util.ArrayList;
 
-import static com.structed.data1.Factory.getReader;
+import static com.structed.data.Factory.getReader;
 
 /**
  * Created by yossiadi on 6/29/15.
- * Tutorial about the vowel duration data1
+ * Tutorial about the vowel duration data
  */
 public class VowelDurationTutorial {
     public static void main(String[] args) throws Exception {
         // ============================ VOWEL DURATION DATA ============================ //
-        Logger.info("Vowel Duration data1 example.");
-        String trainPath = "data1/db/vowel/train.vowel";
-        String testPath = "data1/db/vowel/test.results";
+        Logger.info("Vowel Duration data example.");
+        String trainPath = "data/db/vowel/train.vowel";
+        String testPath = "data/db/vowel/test.results";
 
         int epochNum = 1;
         int readerType = 2;
@@ -58,7 +58,7 @@ public class VowelDurationTutorial {
         int numExamples2Display = 1;
         Reader reader = getReader(readerType);
 
-        // load the data1
+        // load the data
         InstancesContainer vowelTrainInstances = reader.readData(trainPath, Consts.SPACE, Consts.COLON_SPLITTER);
         InstancesContainer vowelTestInstances = reader.readData(testPath, Consts.SPACE, Consts.COLON_SPLITTER);
         if (vowelTrainInstances.getSize() == 0) return;

@@ -27,10 +27,10 @@
 package com.structed.tests.utils;
 
 import com.structed.constants.Consts;
-import com.structed.data1.entities.Example2D;
-import com.structed.data1.Factory;
-import com.structed.data1.InstancesContainer;
-import com.structed.data1.LazyInstancesContainer;
+import com.structed.data.entities.Example2D;
+import com.structed.data.Factory;
+import com.structed.data.InstancesContainer;
+import com.structed.data.LazyInstancesContainer;
 import com.structed.dal.Reader;
 import junit.framework.TestCase;
 
@@ -45,12 +45,12 @@ public class LazyInstancesContainerTest extends TestCase{
     public void testGetInstance() throws Exception {
         Reader reader =  Factory.getReader(2);
         InstancesContainer instances_train;
-        instances_train = reader.readData("data1/tests/db/test4.txt", Consts.SPACE, Consts.COLON_SPLITTER);
+        instances_train = reader.readData("data/tests/db/test4.txt", Consts.SPACE, Consts.COLON_SPLITTER);
         assertThat(instances_train, instanceOf(LazyInstancesContainer.class));
         assertEquals("Must return null because there is no such files",instances_train.getInstance(0), null);
 
         InstancesContainer instances_test;
-        instances_test = reader.readData("data1/tests/db/test2.txt", Consts.SPACE, Consts.COLON_SPLITTER);
+        instances_test = reader.readData("data/tests/db/test2.txt", Consts.SPACE, Consts.COLON_SPLITTER);
         assertThat(instances_test, instanceOf(LazyInstancesContainer.class));
         assertThat(instances_test.getInstance(0), instanceOf(Example2D.class));
     }

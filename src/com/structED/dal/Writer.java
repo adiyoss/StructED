@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 /**
- * An interface for writing the data1/models
+ * An interface for writing the data/models
  */
 public interface Writer {
     void writeData2File(String path, ArrayList<String> data, boolean isNewLine);

@@ -32,10 +32,10 @@ package com.structed.constants;
 public class ErrorConstants {
 
 	public static final String GENERAL_ERROR = "Error: ";
-	public static final String RAW_DATA_EMPTY_ERROR = "Raw data1 is empty";
+	public static final String RAW_DATA_EMPTY_ERROR = "Raw data is empty";
 	public static final String VECTOR_CONVERT_ERROR = "Error converting vector: ";
 	public static final String PARSE_CLASSIFICATION_ERROR = "Error with the classification of example: ";
-	public static final String PHI_VECTOR_DATA = "Phi vector data1 empty";
+	public static final String PHI_VECTOR_DATA = "Phi vector data empty";
 	
 	public static final String MULTIPLE_VECTORS_SIZE_ERROR = "The vectors doesn't have the same size";
 	public static final String MULTIPLE_VECTORS_EMPTY_ERROR = "The vectors are empty";
@@ -43,7 +43,7 @@ public class ErrorConstants {
 	public static final String UPDATE_ARGUMENTS_ERROR = "Size of arguments is not valid";
 	public static final String UPDATE_DIVIDE_ZERO_ERROR = "Phi difference multiple return 0";
 	
-	public static final String PHI_DATA_ERROR = "Phi data1 is null";
+	public static final String PHI_DATA_ERROR = "Phi data is null";
 	public static final String EPOCH_ERROR = "Epoch is a negative number";
 	
 	public static final String SIZE_OF_TRAIN_ERROR = "Train size is 0";

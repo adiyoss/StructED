@@ -27,12 +27,12 @@
 package com.structed.models;
 
 import com.structed.constants.ErrorConstants;
-import com.structed.data1.CacheVowelData;
-import com.structed.data1.entities.Example;
-import com.structed.data1.InstancesContainer;
-import com.structed.data1.entities.PredictedLabels;
-import com.structed.data1.entities.Vector;
-import com.structed.data1.Logger;
+import com.structed.data.CacheVowelData;
+import com.structed.data.entities.Example;
+import com.structed.data.InstancesContainer;
+import com.structed.data.entities.PredictedLabels;
+import com.structed.data.entities.Vector;
+import com.structed.data.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -141,7 +141,7 @@ public class Classifier{
      * predict
      * @param W the model weights
      * @param example an example to predict
-     * @param returnAll can be used by the inference to return the desired number of examples
+     * @param returnAll can be used by the inference1 to return the desired number of examples
      * @return PredictedLabels object containing the sorted predictions
      */
     public PredictedLabels test(Vector W, Example example, int returnAll) {

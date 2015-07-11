@@ -27,10 +27,10 @@
 package com.structed.utils;
 
 import com.structed.constants.Consts;
-import com.structed.data1.entities.Example;
-import com.structed.data1.Factory;
-import com.structed.data1.InstancesContainer;
-import com.structed.data1.entities.Vector;
+import com.structed.data.entities.Example;
+import com.structed.data.Factory;
+import com.structed.data.InstancesContainer;
+import com.structed.data.entities.Vector;
 import com.structed.dal.Reader;
 
 import java.text.ParseException;
@@ -62,7 +62,7 @@ public class ModelHandler {
     /**
      * Converts an array list of strings into a vector of double
      * this function can be used after reading a vector from a file
-     * @param data the data1 2D array but we treat tim as a 1D array
+     * @param data the data 2D array but we treat tim as a 1D array
      * @return a vector that contains the model weights
      * @throws ParseException
      */
@@ -80,7 +80,7 @@ public class ModelHandler {
     }
 
     /**
-     * preforming random shuffle on the data1 instances
+     * preforming random shuffle on the data instances
      * @param instances
      * @return
      */

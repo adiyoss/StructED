@@ -26,16 +26,16 @@
 
 package com.structed.models;
 
-import com.structed.models.algorithms.IUpdateRule;
-import com.structed.models.inference.IInference;
-import com.structed.models.kernels.IKernel;
+import com.structed.models.algorithms1.IUpdateRule;
+import com.structed.models.inference1.IInference;
+import com.structed.models.kernels1.IKernel;
 import com.structed.models.loss.ITaskLoss;
-import com.structed.data1.entities.Example;
-import com.structed.data1.entities.PredictedLabels;
-import com.structed.data1.entities.Vector;
-import com.structed.data1.featurefunctions.IFeatureFunctions;
-import com.structed.data1.InstancesContainer;
-import com.structed.data1.Logger;
+import com.structed.data.entities.Example;
+import com.structed.data.entities.PredictedLabels;
+import com.structed.data.entities.Vector;
+import com.structed.data.featurefunctions.IFeatureFunctions;
+import com.structed.data.InstancesContainer;
+import com.structed.data.Logger;
 import com.structed.utils.ModelHandler;
 import com.structed.view.Graph;
 
@@ -49,7 +49,7 @@ import java.util.concurrent.TimeUnit;
 
 public class StructEDModel implements Serializable{
 
-    // data1 members
+    // data members
     private Classifier classifier;
     private Vector W;
     private double cumulative_loss = 0;
@@ -70,7 +70,7 @@ public class StructEDModel implements Serializable{
 
     /**
      * Train the model on the train instances
-     * @param epoch - the number of epochs to run over the data1
+     * @param epoch - the number of epochs to run over the data
      * @param trainInstances - the training instances(train set)
      * @param task_loss_params - the task loss parameters, if there are no parameters set this to null
      * @param developInstances - the develop instances(dev set), set this to null if there is no validation set

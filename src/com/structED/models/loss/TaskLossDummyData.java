@@ -27,7 +27,7 @@
 package com.structed.models.loss;
 
 import com.structed.constants.Consts;
-import com.structed.data1.Logger;
+import com.structed.data.Logger;
 
 import java.util.List;
 
