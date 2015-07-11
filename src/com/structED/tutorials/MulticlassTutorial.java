@@ -34,6 +34,7 @@ import com.structed.data.entities.PredictedLabels;
 import com.structed.data.entities.Vector;
 import com.structed.data.featurefunctions.FeatureFunctionsSparse;
 import com.structed.models.StructEDModel;
+import com.structed.models.algorithms.PassiveAggressive;
 import com.structed.models.algorithms.SVM;
 import com.structed.models.inference.InferenceMultiClass;
 import com.structed.models.loss.TaskLossMultiClass;
@@ -97,9 +98,9 @@ public class MulticlassTutorial {
         InstancesContainer irisTestInstances = reader.readData(testPath, Consts.COMMA_NOTE, Consts.COLON_SPLITTER);
         // ======= SVM ====== //
         W = new Vector() {{put(0, 0.0);}}; // init the first weight vector to be zeros
-        arguments = new ArrayList<Double>() {{add(0.1);add(0.1);}}; // model parameters
+        arguments = new ArrayList<Double>() {{add(1.0);}}; // model parameters
 
-        StructEDModel iris_model = new StructEDModel(W, new SVM(), new TaskLossMultiClass(),
+        StructEDModel iris_model = new StructEDModel(W, new PassiveAggressive(), new TaskLossMultiClass(),
                 new InferenceMultiClass(numOfClasses), null, new FeatureFunctionsSparse(numOfClasses, maxFeatures), arguments); // create the model
         iris_model.train(irisTrainInstances, null, null, epochNum, isAvg); // train
         ArrayList<PredictedLabels> iris_labels = iris_model.predict(irisTestInstances, null, numExamples2Display); // predict

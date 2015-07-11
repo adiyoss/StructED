@@ -132,12 +132,12 @@ public class APITest {
         // ======================= LOAD & SAVE THE MODEL ====================== //
         Logger.info("Save and Load Dummy model.");
 
-        dummy_model.saveModel("data/models/dummy/dummy.model"); // save the pa model of the dummy data
+        dummy_model.saveModel("dummy.model"); // save the pa model of the dummy data
         arguments = new ArrayList<Double>(){{add(3.0);}}; // model parameters
 
         StructEDModel loaded_model = new StructEDModel(null, new PassiveAggressive(), new TaskLossDummyData(),
                 new InferenceDummyData(), null, new FeatureFunctionsDummy(), arguments); // create the model
-        loaded_model.loadModel("data/models/dummy/dummy.model"); // load the saved model
+        loaded_model.loadModel("dummy.model"); // load the saved model
         loaded_model.predict(dummyTestInstances, task_loss_params, numExamples2Display); // predict
 
         // print the prediction
