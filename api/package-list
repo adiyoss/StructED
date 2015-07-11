@@ -1,4 +1,3 @@
-com.structed.constants
 com.structed.dal
 com.structed.data
 com.structed.data.entities
@@ -8,6 +7,4 @@ com.structed.models.algorithms
 com.structed.models.inference
 com.structed.models.kernels
 com.structed.models.loss
-com.structed.tutorials
 com.structed.utils
-com.structed.view
