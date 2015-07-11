@@ -26,11 +26,11 @@
 
 package com.structed.main;
 
-import com.structed.models.algorithms1.CRF;
-import com.structed.models.algorithms1.PassiveAggressive;
-import com.structed.models.algorithms1.SVM;
-import com.structed.models.inference1.InferenceDummyData;
-import com.structed.models.inference1.InferenceMultiClass;
+import com.structed.models.algorithms.CRF;
+import com.structed.models.algorithms.PassiveAggressive;
+import com.structed.models.algorithms.SVM;
+import com.structed.models.inference.InferenceDummyData;
+import com.structed.models.inference.InferenceMultiClass;
 import com.structed.models.StructEDModel;
 import com.structed.models.loss.TaskLossDummyData;
 import com.structed.models.loss.TaskLossMultiClass;

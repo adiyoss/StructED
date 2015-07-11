@@ -24,7 +24,7 @@
  * THE SOFTWARE.
  */
 
-package com.structed.models.kernels1;
+package com.structed.models.kernels;
 
 import com.structed.data.entities.Vector;
 

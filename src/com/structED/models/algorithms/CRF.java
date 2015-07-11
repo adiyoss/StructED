@@ -24,7 +24,7 @@
  * THE SOFTWARE.
  */
 
-package com.structed.models.algorithms1;
+package com.structed.models.algorithms;
 
 import java.util.ArrayList;
 import java.util.Map;

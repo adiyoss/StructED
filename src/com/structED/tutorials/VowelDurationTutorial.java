@@ -33,8 +33,8 @@ import com.structed.data.Logger;
 import com.structed.data.entities.Vector;
 import com.structed.data.featurefunctions.FeatureFunctionsVowelDuration;
 import com.structed.models.StructEDModel;
-import com.structed.models.algorithms1.DirectLoss;
-import com.structed.models.inference1.InferenceVowelDurationData;
+import com.structed.models.algorithms.DirectLoss;
+import com.structed.models.inference.InferenceVowelDurationData;
 import com.structed.models.loss.TaskLossVowelDuration;
 
 import java.util.ArrayList;

@@ -34,9 +34,9 @@ import com.structed.data.entities.PredictedLabels;
 import com.structed.data.entities.Vector;
 import com.structed.data.featurefunctions.FeatureFunctionsDummy;
 import com.structed.models.StructEDModel;
-import com.structed.models.algorithms1.CRF;
-import com.structed.models.algorithms1.PassiveAggressive;
-import com.structed.models.inference1.InferenceDummyData;
+import com.structed.models.algorithms.CRF;
+import com.structed.models.algorithms.PassiveAggressive;
+import com.structed.models.inference.InferenceDummyData;
 import com.structed.models.loss.TaskLossDummyData;
 
 import java.util.ArrayList;

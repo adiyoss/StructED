@@ -141,7 +141,7 @@ public class Classifier{
      * predict
      * @param W the model weights
      * @param example an example to predict
-     * @param returnAll can be used by the inference1 to return the desired number of examples
+     * @param returnAll can be used by the inference to return the desired number of examples
      * @return PredictedLabels object containing the sorted predictions
      */
     public PredictedLabels test(Vector W, Example example, int returnAll) {

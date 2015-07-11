@@ -26,7 +26,7 @@
 
 package com.structed.data.featurefunctions;
 
-import com.structed.models.kernels1.IKernel;
+import com.structed.models.kernels.IKernel;
 import com.structed.data.entities.Example;
 import com.structed.data.Factory;
 import com.structed.data.entities.Vector;

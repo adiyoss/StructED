@@ -33,8 +33,8 @@ import com.structed.data.Logger;
 import com.structed.data.entities.Vector;
 import com.structed.data.featurefunctions.FeatureFunctionsDummy;
 import com.structed.models.StructEDModel;
-import com.structed.models.algorithms1.*;
-import com.structed.models.inference1.InferenceDummyData;
+import com.structed.models.algorithms.*;
+import com.structed.models.inference.InferenceDummyData;
 import com.structed.models.loss.TaskLossDummyData;
 import junit.framework.TestCase;
 

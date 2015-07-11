@@ -24,13 +24,20 @@
  * THE SOFTWARE.
  */
 
-package com.structed.models.kernels1;
+package com.structed.models.algorithms;
 
+import com.structed.models.ClassifierData;
+import com.structed.data.entities.Example;
 import com.structed.data.entities.Vector;
 
+import java.util.ArrayList;
+
 /**
- * IKernel interface - inorder to add new kernel in you own task you should implement this interface
+ * IUpdateRule interface - inorder to add new update rule in you own task you should implement this interface
+ * this interface enable us to set many update versions and compare between them
  */
-public interface IKernel {
-    Vector convertVector(Vector vector, int vectorSize);
+public interface IUpdateRule {
+	//the arguments would be different from update to update
+	Vector update(Vector currentWeights, Example example, ClassifierData classifierData);
+	void init(ArrayList<Double> args);
 }

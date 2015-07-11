@@ -24,7 +24,7 @@
  * THE SOFTWARE.
  */
 
-package com.structed.models.inference1;
+package com.structed.models.inference;
 
 import com.structed.models.ClassifierData;
 import com.structed.constants.Consts;
@@ -36,7 +36,7 @@ import com.structed.data.Logger;
 import com.structed.utils.MathHelpers;
 
 /**
- * Vowel Duration inference1 example
+ * Vowel Duration inference example
  */
 public class InferenceVowelDurationData implements IInference {
 

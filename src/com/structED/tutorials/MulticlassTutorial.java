@@ -34,9 +34,9 @@ import com.structed.data.entities.PredictedLabels;
 import com.structed.data.entities.Vector;
 import com.structed.data.featurefunctions.FeatureFunctionsSparse;
 import com.structed.models.StructEDModel;
-import com.structed.models.algorithms1.PassiveAggressive;
-import com.structed.models.algorithms1.SVM;
-import com.structed.models.inference1.InferenceMultiClass;
+import com.structed.models.algorithms.PassiveAggressive;
+import com.structed.models.algorithms.SVM;
+import com.structed.models.inference.InferenceMultiClass;
 import com.structed.models.loss.TaskLossMultiClass;
 
 import java.util.ArrayList;

@@ -24,7 +24,7 @@
  * THE SOFTWARE.
  */
 
-package com.structed.models.inference1;
+package com.structed.models.inference;
 
 import com.structed.models.ClassifierData;
 import com.structed.constants.Consts;

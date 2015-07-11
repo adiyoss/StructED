@@ -26,9 +26,9 @@
 
 package com.structed.models;
 
-import com.structed.models.algorithms1.IUpdateRule;
-import com.structed.models.kernels1.IKernel;
-import com.structed.models.inference1.IInference;
+import com.structed.models.algorithms.IUpdateRule;
+import com.structed.models.kernels.IKernel;
+import com.structed.models.inference.IInference;
 import com.structed.models.loss.ITaskLoss;
 import com.structed.data.featurefunctions.IFeatureFunctions;
 

@@ -24,20 +24,17 @@
  * THE SOFTWARE.
  */
 
-package com.structed.models.algorithms1;
+package com.structed.models.inference;
 
 import com.structed.models.ClassifierData;
 import com.structed.data.entities.Example;
+import com.structed.data.entities.PredictedLabels;
 import com.structed.data.entities.Vector;
 
-import java.util.ArrayList;
-
 /**
- * IUpdateRule interface - inorder to add new update rule in you own task you should implement this interface
- * this interface enable us to set many update versions and compare between them
+ * IInference interface - inorder to add new inference in you own task you should implement this interface
  */
-public interface IUpdateRule {
-	//the arguments would be different from update to update
-	Vector update(Vector currentWeights, Example example, ClassifierData classifierData);
-	void init(ArrayList<Double> args);
+public interface IInference {
+    PredictedLabels predictForTrain(Example vector, Vector W, String realClass, ClassifierData classifierData, double epsilonArgMax);
+    PredictedLabels predictForTest(Example vector, Vector W, String realClass, ClassifierData classifierData, int returnAll);
 }

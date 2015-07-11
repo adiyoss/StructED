@@ -114,16 +114,16 @@ public class Factory {
 //
 //        switch (predictType) {
 //            case 0:
-//                classifier.classifierData.inference1 = new InferenceVowelDurationData();
+//                classifier.classifierData.inference = new InferenceVowelDurationData();
 //                break;
 //            case 1:
-//                classifier.classifierData.inference1 = new InferenceMultiClass();
+//                classifier.classifierData.inference = new InferenceMultiClass();
 //                break;
 //            case 2:
-//                classifier.classifierData.inference1 = new InferenceRanking();
+//                classifier.classifierData.inference = new InferenceRanking();
 //                break;
 //            case 3:
-//                classifier.classifierData.inference1 = new InferenceDummyData();
+//                classifier.classifierData.inference = new InferenceDummyData();
 //                break;
 //            default:
 //                return null;

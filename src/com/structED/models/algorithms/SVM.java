@@ -24,7 +24,9 @@
  * THE SOFTWARE.
  */
 
-package com.structed.models.algorithms1;
+package com.structed.models.algorithms;
+
+import java.util.ArrayList;
 
 import com.structed.constants.Consts;
 import com.structed.models.ClassifierData;
@@ -34,29 +36,41 @@ import com.structed.data.entities.Vector;
 import com.structed.data.Logger;
 import com.structed.utils.MathHelpers;
 
-import java.util.ArrayList;
-
 /**
- * Created by adiyoss on 3/4/15.
- * Structured Perceptron
- * http://www.cs.columbia.edu/~mcollins/papers/tagperc.pdf
+ * Structured SVM
+ * http://link.springer.com/article/10.1007/s10107-010-0420-4#page-1
  */
-public class Perceptron implements IUpdateRule {
+public class SVM implements IUpdateRule {
+
+    //data members
+    double lambda;
+    double eta;
 
     @Override
     public void init(ArrayList<Double> args) {
-        if(args.size() != Consts.SP_PARAMS_SIZE)
+        if(args.size() != Consts.SVM_PARAMS_SIZE){
             Logger.error(ErrorConstants.UPDATE_ARGUMENTS_ERROR);
+            return;
+        }
+        //initialize the parameters
+        this.eta = args.get(0);
+        this.lambda = args.get(1);
     }
 
-    @Override
-    // Structured Perceptron has no attributes
-    public Vector update(Vector currentWeights, Example example, ClassifierData classifierData) {
-        try{
+	@Override
+	//in SVM the lambda value would be in the first cell of the arguments attribute
+	//the second cell of the arguments attribute would be the eta 
+	public Vector update(Vector currentWeights, Example example, ClassifierData classifierData) {
+		
+		try{
+            double algorithmIteration = classifierData.iteration;
+
+			//get the prediction
             String prediction;
+
             //if there's a problem with the predict return the previous weights
             try{
-                prediction = classifierData.inference.predictForTrain(example,currentWeights,example.getLabel(),classifierData,1).firstKey();
+			    prediction = classifierData.inference.predictForTrain(example,currentWeights,example.getLabel(),classifierData,1).firstKey();
             } catch (Exception e){
                 return currentWeights;
             }
@@ -64,16 +78,23 @@ public class Perceptron implements IUpdateRule {
             Example phiRealLabel = classifierData.phi.convert(example,example.getLabel(), classifierData.kernel);
             Example phiPrediction = classifierData.phi.convert(example,prediction, classifierData.kernel);
 
-            //compute the phi difference
+			//compute the phi difference
             Vector phiDifference = MathHelpers.subtract2Vectors(phiRealLabel.getFeatures(), phiPrediction.getFeatures());
-            //update the weights vector
-            Vector result = MathHelpers.add2Vectors(currentWeights, phiDifference);
-            return result;
+			
+            double newEta = eta/Math.sqrt(algorithmIteration);
 
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
+			double coefficientFirstArgument = (1-(lambda*newEta));
+
+            Vector firstArgument = MathHelpers.mulScalarWithVectors(currentWeights, coefficientFirstArgument);
+            Vector secondArgument = MathHelpers.mulScalarWithVectors(phiDifference, newEta);
+
+            Vector result = MathHelpers.add2Vectors(firstArgument, secondArgument);
+
+			return result;
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 }
-

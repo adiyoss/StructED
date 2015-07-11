@@ -24,7 +24,7 @@
  * THE SOFTWARE.
  */
 
-package com.structed.models.algorithms1;
+package com.structed.models.algorithms;
 
 import java.util.ArrayList;
 
@@ -37,64 +37,64 @@ import com.structed.data.Logger;
 import com.structed.utils.MathHelpers;
 
 /**
- * Structured SVM
- * http://link.springer.com/article/10.1007/s10107-010-0420-4#page-1
+ * Passive Aggressive algorithm
+ * http://machinelearning.wustl.edu/mlpapers/paper_files/NIPS2003_LT21.pdf
  */
-public class SVM implements IUpdateRule {
-
+public class PassiveAggressive implements IUpdateRule {
+    
     //data members
-    double lambda;
-    double eta;
+    double cValue;
 
     @Override
-    public void init(ArrayList<Double> args) {
-        if(args.size() != Consts.SVM_PARAMS_SIZE){
+    public void init(ArrayList<Double> args){
+        if(args.size() != Consts.PA_PARAMS_SIZE){
             Logger.error(ErrorConstants.UPDATE_ARGUMENTS_ERROR);
             return;
         }
         //initialize the parameters
-        this.eta = args.get(0);
-        this.lambda = args.get(1);
+        this.cValue = args.get(0);
     }
 
-	@Override
-	//in SVM the lambda value would be in the first cell of the arguments attribute
-	//the second cell of the arguments attribute would be the eta 
+    @Override
+	//the first cell of the arguments attribute would be the C value
 	public Vector update(Vector currentWeights, Example example, ClassifierData classifierData) {
 		
 		try{
-            double algorithmIteration = classifierData.iteration;
-
 			//get the prediction
-            String prediction;
+			String prediction = classifierData.inference.predictForTrain(example, currentWeights, example.getLabel(), classifierData,1).firstKey();
 
-            //if there's a problem with the predict return the previous weights
-            try{
-			    prediction = classifierData.inference.predictForTrain(example,currentWeights,example.getLabel(),classifierData,1).firstKey();
-            } catch (Exception e){
-                return currentWeights;
-            }
-
-            Example phiRealLabel = classifierData.phi.convert(example,example.getLabel(), classifierData.kernel);
-            Example phiPrediction = classifierData.phi.convert(example,prediction, classifierData.kernel);
-
+            Example phiRealLabel = classifierData.phi.convert(example, example.getLabel(), classifierData.kernel);
+            Example phiPrediction = classifierData.phi.convert(example, prediction, classifierData.kernel);
+			
 			//compute the phi difference
             Vector phiDifference = MathHelpers.subtract2Vectors(phiRealLabel.getFeatures(), phiPrediction.getFeatures());
 			
-            double newEta = eta/Math.sqrt(algorithmIteration);
+			double taskLossValue = classifierData.taskLoss.computeTaskLoss(prediction, example.getLabel(), classifierData.arguments);
+			
+			double multipleVectors = MathHelpers.multipleVectors(currentWeights , phiDifference);
+			double denominator = MathHelpers.multipleVectors(phiDifference, phiDifference);
 
-			double coefficientFirstArgument = (1-(lambda*newEta));
+			double tau = 0;
+			if(denominator != 0){
+				tau = (taskLossValue - multipleVectors)/denominator;
+			}
 
-            Vector firstArgument = MathHelpers.mulScalarWithVectors(currentWeights, coefficientFirstArgument);
-            Vector secondArgument = MathHelpers.mulScalarWithVectors(phiDifference, newEta);
+			if(tau > cValue)
+				tau = cValue;
 
-            Vector result = MathHelpers.add2Vectors(firstArgument, secondArgument);
+            if(tau < 0)
+                Logger.error("Loss < 0!, prediction search can't get to the target label.");
+
+            Vector updateVector = MathHelpers.mulScalarWithVectors(phiDifference, tau);
+            Vector result = MathHelpers.add2Vectors(currentWeights, updateVector);
 
 			return result;
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
 	}
 }
+
+

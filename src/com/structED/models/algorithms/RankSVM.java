@@ -24,37 +24,38 @@
  * THE SOFTWARE.
  */
 
-package com.structed.models.algorithms1;
+package com.structed.models.algorithms;
 
-import com.structed.constants.Consts;
 import com.structed.models.ClassifierData;
+import com.structed.constants.Consts;
 import com.structed.constants.ErrorConstants;
 import com.structed.data.entities.Example;
+import com.structed.data.entities.PredictedLabels;
 import com.structed.data.entities.Vector;
 import com.structed.data.Logger;
 import com.structed.utils.MathHelpers;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 /**
- * Created by yossiadi on 5/4/15.
- * Orbit Loss algorithm
+ * TBD
  */
-public class OrbitLoss implements IUpdateRule {
-    
+public class RankSVM implements IUpdateRule {
+
     //data members
     double lambda;
     double eta;
-
+    
     @Override
     public void init(ArrayList<Double> args) {
-        if(args.size() != Consts.ORBIT_PARAMS_SIZE){
+        if(args.size() != Consts.SVM_PARAMS_SIZE){
             Logger.error(ErrorConstants.UPDATE_ARGUMENTS_ERROR);
             return;
         }
         //initialize the parameters
-        this.eta = args.get(0);
-        this.lambda = args.get(1);
+        this.lambda = args.get(0);
+        this.eta = args.get(1);
     }
 
     @Override
@@ -66,32 +67,37 @@ public class OrbitLoss implements IUpdateRule {
             double algorithmIteration = classifierData.iteration;
 
             //get the prediction
-            String prediction;
-
+            PredictedLabels prediction;
             //if there's a problem with the predict return the previous weights
             try{
-                prediction = classifierData.inference.predictForTrain(example,currentWeights,example.getLabel(),classifierData,1).firstKey();
-            } catch (Exception e){
+                prediction = classifierData.inference.predictForTrain(example,currentWeights,example.getLabel(),classifierData,1);
+            }catch (Exception e){
                 return currentWeights;
             }
+            Vector result = currentWeights;
 
-            // feature functions
-            Example phiRealLabel = classifierData.phi.convert(example,example.getLabel(), classifierData.kernel);
-            Example phiPrediction = classifierData.phi.convert(example, prediction, classifierData.kernel);
+            for(Map.Entry<String,Double> entry : prediction.entrySet()) {
 
-            //compute the phi difference
-            Vector phiDifference = MathHelpers.subtract2Vectors(phiRealLabel.getFeatures(), phiPrediction.getFeatures());
+                if(entry.getKey().equalsIgnoreCase(Consts.CLASSIFICATION_SPLITTER))
+                    continue;
+                String[] predictLabels = entry.getKey().split(Consts.CLASSIFICATION_SPLITTER);
+                if(predictLabels.length != 2)
+                    continue;
+                if(predictLabels[0].equalsIgnoreCase("") || predictLabels[1].equalsIgnoreCase(""))
+                    continue;
 
-            // get the loss value and update the learning rate
-            double loss = classifierData.taskLoss.computeTaskLoss(prediction, example.getLabel(), classifierData.arguments);
-            double newEta = eta;
-            double coefficientFirstArgument = (1-(lambda*newEta));
+                Example phiRealLabel = classifierData.phi.convert(example, predictLabels[0], classifierData.kernel);
+                Example phiPrediction = classifierData.phi.convert(example, predictLabels[1], classifierData.kernel);
+                Vector phiDifference = MathHelpers.subtract2Vectors(phiRealLabel.getFeatures(), phiPrediction.getFeatures());
 
-            // update the weights
-            Vector firstArgument = MathHelpers.mulScalarWithVectors(currentWeights, coefficientFirstArgument);
-            Vector secondArgument = MathHelpers.mulScalarWithVectors(phiDifference, newEta*loss);
-            Vector result = MathHelpers.add2Vectors(firstArgument, secondArgument);
+                double newEta = eta/Math.sqrt(algorithmIteration);
+                double coefficientFirstArgument = (1-(lambda*newEta));
 
+                Vector firstArgument = MathHelpers.mulScalarWithVectors(currentWeights, coefficientFirstArgument);
+                Vector secondArgument = MathHelpers.mulScalarWithVectors(phiDifference, newEta);
+
+                result = MathHelpers.add2Vectors(firstArgument, secondArgument);
+            }
             return result;
 
         } catch (Exception e) {

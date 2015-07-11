@@ -24,17 +24,13 @@
  * THE SOFTWARE.
  */
 
-package com.structed.models.inference1;
+package com.structed.models.kernels;
 
-import com.structed.models.ClassifierData;
-import com.structed.data.entities.Example;
-import com.structed.data.entities.PredictedLabels;
 import com.structed.data.entities.Vector;
 
 /**
- * IInference interface - inorder to add new inference1 in you own task you should implement this interface
+ * IKernel interface - inorder to add new kernel in you own task you should implement this interface
  */
-public interface IInference {
-    PredictedLabels predictForTrain(Example vector, Vector W, String realClass, ClassifierData classifierData, double epsilonArgMax);
-    PredictedLabels predictForTest(Example vector, Vector W, String realClass, ClassifierData classifierData, int returnAll);
+public interface IKernel {
+    Vector convertVector(Vector vector, int vectorSize);
 }

@@ -24,7 +24,7 @@
  * THE SOFTWARE.
  */
 
-package com.structed.models.inference1;
+package com.structed.models.inference;
 
 import com.structed.models.ClassifierData;
 import com.structed.constants.Consts;
@@ -36,7 +36,7 @@ import com.structed.utils.comperators.MapValueComparatorDescending;
 import com.structed.utils.MathHelpers;
 
 /**
- * Dummy data inference1 example
+ * Dummy data inference example
  */
 public class InferenceDummyData implements IInference {
 

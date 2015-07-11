@@ -24,7 +24,7 @@
  * THE SOFTWARE.
  */
 
-package com.structed.models.algorithms1;
+package com.structed.models.algorithms;
 
 import java.util.ArrayList;
 
@@ -37,56 +37,52 @@ import com.structed.data.Logger;
 import com.structed.utils.MathHelpers;
 
 /**
- * Direct Loss Minimization
- * http://papers.nips.cc/paper/4069-direct-loss-minimization-for-structured-prediction.pdf
+ * Ramp Loss Minimization
+ * http://papers.nips.cc/paper/4268-generalization-bounds-and-consistency-for-latent-structural-probit-and-ramp-loss.pdf
  */
-public class DirectLoss implements IUpdateRule {
-
+public class RampLoss implements IUpdateRule {
+    
     //data members
+    double lambda;
     double eta;
-    double epsilonArgMax;
 
     @Override
     public void init(ArrayList<Double> args) {
-        if(args.size() != Consts.DL_PARAMS_SIZE){
+        if(args.size() != Consts.RL_PARAMS_SIZE){
             Logger.error(ErrorConstants.UPDATE_ARGUMENTS_ERROR);
             return;
         }
         //initialize the parameters
         this.eta = args.get(0);
-        this.epsilonArgMax = args.get(1);
+        this.lambda = args.get(1);
     }
 
-
 	@Override
-	//the first cell of the arguments attribute would be the eta value
-	//the second cell of the arguments attribute would be the epsilon for the argmax
+	//the eta variable in is the first cell
+	//the lambda variable s in the second cell
 	public Vector update(Vector currentWeights, Example example, ClassifierData classifierData) {
 		
 		try{
             double algorithmIteration = classifierData.iteration;
-            double newEta = eta/(Math.sqrt(algorithmIteration)*Math.abs(epsilonArgMax));
+            double newEta = eta/Math.sqrt(algorithmIteration);
 
 			//get the prediction
 			String prediction = classifierData.inference.predictForTrain(example, currentWeights, example.getLabel(), classifierData, 0).firstKey();
-			//get the direct prediction
-			String predictionDirect = classifierData.inference.predictForTrain(example, currentWeights, example.getLabel(),classifierData, epsilonArgMax).firstKey();
-            Vector directLoss;
+			//get the prediction with the task loss
+			String predictionLoss = classifierData.inference.predictForTrain(example, currentWeights, example.getLabel(), classifierData, 1).firstKey();
 
             Example phiPredictionNoLoss = classifierData.phi.convert(example,prediction,classifierData.kernel);
-            Example phiPredictionDirect = classifierData.phi.convert(example,predictionDirect,classifierData.kernel);
+            Example phiPredictionWithLoss= classifierData.phi.convert(example,predictionLoss,classifierData.kernel);
 
-            //create the direct loss value by the epsilon sign
-            if(epsilonArgMax < 0)
-			    //compute the direct loss
-                directLoss = MathHelpers.subtract2Vectors(phiPredictionDirect.getFeatures(), phiPredictionNoLoss.getFeatures());
-            else
-                directLoss = MathHelpers.subtract2Vectors(phiPredictionNoLoss.getFeatures(),phiPredictionDirect.getFeatures());
+			
+			//compute the ramp loss
+            Vector rampLoss = MathHelpers.subtract2Vectors(phiPredictionNoLoss.getFeatures(), phiPredictionWithLoss.getFeatures());
 
-            //get the update argument for the direct loss
-            Vector updateArg = MathHelpers.mulScalarWithVectors(directLoss, newEta);
-            Vector W_Next = MathHelpers.add2Vectors(currentWeights, updateArg); //compute the new weights
-
+            //perform the update
+            Vector lossArg = MathHelpers.mulScalarWithVectors(rampLoss, newEta);
+            Vector newWeights = MathHelpers.mulScalarWithVectors(currentWeights, 1-lambda*newEta);
+            Vector W_Next = MathHelpers.add2Vectors(newWeights, lossArg);
+			
 			return W_Next;
 			
 		} catch (Exception e) {
