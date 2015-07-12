@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="StructED, structured prediction learning package">
+    <meta name="author" content="adiyoss yossi adi joseph keshet">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>StructED - Introduction</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+
+   <!-- Custom styles for this template -->
+    <link href="css/navbar-fixed-top.css" rel="stylesheet">
+    <link href="css/sticky-footer-navbar.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/jumbotron.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="assets/ie-emulation-modes-warning.js"></script>
+
+    <!-- Custom Fonts -->
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+
+    <link href="css/introduction.css" rel="stylesheet">  
+
+    <!-- USED FOR LATEX CODE INSIDE THE HTML -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        extensions: ["tex2jax.js"],
+        jax: ["input/TeX","output/HTML-CSS"],
+        tex2jax: {inlineMath: [["$","$"],["\\(","\\)"]]}
+      });
+    </script>
+    <script type="text/javascript" src="js/MathJax.js"></script>  
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="index.html">StrcutED</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">            
+            <li><a href="introduction.html">Introduction</a></li>
+            <li><a href="models.html">Models</a></li>
+            <li><a href="examples.html">Examples</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="api/index.html" target="blank">API</a></li>
+            <li><a href="https://github.com/adiyoss/StructED" target="blank"><i class="fa fa-github fa-fw fa-lg"></i></a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    <div style="display:none">
+    \(      
+      \newcommand{\oneinf}{\ell_{1,\infty}}
+      \newcommand{\onetwo}{\ell_{1,2}}
+    \)
+    </div>
+    
+
+    <div class="container container_short">
+      <!-- Example row of columns -->
+      <h2 class="text-center">Models</h2>
+      <hr>
+      <div>  
+        Here we describe the models(learning algorithms) we implemented in StructED package.
+          <p>We implemented six structured prediction algorithms in StructED, all the loss functions and update rules are summerized in the following table:</p>         
+          <div>
+            <table class="table table-bordered table-striped">             
+             <thead>
+                <tr>                                    
+                  <th class="col-md-5">Loss</th>
+                  <th class="col-md-5">Update Rule</th>
+                </tr>
+             </thead>
+             <tbody>
+                <tr>
+                  <td colspan="2"><b>Structured Perceptron</b> <a href="http://www.cs.columbia.edu/~mcollins/papers/tagperc.pdf" target="blank">(Collins, 2002).</td>
+                </tr>
+                <tr>                   
+                   <td class="text-center"> - </td>
+                   <td>$w_{t+1} = w_t + \phi(x_t, y_t) - \phi(x_t,\hat{y}^0_t)$</td>
+                </tr>
+                <tr>
+                  <td colspan="2"><b>Structured SVM</b> <a href="http://www.jmlr.org/papers/volume6/tsochantaridis05a/tsochantaridis05a.pdf" target="blank">(Tsochantaridis et al., 2005).</td>
+                </tr>
+                <tr>                   
+                   <td class="text-center">$max_{\hat{y}} ~[ \ell(y,\hat{y}) - w^\top\phi(x,y) + w^\top\phi(x,\hat{y})]$</td>
+                   <td>$w_{t+1} = (1-\eta_t \lambda)w_t + \eta_t( \phi(x_t, y_t) - \phi(x_t,\hat{y}^1_t))$</td>
+                </tr>
+                <tr>
+                  <td colspan="2"><b>Passive Aggressive</b> <a href="http://webee.technion.ac.il/people/koby/publications/crammer06a.pdf" target="blank">(Crammer et al., 2006).</a></td>
+                </tr>
+                <tr>                   
+                   <td class="text-center"> - </td>
+                   <td>$w_{t+1} = w_{t} + \tau_{t}(\phi(x_t,y_t)) - \phi(x_t,\hat{y}^1_t))$</td>
+                </tr>
+                <tr>
+                  <td colspan="2"><b>CRF</b> <a href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.26.803&rep=rep1&type=pdf" target="blank">(Lafferty et al., 2001).</a></td>
+                </tr>
+                <tr>                   
+                   <td class="text-center">$-\ln P_{w}(y \,|\, x)$, where $P_{w}(y \,|\, x) = \frac{1}{Z_{w}(x)} \exp\{w^\top \phi(x, y)\}$</td>
+                   <td>$w_{t+1} = (1-\eta_t \lambda)\,w_{t} + \eta_t\Big( \phi(x_{j_t},y_{j_t}) - \mathbb{E}_{y'\sim P_{w}(y' \,|\, x)}[ \phi(x_{j_t},y')] \Big)$</td>
+                </tr>
+                <tr>
+                  <td colspan="2"><b>Direct Loss Minimization</b> <a href="http://u.cs.biu.ac.il/~jkeshet/papers/McAllesterHaKe10.pdf" target="blank">(McAllester et al., 2010).</a></td>
+                </tr>
+                <tr>                   
+                   <td class="text-center">$\ell (y,\hat{y})$</td>
+                   <td>$w_{t+1} = w_{t} + \frac{\eta_t}{\epsilon}(\phi(x_t,\hat{y}^{-\epsilon}_t) - \phi(x_t,\hat{y}^1_{t}))$</td>
+                </tr>
+                <tr>
+                  <td colspan="2"><b>Structured Ramp Loss</b> <a href="http://papers.nips.cc/paper/4268-generalization-bounds-and-consistency-for-latent-structural-probit-and-ramp-loss.pdf" target="blank">(McAllester and Keshet, 2011).</a></td>
+                </tr>
+                <tr>                   
+                   <td class="text-center">$\max_{\hat{y}} [ \ell(y,\hat{y}) +  w^\top \phi(x,\hat{y})] - \max_{\tilde{y}} [w^\top \phi(x,\tilde{y})]$</td>
+                   <td>$w_{t+1} = (1-\eta_t\lambda)\,w_{t} + \eta_t(\phi(x_t,\hat{y}^0_t) - \phi(x_t,\hat{y}^1_t))$</td>
+                </tr>
+                <tr>
+                  <td colspan="2"><b>Probit Loss</b> <a href="http://cs.haifa.ac.il/~tamir/papers/KeshetMcHa10.pdf" target="blank">(Keshet et al., 2011).</a></td>
+                </tr>
+                <tr>                   
+                   <td class="text-center">$\mathbb{E}_{\gamma \sim \mathcal{N}(0,I)}[\ell (y,\hat{y}_{w+\gamma})]$</td>
+                   <td>$w_{t+1} = (1-\eta_t\lambda)\,w_t + \eta_t \mathbb{E}_{\gamma \sim \mathcal{N}(0,I)}[ \gamma \, \ell (y_t,\hat{y}^0_{w+\gamma})]$</td>
+                </tr>
+
+             </tbody>
+          </table>
+          </div>
+          <br><br>
+          <div>
+            <h2 class="text-center">Parameters</h2>            
+            Here we detailed the mendatory parameters for each structured model. Those parameters needs to be set in order before using any StructED model. In order to set these parameter you need to add them to an ArrayList of Doubles and set this list in the StructED model object's constructor. The parameters should be at the following order:
+            <div>
+               <table class="table table-bordered table-striped">             
+                 <thead>
+                    <tr>                                    
+                      <th class="col-md-5">Model (learning algorithm)</th>
+                      <th class="col-md-5">Parameters</th>
+                    </tr>
+                 </thead>
+                 <tbody>
+                    <tr>
+                      <td><b>Structured Perceptron</b></td>
+                      <td class="text-center"> - </td>
+                    </tr>                
+                    <tr>
+                      <td><b>Structured SVM</b></td>
+                      <td> 
+                        <ol>
+                          <li><u>eta</u>: learning rate</li>
+                          <li><u>lambda</u>: regularization</li>
+                        </ol>
+                      </td>
+                    </tr>              
+                    <tr>
+                      <td><b>Passive Aggressive</b></td>
+                      <td>
+                        <ol>
+                          <li><u>C</u>: trade-off parameter</li>
+                        </ol> 
+                      </td>
+                    </tr>                
+                    <tr>
+                      <td><b>CRF</b></td>
+                      <td> 
+                        <ol>
+                          <li><u>eta</u>: learning rate</li>
+                          <li><u>lambda</u>: regularization</li>
+                        </ol> 
+                      </td>
+                    </tr>                
+                    <tr>
+                      <td><b>Direct Loss Minimization</b></td>
+                      <td> 
+                        <ol>
+                          <li><u>eta</u>: learning rate</li>
+                          <li><u>epsilon</u></li>
+                        </ol> 
+                      </td>
+                    </tr>              
+                    <tr>
+                      <td><b>Structured Ramp Loss</b></td>
+                      <td> 
+                        <ol>
+                          <li><u>eta</u>: learning rate</li>
+                          <li><u>lambda</u>: regularization</li>
+                        </ol>
+                      </td>
+                    </tr>                
+                    <tr>
+                      <td><b>Probit Loss</b></td>
+                      <td>
+                        <ol>
+                          <li><u>eta</u>: learning rate</li>
+                          <li><u>lambda</u>: regularization</li>
+                          <li><u>num_of_iteration</u>: the number of times to generation noise</li>
+                          <li><u>noise_all_vector</u>: boolean(1/0) indicates whether to generate noise through all the weight vector or just in one random place</li>
+                          <li><u>noise_mean</u>: the mean of the noise to be generated(we draw the noise from a normal distribution)</li>
+                          <li><u>noise_std</u>: the standard deviation of the noise to be generated(we draw the noise from a normal distribution)</li>
+                        </ol>
+                        </td>
+                    </tr>                
+                  </tbody>
+                </table>
+            </div>
+          </div>     
+      </div>
+    </div> <!-- /container -->    
+
+    <footer class="footer">
+      <div class="container">
+      </div>
+    </footer>
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="assets/ie10-viewport-bug-workaround.js"></script>    
+  </body>
+</html>
