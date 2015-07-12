@@ -150,20 +150,46 @@
             Now we can create the StructEDModel with the interfaces we have just implemented, all we have left to do is to choose the model (learning algorithm). The code should look like this: <br><br>
             <div>
               <pre class="prettyprint">
+              
+        /* VOWEL DURATION DATA */
+        Logger.info("Vowel Duration data example.");
+        // &ltthe path to the vowel duration train data&gt
+        String trainPath = "data/db/vowel/train.vowel"; 
+        // &ltthe path to the vowel duration test data&gt
+        String testPath = "data/db/vowel/test.results"; 
 
-      // create the model 
-      StructEDModel vowel_model = new StructEDModel(W, new DirectLoss(), new TaskLossVowelDuration(), 
+        // parameters
+        int epochNum = 1;
+        int readerType = 2;
+        int isAvg = 1;
+        int numExamples2Display = 1;
+        Reader reader = getReader(readerType);
+
+        // load the data
+        InstancesContainer vowelTrainInstances = reader.readData(trainPath, Consts.SPACE, 
+              Consts.COLON_SPLITTER);
+        InstancesContainer vowelTestInstances = reader.readData(testPath, Consts.SPACE, 
+              Consts.COLON_SPLITTER);
+        if (vowelTrainInstances.getSize() == 0) return;
+
+        /* DIRECT LOSS MODEL*/
+        // init the first weight vector
+        Vector W = new Vector() {{put(0, 0.0);}}; 
+        // model parameters
+        ArrayList&ltDouble&gt arguments = new ArrayList&ltDouble&gt() {{add(0.1);add(-1.51);}}; 
+        // task loss parameters
+        ArrayList&ltDouble&gt task_loss_params = new ArrayList&ltDouble&gt(){{add(1.0);add(2.0);}}; 
+
+        // build the model
+        StructEDModel vowel_model = new StructEDModel(W, new DirectLoss(), new TaskLossVowelDuration(),
                 new InferenceVowelDurationData(), null, new FeatureFunctionsVowelDuration(), arguments); 
-
-      // train
-      vowel_model.train(vowelTrainInstances, task_loss_params, null, epochNum, isAvg);
-
-      // predict
-      vowel_model.predict(vowelTestInstances, null, numExamples2Display); 
-
+        // train
+        vowel_model.train(vowelTrainInstances, task_loss_params, null, epochNum, isAvg);
+        // predict 
+        vowel_model.predict(vowelTestInstances, task_loss_params, numExamples2Display); 
               </pre>
               <br><br>
-              In this case, we used a different reader, we called it LazyInstanceContainer, this container gets the pathes to all the data and read the actual data on demand. Moreover, we store the raw data here as a 2D-Array, hence we create a new data structure called Examle2D which support this kind of data.
+              In this case, we used a different reader (lazy reader), and we stored our data in a data structure called it LazyInstanceContainer, this container gets the pathes to all the data and reads the actual data on demand. This data structure inherits from the original Instance container, hence we can use it we only a minot changes. Moreover, we store the raw data here as a 2D-Array, hence we create a new data structure called Examle2D which support this kind of data.
             </div>  
           </div>
         </div>              

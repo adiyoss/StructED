@@ -184,15 +184,50 @@
                   <br><br>                 
                   <div>
                     <pre class="prettyprint">
+                
+        Logger.info("Dummy data example.");
 
-      // create the model
-      StructEDModel dummy_model = new StructEDModel(W, new PassiveAggressive(), new TaskLossDummyData(), 
-                new InferenceDummyData(), null, new FeatureFunctionsDummy(), arguments);                      
-      // train
-      dummy_model.train(dummyTrainInstances, task_loss_params, null, epochNum, isAvg);                      
-      // predict
-      ArrayList&ltPredictedLabels&gt labels = dummy_model.predict(dummyTestInstances, task_loss_params, 
-                numExamples2Display);
+        // parameters
+        int readerType = 0;
+        int epochNum = 3;
+        int isAvg = 1;
+        int numExamples2Display = 3;
+
+        // &ltthe path to the dummy train data&gt
+        String trainPath = "data/db/dummy/train.txt"; 
+        // &ltthe path to the dummy test data&gt
+        String testPath = "data/db/dummy/test.txt"; 
+
+        // load the data
+        Reader reader = getReader(readerType);
+        InstancesContainer dummyTrainInstances = reader.readData(trainPath, Consts.SPACE, 
+              Consts.COLON_SPLITTER);
+        InstancesContainer dummyTestInstances = reader.readData(testPath, Consts.SPACE, 
+              Consts.COLON_SPLITTER);
+        if ( dummyTrainInstances.getSize() == 0 ) return;
+
+        /*  PASSIVE AGGRESSIVE MODEL */
+        // init the first weight vector 
+        Vector W = new Vector() {{put(0, 0.0);}}; 
+        // model parameters (in pa - C parameter)
+        ArrayList&ltDouble&gt arguments = new ArrayList&ltDouble&gt(){{add(3.0);}}; 
+        // task loss parameters
+        ArrayList&ltDouble&gt task_loss_params = new ArrayList&ltDouble&gt(){{add(1.0);}}; 
+
+        // build the model
+        StructEDModel dummy_model = new StructEDModel(W, new PassiveAggressive(), new TaskLossDummyData(),
+                new InferenceDummyData(), null, new FeatureFunctionsDummy(), arguments); 
+        // train
+        dummy_model.train(dummyTrainInstances, task_loss_params, null, epochNum, isAvg); 
+        // predict
+        ArrayList&ltPredictedLabels&gt labels = dummy_model.predict(dummyTestInstances, 
+                task_loss_params, numExamples2Display); 
+
+        // print the prediction
+        for(int i=0 ; i&ltdummyTestInstances.getSize() ; i++)
+            Logger.info("Y = "+dummyTestInstances.getInstance(i).getLabel()+", Y_HAT = "+
+                labels.get(i).firstKey());
+        Logger.info("");        
 
                     </pre>
                   </div>                  
