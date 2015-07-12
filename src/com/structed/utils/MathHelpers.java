@@ -44,6 +44,7 @@ public class MathHelpers {
 	public static double multipleVectors(Vector v1, Vector v2)
 	{
 		double result = 0;
+        Double num;
 
 		//validation
 		if(v1.size() == 0 || v2.size() == 0) {
@@ -54,13 +55,15 @@ public class MathHelpers {
         if(v1.size() <= v2.size()) {
             //multiple the vectors
             for (Integer key : v1.keySet()) {
-                if (v2.containsKey(key))
+                num = v2.get(key);
+                if (num != null)
                     result += (v1.get(key) * v2.get(key));
             }
         } else {
             //multiple the vectors
             for (Integer key : v2.keySet()) {
-                if (v1.containsKey(key))
+                num = v1.get(key);
+                if (num != null)
                     result += (v1.get(key) * v2.get(key));
             }
         }
@@ -85,7 +88,7 @@ public class MathHelpers {
 
 		//multiple the vectors
 		for(Integer key : v1.keySet())
-			result.put(key,v1.get(key) + scalar);
+			result.put(key, v1.get(key) + scalar);
 
 		return result;
 	}
@@ -107,7 +110,7 @@ public class MathHelpers {
 
 		//multiple the vectors
         for(Integer key : v1.keySet())
-            result.put(key,v1.get(key)*scalar);
+            result.put(key, v1.get(key) * scalar);
 
 		return result;
 	}
@@ -121,6 +124,7 @@ public class MathHelpers {
 	public static Vector subtract2Vectors(Vector v1, Vector v2)
 	{
         Vector result = new Vector ();
+        Double num;
 
 		//validation
 		if(v1.size() == 0 || v2.size() == 0) {
@@ -130,14 +134,16 @@ public class MathHelpers {
 
 		//subtract the vectors
 		for(Integer key : v1.keySet()){
-            if(v2.containsKey(key))
+            num = v2.get(key);
+            if(num != null)
 			    result.put(key, v1.get(key)-v2.get(key));
             else
                 result.put(key, v1.get(key));
         }
 
         for(Integer key : v2.keySet()){
-            if(!v1.containsKey(key))
+            num = v1.get(key);
+            if(num == null)
                 result.put(key, (-1)*v2.get(key));
         }
 
@@ -153,7 +159,7 @@ public class MathHelpers {
 	public static Vector add2Vectors(Vector v1, Vector v2)
 	{
         Vector result = new Vector();
-
+        Double num;
 		//validation
         if(v1.size() == 0 || v2.size() == 0) {
             Logger.error(ErrorConstants.MULTIPLE_VECTORS_EMPTY_ERROR);
@@ -162,14 +168,16 @@ public class MathHelpers {
 
 		//add the vectors
         for(Integer key : v1.keySet()){
-            if(v2.containsKey(key))
+            num = v2.get(key);
+            if(num != null)
                 result.put(key, v1.get(key)+v2.get(key));
             else
                 result.put(key, v1.get(key));
         }
 
         for(Integer key : v2.keySet()){
-            if(!v1.containsKey(key))
+            num = v1.get(key);
+            if(num == null)
                 result.put(key, v2.get(key));
         }
 
