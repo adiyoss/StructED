@@ -36,9 +36,24 @@ import java.util.HashMap;
 public class Vector extends HashMap<Integer, Double> implements Serializable{
 
     private static final long serialVersionUID = 1L;
-
-    public Vector(){}
+    private int maxIndex;
+    public Vector(){this.maxIndex = -1;}
     public Vector(Vector v){
         super(v);
+    }
+
+    @Override
+    public Double put(Integer key, Double value){
+        super.put(key, value);
+        if(maxIndex < key) maxIndex = key;
+        return value;
+    }
+
+    // getter
+    public int getMaxIndex() {
+        return maxIndex;
+    }
+    public void resetMaxIndex(){
+        this.maxIndex = -1;
     }
 }

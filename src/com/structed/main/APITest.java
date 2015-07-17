@@ -30,7 +30,7 @@ import com.structed.models.algorithms.CRF;
 import com.structed.models.algorithms.PassiveAggressive;
 import com.structed.models.algorithms.SVM;
 import com.structed.models.inference.InferenceDummyData;
-import com.structed.models.inference.InferenceMultiClass;
+import com.structed.models.inference.InferenceMultiClassOld;
 import com.structed.models.StructEDModel;
 import com.structed.models.loss.TaskLossDummyData;
 import com.structed.models.loss.TaskLossMultiClass;
@@ -121,7 +121,7 @@ public class APITest {
         arguments = new ArrayList<Double>(){{add(0.1); add(0.1);}}; // model parameters
 
         StructEDModel mnist_model = new StructEDModel(W, new SVM(), new TaskLossMultiClass(),
-                new InferenceMultiClass(numOfClasses), null, new FeatureFunctionsSparse(numOfClasses, maxFeatures), arguments); // create the model
+                new InferenceMultiClassOld(numOfClasses), null, new FeatureFunctionsSparse(numOfClasses, maxFeatures), arguments); // create the model
         mnist_model.train(mnistTrainInstances, task_loss_params, mnistDevelopInstances, epochNum, isAvg); // train
         mnist_model.predict(mnistTestInstances, null, numExamples2Display); // predict
         mnist_model.plotValidationError(false); // plot the error on the validation set

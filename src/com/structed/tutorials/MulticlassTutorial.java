@@ -80,7 +80,7 @@ public class MulticlassTutorial {
         mnist_model.train(mnistTrainInstances, null, mnistDevelopInstances, epochNum, isAvg); // train
         mnist_model.predict(mnistTestInstances, null, numExamples2Display); // predict
         mnist_model.plotValidationError(false); // plot the error on the validation set
-        // ==================================================================== //
+        //==================================================================== //
 
         // ============================ IRIS DATA ============================= //
         // === PARAMETERS === //

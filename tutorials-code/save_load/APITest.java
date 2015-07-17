@@ -28,17 +28,13 @@ package com;
 
 import com.structed.models.algorithms.CRF;
 import com.structed.models.algorithms.PassiveAggressive;
-import com.structed.models.algorithms.SVM;
 import com.structed.models.inference.InferenceDummyData;
-import com.structed.models.inference.InferenceMultiClass;
 import com.structed.models.StructEDModel;
 import com.structed.models.loss.TaskLossDummyData;
-import com.structed.models.loss.TaskLossMultiClass;
 import com.structed.constants.Consts;
 import com.structed.data.entities.PredictedLabels;
 import com.structed.data.entities.Vector;
 import com.structed.data.featurefunctions.FeatureFunctionsDummy;
-import com.structed.data.featurefunctions.FeatureFunctionsSparse;
 import com.structed.dal.Reader;
 import com.structed.data.InstancesContainer;
 import com.structed.data.Logger;

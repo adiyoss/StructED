@@ -29,6 +29,7 @@ package com.structed.models.loss;
 import java.util.List;
 
 public class TaskLossRank implements ITaskLoss {
+
     @Override
     public double computeTaskLoss(String predictClass, String actualClass, List<Double> params) {
         try {
