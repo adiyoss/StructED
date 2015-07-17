@@ -36,7 +36,7 @@ import com.structed.data.featurefunctions.FeatureFunctionsSparse;
 import com.structed.models.StructEDModel;
 import com.structed.models.algorithms.PassiveAggressive;
 import com.structed.models.algorithms.SVM;
-import com.structed.models.inference.InferenceMultiClass;
+import com.structed.models.inference.InferenceMultiClassOld;
 import com.structed.models.loss.TaskLossMultiClass;
 
 import java.util.ArrayList;
@@ -77,7 +77,7 @@ public class MulticlassTutorial {
 
         // build the model
         StructEDModel mnist_model = new StructEDModel(W, new SVM(), new TaskLossMultiClass(),
-                new InferenceMultiClass(numOfClasses), null, new FeatureFunctionsSparse(numOfClasses, maxFeatures), arguments);
+                new InferenceMultiClassOld(numOfClasses), null, new FeatureFunctionsSparse(numOfClasses, maxFeatures), arguments);
         // train
         mnist_model.train(mnistTrainInstances, null, mnistDevelopInstances, epochNum, isAvg);
         // predict
@@ -108,7 +108,7 @@ public class MulticlassTutorial {
 
         // build the model
         StructEDModel iris_model = new StructEDModel(W, new PassiveAggressive(), new TaskLossMultiClass(),
-                new InferenceMultiClass(numOfClasses), null, new FeatureFunctionsSparse(numOfClasses, maxFeatures), arguments);
+                new InferenceMultiClassOld(numOfClasses), null, new FeatureFunctionsSparse(numOfClasses, maxFeatures), arguments);
         // train
         iris_model.train(irisTrainInstances, null, null, epochNum, isAvg);
         // predict

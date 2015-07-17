@@ -117,7 +117,7 @@ public class Factory {
 //                classifier.classifierData.inference = new InferenceVowelDurationData();
 //                break;
 //            case 1:
-//                classifier.classifierData.inference = new InferenceMultiClass();
+//                classifier.classifierData.inference = new InferenceMultiClassOld();
 //                break;
 //            case 2:
 //                classifier.classifierData.inference = new InferenceRanking();

@@ -26,34 +26,38 @@
 
 package com.structed.models.inference;
 
+import com.structed.models.ClassifierData;
 import com.structed.constants.Consts;
 import com.structed.constants.ErrorConstants;
-import com.structed.data.Logger;
 import com.structed.data.entities.Example;
 import com.structed.data.entities.PredictedLabels;
 import com.structed.data.entities.Vector;
-import com.structed.models.ClassifierData;
-import com.structed.utils.MathHelpers;
+import com.structed.data.Logger;
 import com.structed.utils.comperators.MapValueComparatorDescending;
+import com.structed.utils.MathHelpers;
 
 /**
  * Multi class inference
- * Created by yossiadi on 7/17/15.
  */
-public class InferenceMultiClass implements IInference {
+public class InferenceMultiClassOld implements IInference {
 
-    private int numOfClass = 10; //default for MNIST
+    private int numOfClass = 10; //default MNIST
 
     /**
      * Constructor
      * @param numOfClasses - the number of classes
      */
-    public InferenceMultiClass(int numOfClasses){
+    public InferenceMultiClassOld(int numOfClasses){
         this.numOfClass = numOfClasses;
     }
 
     @Override
-    public PredictedLabels predictForTrain(Example vector, Vector W, String realClass, ClassifierData classifierData, double epsilonArgMax) {
+    //predict function
+    //argmax(yS,yE) (W*Phi(Xi,yS,yE)) + Task Loss
+    //this function assumes that the argument vector has already been converted to phi vector
+    //return null on error
+    public PredictedLabels predictForTrain(Example vector, Vector W, String realClass, ClassifierData classifierData, double epsilonArgMax)
+    {
         try{
             //validation
             if(vector.sizeOfVector<=0) {
@@ -62,22 +66,30 @@ public class InferenceMultiClass implements IInference {
             }
 
             if(this.numOfClass > 0) {
-                int maxFeatures = classifierData.phi.getSizeOfVector() / this.numOfClass;
-                double[] scores = new double[this.numOfClass];
-                for(Integer key : vector.getFeatures().keySet()){
-                    for(int i=0 ; i<this.numOfClass ; i++){
-                        Double wVal = W.get(key + i * maxFeatures);
-                        if(wVal != null)
-                            scores[i] += wVal * vector.getFeatures().get(key);
-                    }
+                // get score for the first label
+                String maxLabel = "0";
+                Example phiData = classifierData.phi.convert(vector, String.valueOf(0), classifierData.kernel);
+                double maxScore = MathHelpers.multipleVectors(W, phiData.getFeatures());
+
+                if (epsilonArgMax != 0) {
+                    //add the task loss
+                    maxScore += epsilonArgMax * classifierData.taskLoss.computeTaskLoss(String.valueOf(0), realClass, classifierData.arguments);
                 }
 
-                String maxLabel = "0";
-                double maxScore = scores[0];
-                for(int i=1 ; i<this.numOfClass ; i++) {
-                    if (scores[i] > maxScore) {
-                        maxScore = scores[i];
+                for (int i = 1; i < numOfClass; i++) {
+                    phiData = classifierData.phi.convert(vector, String.valueOf(i), classifierData.kernel);
+                    //multiple the vectors
+                    double tmp = MathHelpers.multipleVectors(W, phiData.getFeatures());
+
+                    if (epsilonArgMax != 0) {
+                        //add the task loss
+                        tmp += epsilonArgMax * classifierData.taskLoss.computeTaskLoss(String.valueOf(i), realClass, classifierData.arguments);
+                    }
+
+                    // updates the max score and max label
+                    if (tmp > maxScore){
                         maxLabel = String.valueOf(i);
+                        maxScore = tmp;
                     }
                 }
 
@@ -85,6 +97,7 @@ public class InferenceMultiClass implements IInference {
                 result.put(maxLabel, maxScore);
 
                 return result;
+
             }
             return null;
         } catch (Exception e){
@@ -94,7 +107,8 @@ public class InferenceMultiClass implements IInference {
     }
 
     @Override
-    public PredictedLabels predictForTest(Example vector, Vector W, String realClass, ClassifierData classifierData, int returnAll) {
+    public PredictedLabels predictForTest(Example vector, Vector W, String realClass, ClassifierData classifierData, int returnAll){
+
         if(returnAll != Consts.ERROR_NUMBER) {
             try {
                 PredictedLabels tree = new PredictedLabels();
@@ -128,4 +142,5 @@ public class InferenceMultiClass implements IInference {
         } else
             return predictForTrain(vector, W, realClass, classifierData ,0);
     }
+
 }

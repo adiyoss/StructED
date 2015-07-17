@@ -39,6 +39,7 @@ import java.util.TreeMap;
 
 public class InferenceRanking implements IInference {
 
+    @Override
     public PredictedLabels predictForTrain(Example vector, Vector W, String realClass, ClassifierData classifierData, double epsilonArgMax)
     {
         try{
@@ -140,6 +141,7 @@ public class InferenceRanking implements IInference {
         }
     }
 
+    @Override
     public PredictedLabels predictForTest(Example vector, Vector W, String realClass, ClassifierData classifierData, int returnAll)
     {
         try{

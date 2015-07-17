@@ -36,6 +36,7 @@ public class RBF3Kernel implements IKernel {
 
     private double sigma = Consts.SIGMA;//default value
 
+    @Override
     //new dimension = 1 + 3.0*d + 3.0*d*(d-1)/2.0 + d*(d-1)*(d-2)/6.0
     public Vector convertVector(Vector vector, int vectorSize)
     {

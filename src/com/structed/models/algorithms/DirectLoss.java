@@ -57,8 +57,7 @@ public class DirectLoss implements IUpdateRule {
         this.epsilonArgMax = args.get(1);
     }
 
-
-	@Override
+    @Override
 	//the first cell of the arguments attribute would be the eta value
 	//the second cell of the arguments attribute would be the epsilon for the argmax
 	public Vector update(Vector currentWeights, Example example, ClassifierData classifierData) {

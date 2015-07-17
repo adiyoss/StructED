@@ -40,6 +40,7 @@ import com.structed.utils.MathHelpers;
  */
 public class InferenceVowelDurationData implements IInference {
 
+    @Override
     //predict function
     //argmax(yS,yE) (W*Phi(Xi,yS,yE)) + Task Loss
     //this function assumes that the argument vector has already been converted to phi vector
@@ -98,6 +99,7 @@ public class InferenceVowelDurationData implements IInference {
         }
     }
 
+    @Override
     public PredictedLabels predictForTest(Example vector, Vector W, String realClass, ClassifierData classifierData, int returnAll)
     {
         return predictForTrain(vector, W, realClass, classifierData ,0);
