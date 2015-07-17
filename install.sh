@@ -1,9 +1,0 @@
-#!/bin/bash
-echo Removing old files…
-rm -rf bin
-mkdir -p bin
-echo Compile train files…
-javac -d bin -sourcepath src -cp lib/jsc.jar src/main/Train.java
-echo Compile predict files…
-javac -d bin -sourcepath src -cp lib/jsc.jar src/main/Test.java
-echo Done
