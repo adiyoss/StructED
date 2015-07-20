@@ -45,12 +45,12 @@ public class LazyReaderTest extends TestCase {
         Reader reader =  Factory.getReader(2);
 
         // Test 1
-        instances = reader.readData("data/tests/db/test2.txt", Consts.SPACE, Consts.COLON_SPLITTER);
+        instances = reader.readData("src/com/structed/tests/tests_data/test2.txt", Consts.SPACE, Consts.COLON_SPLITTER);
         assertEquals("Number of examples must be: 16",16,instances.getSize());
         assertThat(instances, instanceOf(LazyInstancesContainer.class));
 
         // Test 2
-        instances = reader.readData("data/tests/db/test4.txt", Consts.SPACE, Consts.COLON_SPLITTER);
+        instances = reader.readData("src/com/structed/tests/tests_data/test4.txt", Consts.SPACE, Consts.COLON_SPLITTER);
         assertEquals("Number of examples must be: 36", 36, instances.getSize());
         assertThat(instances, instanceOf(LazyInstancesContainer.class));
     }

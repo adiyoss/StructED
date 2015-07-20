@@ -55,8 +55,8 @@ public class AlgorithmsTests extends TestCase{
         int epochNum = 5;
         int isAvg = 1;
         int numExamples2Display = 3;
-        String trainPath = "data/db/dummy/train.txt";
-        String testPath = "data/db/dummy/test.txt";
+        String trainPath = "src/com/structed/tests/tests_data/dummy/train.txt";
+        String testPath = "src/com/structed/tests/tests_data/dummy/test.txt";
 
         // load the data
         Reader reader = getReader(readerType);

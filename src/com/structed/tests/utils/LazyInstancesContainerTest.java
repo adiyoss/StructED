@@ -45,12 +45,12 @@ public class LazyInstancesContainerTest extends TestCase{
     public void testGetInstance() throws Exception {
         Reader reader =  Factory.getReader(2);
         InstancesContainer instances_train;
-        instances_train = reader.readData("data/tests/db/test4.txt", Consts.SPACE, Consts.COLON_SPLITTER);
+        instances_train = reader.readData("src/com/structed/tests/tests_data/test4.txt", Consts.SPACE, Consts.COLON_SPLITTER);
         assertThat(instances_train, instanceOf(LazyInstancesContainer.class));
         assertEquals("Must return null because there is no such files",instances_train.getInstance(0), null);
 
         InstancesContainer instances_test;
-        instances_test = reader.readData("data/tests/db/test2.txt", Consts.SPACE, Consts.COLON_SPLITTER);
+        instances_test = reader.readData("src/com/structed/tests/tests_data/test2.txt", Consts.SPACE, Consts.COLON_SPLITTER);
         assertThat(instances_test, instanceOf(LazyInstancesContainer.class));
         assertThat(instances_test.getInstance(0), instanceOf(Example2D.class));
     }

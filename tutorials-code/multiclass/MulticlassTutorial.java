@@ -53,9 +53,9 @@ public class MulticlassTutorial {
         Logger.info("MNIST data example.");
 
         // === PARAMETERS === //
-        String trainPath = "data/db/MNIST/train.txt"; // <the path to the mnist train data>
-        String testPath = "data/db/MNIST/test.data.txt"; // <the path to the mnist test data>
-        String valPath = "data/db/MNIST/val.data.txt"; // <the path to the mnist validation data>
+        String trainPath = "data/MNIST/train.txt"; // <the path to the mnist train data>
+        String testPath = "data/MNIST/test.data.txt"; // <the path to the mnist test data>
+        String valPath = "data/MNIST/val.data.txt"; // <the path to the mnist validation data>
         int epochNum = 1;
         int readerType = 0;
         int isAvg = 1;
@@ -90,8 +90,8 @@ public class MulticlassTutorial {
 
         // ============================ IRIS DATA ============================= //
         // === PARAMETERS === //
-        trainPath = "data/db/iris/iris.train.txt"; // <the path to the iris train data>
-        testPath = "data/db/iris/iris.test.txt"; // <the path to the iris test data>
+        trainPath = "../../data/db/iris/iris.train.txt"; // <the path to the iris train data>
+        testPath = "../../data/db/iris/iris.test.txt"; // <the path to the iris test data>
         epochNum = 10;
         isAvg = 1;
         numExamples2Display = 3;

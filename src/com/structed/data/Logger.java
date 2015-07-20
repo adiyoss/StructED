@@ -44,9 +44,18 @@ public class Logger {
     private static final String directory = "log";
     private static final String log_file = "files.log";
 
+    /**
+     * Write the message into the standard output
+     * @param message - the message to be written
+     */
     public static void info(String message){
         System.out.println(message);
     }
+
+    /**
+     * Write the message into the standard output with the data and time attached
+     * @param message - the message to be written
+     */
     public static void infoTime(String message){
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         //get current date time with Date()
@@ -56,6 +65,9 @@ public class Logger {
         System.out.println(message+" "+dateFormat.format(date));
     }
 
+    /**
+     * Writes only the data and time to the standard output
+     */
     public static void time(){
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         //get current date time with Date()
@@ -63,6 +75,11 @@ public class Logger {
         System.out.println(dateFormat.format(date));
     }
 
+    /**
+     * Write the message into the standard output with the data and time attached
+     * @param msg - the message to be written
+     * @param example - a running id
+     */
     public static void timeExampleStandard(String msg, int example){
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         //get current date time with Date()
@@ -70,17 +87,36 @@ public class Logger {
         System.out.println(msg+example+", "+dateFormat.format(date));
     }
 
+    /**
+     * Write the message into the standard output as a progress bar
+     * @param msg - the message to be written
+     */
     public static void progressMessage(String msg){
         System.out.print("\r" + msg + " ");
     }
 
+    /**
+     * Write the message into the standard error
+     * @param message - the message to be written
+     */
     public static void error(String message){
         System.err.println("Error: "+message);
     }
 
-    //saves the file names to different folder
+
+
+    /**
+     * Write the message into the files.log in the lod directory(if doesn't exists the program creates the dir)
+     * @param message - tha message to ve written
+     * @throws IOException
+     */
     public static void log2File(String message) throws IOException
     {
+        // create the log directory if does noe exists
+        File dir = new File(directory);
+        if(!dir.exists())
+            dir.mkdir();
+
         // Create file stream
         File file = new File(directory+"/"+log_file);
         FileWriter fstream = new FileWriter(file,true);
@@ -93,7 +129,9 @@ public class Logger {
         fstream.close();
     }
 
-    //clean the log file
+    /**
+     * clean the log firectory
+     */
     public static void clean(){
         File dir = new File(directory);
         if(dir.exists() && dir.isDirectory()) {

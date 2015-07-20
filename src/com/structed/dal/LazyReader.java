@@ -27,7 +27,6 @@
 package com.structed.dal;
 
 import com.structed.constants.Consts;
-import com.structed.constants.ErrorConstants;
 import com.structed.data.entities.Example;
 import com.structed.data.Factory;
 import com.structed.data.InstancesContainer;
@@ -35,14 +34,13 @@ import com.structed.data.entities.Vector;
 import com.structed.data.Logger;
 import com.structed.utils.ConverterHelplers;
 
-import java.io.BufferedReader;
-import java.io.DataInputStream;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-//Paths reader
-public class LazyReader implements Reader {
+/**
+ * This class reads the examples on demand
+ * It gets as input a file with the paths to all the data and reads each example by the algorithm's demand
+ */
+public class LazyReader extends StandardReader implements Reader {
 
     /**
      * a Lazy reader, it reads only the paths to the data and not the data itself
@@ -52,9 +50,10 @@ public class LazyReader implements Reader {
      * @param valueSpliter the separator between the index of the feature to the feature value
      * @return an InstanceContainer object which contains all the data
      */
+    @Override
     public InstancesContainer readData(String path, String dataSpliter, String valueSpliter)
     {
-        ArrayList<ArrayList<String>> data = readFile(path,dataSpliter);
+        ArrayList<ArrayList<String>> data = readFile(path, dataSpliter);
         InstancesContainer instances = Factory.getInstanceContainer(1);
         instances.setPaths(data);
         return instances;
@@ -100,54 +99,5 @@ public class LazyReader implements Reader {
 
         example.sizeOfVector = example.getFeatures2D().size();
         return example;
-    }
-
-    /**
-     * read the file
-     * each attribute in each row should be splited by spliter
-     * @param path the path to the input file
-     * @param spliter the note to separate the values by
-     * @return a 2-D array of strings
-     */
-    public ArrayList<ArrayList<String>> readFile(String path, String spliter)
-    {
-        //result object
-        ArrayList<ArrayList<String>> data = new ArrayList<ArrayList<String>>();
-
-        try{
-            // Open the file that is the first
-            // command line parameter
-            FileInputStream fstream = new FileInputStream(path);
-            // Get the object of DataInputStream
-            DataInputStream in = new DataInputStream(fstream);
-            BufferedReader br = new BufferedReader(new InputStreamReader(in));
-
-            String strLine;
-            //Read File Line By Line
-            while ((strLine = br.readLine())!=null)   {
-                //skip on empty line
-                if(strLine.equalsIgnoreCase("")){
-                    continue;
-                }
-
-                String values[] = strLine.split(spliter);
-                ArrayList<String> row = new ArrayList<String>();
-                for(int i=0 ; i<values.length ; i++)
-                    //Print the content on the console
-                    row.add(values[i]);
-                data.add(row);
-            }
-            //Close the input stream
-            br.close();
-            in.close();
-            fstream.close();
-
-        } catch (Exception e) {//Catch exception if any
-            Logger.error(ErrorConstants.GENERAL_ERROR);
-            e.printStackTrace();
-            return null;
-        }
-
-        return data;
     }
 }

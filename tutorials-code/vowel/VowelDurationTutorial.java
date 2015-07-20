@@ -50,8 +50,8 @@ public class VowelDurationTutorial {
     public static void main(String[] args) throws Exception {
         // ============================ VOWEL DURATION DATA ============================ //
         Logger.info("Vowel Duration data example.");
-        String trainPath = "data/db/vowel/train.vowel"; // <the path to the vowel duration train data>
-        String testPath = "data/db/vowel/test.results"; // <the path to the vowel duration test data>
+        String trainPath = "data/vowel/train.vowel"; // <the path to the vowel duration train data>
+        String testPath = "data/vowel/test.results"; // <the path to the vowel duration test data>
 
         int epochNum = 1;
         int readerType = 2;
