@@ -38,7 +38,6 @@ import com.structed.models.algorithms.PassiveAggressive;
 import com.structed.models.algorithms.SVM;
 import com.structed.models.inference.InferenceMultiClass;
 import com.structed.models.loss.TaskLossMultiClass;
-import sun.rmi.runtime.Log;
 
 import java.util.ArrayList;
 
