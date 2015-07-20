@@ -46,6 +46,8 @@ public class Factory {
                 return new RankReader();
             case 2:
                 return new LazyReader();
+            case 3:
+                return new OcrReader();
             default:
                 return new StandardReader();
         }
@@ -73,7 +75,6 @@ public class Factory {
                 return new Example1D();
             case 1:
                 return new Example2D();
-
             default:
                 return new Example1D();
         }

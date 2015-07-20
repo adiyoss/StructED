@@ -38,6 +38,7 @@ import com.structed.models.algorithms.PassiveAggressive;
 import com.structed.models.algorithms.SVM;
 import com.structed.models.inference.InferenceMultiClass;
 import com.structed.models.loss.TaskLossMultiClass;
+import sun.rmi.runtime.Log;
 
 import java.util.ArrayList;
 
@@ -47,11 +48,10 @@ import static com.structed.data.Factory.getReader;
  * Created by yossiadi on 6/29/15.
  * Tutorial about the multiclass classifications using MNIST and Iris datasets
  */
-public class MulticlassTutorial {
+public class MultiClassTutorial {
     public static void main(String[] args) throws Exception {
         // ============================ MNIST DATA ============================ //
         Logger.info("MNIST data example.");
-
         // === PARAMETERS === //
         String trainPath = "data/db/MNIST/train.txt";
         String testPath = "data/db/MNIST/test.data.txt";

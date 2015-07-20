@@ -39,62 +39,17 @@ import com.structed.data.InstancesContainer;
 import com.structed.data.entities.Vector;
 import com.structed.data.Logger;
 
+/**
+ * A standard reader
+ * It reads the data in the following format:
+ * label index_of_feature_i:value_of_feature_i (this holds also for sparse data, when many values are zeros, see mnist data for example)
+ */
 public class StandardReader implements Reader{
 
     /**
      * default Constructor
      */
 	public StandardReader() {
-	}
-
-	//read the file
-	//each attribute in each row should be splited with , 
-	public ArrayList<ArrayList<String>> readFileInChunks(String path, String spliter, int offset, int chunckSize)
-	{
-		//result object
-		ArrayList<ArrayList<String>> data = new ArrayList<ArrayList<String>>();
-		
-		try{
-			// Open the file that is the first 
-			// command line parameter
-			FileInputStream fstream = new FileInputStream(path);
-			// Get the object of DataInputStream
-			DataInputStream in = new DataInputStream(fstream);
-			BufferedReader br = new BufferedReader(new InputStreamReader(in));
-			
-			br.skip(offset);
-			
-			String strLine;
-			int j=0;
-			//Read File Line By Line
-			while ((strLine = br.readLine())!=null && j<chunckSize)   {				
-				//skip on empty line
-				if(strLine.equalsIgnoreCase("")){
-					j++;
-					continue;
-				}
-				
-				String values[] = strLine.split(spliter);
-				ArrayList<String> row = new ArrayList<String>();
-				for(int i=0 ; i<values.length ; i++)
-					//Print the content on the console
-					row.add(values[i]);
-				data.add(row);
-				
-				j++;
-			}
-			//Close the input stream
-			br.close();
-			in.close();
-			fstream.close();
-			
-		} catch (Exception e) {//Catch exception if any
-            Logger.error(ErrorConstants.GENERAL_ERROR);
-			e.printStackTrace();
-			return null;
-		}
-		
-		return data;
 	}
 
     /**
@@ -104,6 +59,7 @@ public class StandardReader implements Reader{
      * @param valueSpliter the separator between the index of the feature to the feature value
      * @return an InstanceContainer object which contains all the data
      */
+    @Override
     public InstancesContainer readData(String path, String dataSpliter, String valueSpliter)
     {
         ArrayList<ArrayList<String>> data = readFile(path,dataSpliter);
@@ -136,6 +92,7 @@ public class StandardReader implements Reader{
      * @param spliter the note to separate the values by
      * @return a 2-D array of strings
      */
+    @Override
     public ArrayList<ArrayList<String>> readFile(String path, String spliter)
     {
         //result object

@@ -33,6 +33,7 @@ public class Consts {
 
     // GENERALS
 	public static final String SPACE = " ";
+    public static final String TAB = "\t";
     public static final String COMMA_NOTE = ",";
 	public static final String CLASSIFICATION_SPLITTER = "-";
 	public static final String COLON_SPLITTER = ":";
