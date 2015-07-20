@@ -47,7 +47,7 @@ import static com.structed.data.Factory.getReader;
  * Created by yossiadi on 6/28/15.
  * Another example of some usage functions of StructED
  */
-public class APITest {
+public class SaveLoad {
 
     public static void main(String[] args) throws Exception {
 
@@ -61,8 +61,8 @@ public class APITest {
         int epochNum = 3;
         int isAvg = 1;
         int numExamples2Display = 3;
-        String trainPath = "data/db/dummy/train.txt";
-        String testPath = "data/db/dummy/test.txt";
+        String trainPath = "data/train.txt";
+        String testPath = "data/test.txt";
 
         // load the data
         Reader reader = getReader(readerType);

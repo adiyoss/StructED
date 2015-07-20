@@ -42,7 +42,7 @@ public class OcrReaderTest extends TestCase {
     
     public void testReadFile() throws Exception {
         Reader reader = Factory.getReader(3);
-        ArrayList<ArrayList<String>> data = reader.readFile("data/db/ocr/val.data", Consts.TAB);
+        ArrayList<ArrayList<String>> data = reader.readFile("src/com/structed/tests/tests_data/ocr/val.data", Consts.TAB);
         assertEquals("Data size should be: 999", 999, data.size());
         for(int i=0 ; i<data.size() ; i++)
             assertEquals((i+1)+"Example, size should be: 134", 134, data.get(i).size());
@@ -51,15 +51,11 @@ public class OcrReaderTest extends TestCase {
     public void testReadData() throws Exception {
         Reader reater = Factory.getReader(3);
         // validation set
-        InstancesContainer containerVal = reater.readData("data/db/ocr/val.data", Consts.TAB, Consts.TAB);
+        InstancesContainer containerVal = reater.readData("src/com/structed/tests/tests_data/ocr/val.data", Consts.TAB, Consts.TAB);
         assertEquals("Should be 111 words", 111, containerVal.getSize());
 
         // test set
-        InstancesContainer containerTest = reater.readData("data/db/ocr/test.data", Consts.TAB, Consts.TAB);
+        InstancesContainer containerTest = reater.readData("src/com/structed/tests/tests_data/ocr/test.data", Consts.TAB, Consts.TAB);
         assertEquals("Should be 1,137 words", 1137, containerTest.getSize());
-
-        // train set
-        InstancesContainer containerTrain = reater.readData("data/db/ocr/train.data", Consts.TAB, Consts.TAB);
-        assertEquals("Should be 5,629 words", 5629, containerTrain.getSize());
     }
 }
