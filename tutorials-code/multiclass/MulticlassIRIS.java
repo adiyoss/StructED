@@ -47,64 +47,30 @@ import static com.structed.data.Factory.getReader;
  * Created by yossiadi on 6/29/15.
  * Tutorial about the multiclass classifications using MNIST and Iris datasets
  */
-public class MulticlassTutorial {
+public class MulticlassIRIS {
     public static void main(String[] args) throws Exception {
         // ============================ MNIST DATA ============================ //
-        Logger.info("MNIST data example.");
-
-        // === PARAMETERS === //
-        String trainPath = "data/MNIST/train.txt"; // <the path to the mnist train data>
-        String testPath = "data/MNIST/test.data.txt"; // <the path to the mnist test data>
-        String valPath = "data/MNIST/val.data.txt"; // <the path to the mnist validation data>
-        int epochNum = 1;
-        int readerType = 0;
-        int isAvg = 1;
-        int numExamples2Display = 3;
-        int numOfClasses = 10;
-        int maxFeatures = 784;
-        Reader reader = getReader(readerType);
-        // ================== //
-
-        // load the data
-        InstancesContainer mnistTrainInstances = reader.readData(trainPath, Consts.SPACE, Consts.COLON_SPLITTER);
-        InstancesContainer mnistDevelopInstances = reader.readData(valPath, Consts.SPACE, Consts.COLON_SPLITTER);
-        InstancesContainer mnistTestInstances = reader.readData(testPath, Consts.SPACE, Consts.COLON_SPLITTER);
-        if (mnistTrainInstances.getSize() == 0) return;
-
-        // ======= SVM ====== //
-        Vector W = new Vector() {{put(0, 0.0);}}; // init the first weight vector
-        ArrayList<Double> arguments = new ArrayList<Double>() {{add(0.1);add(0.1);}}; // model parameters
-
-        // build the model
-        StructEDModel mnist_model = new StructEDModel(W, new SVM(), new TaskLossMultiClass(),
-                new InferenceMultiClassOld(numOfClasses), null, new FeatureFunctionsSparse(numOfClasses, maxFeatures), arguments);
-        // train
-        mnist_model.train(mnistTrainInstances, null, mnistDevelopInstances, epochNum, isAvg);
-        // predict
-        mnist_model.predict(mnistTestInstances, null, numExamples2Display);
-        // plot the error on the validation set
-        // the true flag indicates that we saves the image to img folder in the project directory
-        // if the img directory does not exists it will create it
-        mnist_model.plotValidationError(true);
-        // ==================================================================== //
+        Logger.info("Loading IRIS dataset.");
 
         // ============================ IRIS DATA ============================= //
         // === PARAMETERS === //
-        trainPath = "../../data/db/iris/iris.train.txt"; // <the path to the iris train data>
-        testPath = "../../data/db/iris/iris.test.txt"; // <the path to the iris test data>
-        epochNum = 10;
-        isAvg = 1;
-        numExamples2Display = 3;
-        numOfClasses = 3;
-        maxFeatures = 4;
+        String trainPath = "data/iris/iris.train.txt"; // <the path to the iris train data>
+        String testPath = "data/iris/iris.test.txt"; // <the path to the iris test data>
+        int epochNum = 10;
+        int isAvg = 1;
+        int numExamples2Display = 3;
+        int numOfClasses = 3;
+        int maxFeatures = 4;
+        int readerType = 0;
+        Reader reader = getReader(readerType);
         // ================== //
 
         // load the data
         InstancesContainer irisTrainInstances = reader.readData(trainPath, Consts.COMMA_NOTE, Consts.COLON_SPLITTER);
         InstancesContainer irisTestInstances = reader.readData(testPath, Consts.COMMA_NOTE, Consts.COLON_SPLITTER);
-        // ======= SVM ====== //
-        W = new Vector() {{put(0, 0.0);}}; // init the first weight vector to be zeros
-        arguments = new ArrayList<Double>() {{add(1.0);}}; // model parameters
+        // ======= PA ====== //
+        Vector W = new Vector() {{put(0, 0.0);}}; // init the first weight vector to be zeros
+        ArrayList<Double> arguments = new ArrayList<Double>() {{add(1.0);}}; // model parameters
 
         // build the model
         StructEDModel iris_model = new StructEDModel(W, new PassiveAggressive(), new TaskLossMultiClass(),
