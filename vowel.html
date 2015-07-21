@@ -80,6 +80,19 @@
         <div>                  
           <div>
             In this tutorial we will demonstrate how to use and add new task to the StructED package. We will give code examples for the Task-Loss, Predict - Inference and Feature Functions interfaces. For this tutorial we will use a structured prediction problem called the Vowel Duration Measurement. We provide a small subset from the original data we use in our experiments.
+
+                              <br><br>
+                  <b>
+                  First, we should setup our development environment. Open a java project and add the StructED jar file to your build path (it can be found under the bin directory at StructED repository). You can download all StructED source codes and jar files from <a href="https://github.com/adiyoss/StructED" target="blank">GitHub.</a>
+                  <br><br>
+                  In order to run the tutorials you can simply run the bash script in any of the tutorials directories in our <a href="https://github.com/adiyoss/StructED" target="blank">GitHub</a> repository. The tutorials can be found under the tutorials-code directory.
+                  Another options is to copy the code at the bottom of the page and change to path of the data to the place you saved the data.                  
+                  <br><br>
+
+                  Now let's begin!
+
+                  <br><br>
+                  </b>
           </div>
 
           <h3>The Task</h3>    
@@ -101,15 +114,6 @@
           <hr>
           <div>
                     Here, we present what classes do we need to add and what interfaces do we need to implement. We provide the source code for all of the classes and interfaces. <br><br>
-
-                    First, we should setup our development environment. Open a java project and add the StructED jar file to your build path (it can be found under the bin directory at StructED repository). You can download all StructED source codes and jar files from <a href="https://github.com/adiyoss/StructED" target="blank">GitHub.</a>
-                    <br><br>
-                    Note, if you would like to use one of our datasets for any of the tutorials or unit tests, you should copy the data folder to the project directory or change the path in the marked places in the code to the where you store the data.
-                    <br><br>
-
-                    Now let's begin!
-
-                    <br><br>
           </div>
           <h4>Task Loss</h4>
           <div>              
@@ -159,9 +163,9 @@
         /* VOWEL DURATION DATA */
         Logger.info("Vowel Duration data example.");
         // &ltthe path to the vowel duration train data&gt
-        String trainPath = "data/db/vowel/train.vowel"; 
+        String trainPath = "data/vowel/train.vowel"; 
         // &ltthe path to the vowel duration test data&gt
-        String testPath = "data/db/vowel/test.results"; 
+        String testPath = "data/vowel/test.results"; 
 
         // parameters
         int epochNum = 1;

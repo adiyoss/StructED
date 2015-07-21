@@ -80,6 +80,19 @@
           <div>
             In this tutorial we will demonstrate how to use StructED for multi-class problems. For this tutorial we will use a multi-class problem, the standard benchmark MNIST, we supply a small subset from this dataset, you can download the full data set from <a href="http://yann.lecun.com/exdb/mnist/">mnist</a>. <br>
             This tutorial is also suitable for any other multi-class problem, at the end it we demonstrate how use it also with the <a href="https://archive.ics.uci.edu/ml/datasets/Iris"> Iris flower data set</a>.
+
+            <br><br>
+                  <b>
+                  First, we should setup our development environment. Open a java project and add the StructED jar file to your build path (it can be found under the bin directory at StructED repository). You can download all StructED source codes and jar files from <a href="https://github.com/adiyoss/StructED" target="blank">GitHub.</a>
+                  <br><br>
+                  In order to run the tutorials you can simply run the bash script in any of the tutorials directories in our <a href="https://github.com/adiyoss/StructED" target="blank">GitHub</a> repository. The tutorials can be found under the tutorials-code directory.
+                  Another options is to copy the code at the bottom of the page and change to path of the data to the place you saved the data.                  
+                  <br><br>
+
+                  Now let's begin!
+
+                  <br><br>
+                  </b>
           </div>
 
           <h3>MNIST</h3>    
@@ -104,15 +117,6 @@
           <hr>
           <div>
                     Here, we present what classes do we need to add and what interfaces do we need to implement. We provide the source code for all of the classes and interfaces. <br><br>
-
-                    First, we should setup our development environment. Open a java project and add the StructED jar file to your build path (it can be found under the bin directory at StructED repository). You can download all StructED source codes and jar files from <a href="https://github.com/adiyoss/StructED" target="blank">GitHub.</a>
-                    <br><br>
-                    Note, if you would like to use one of our datasets for any of the tutorials or unit tests, you should copy the data folder to the project directory or change the path in the marked places in the code to the where you store the data.
-                    <br><br>
-
-                    Now let's begin!
-
-                    <br><br>
           </div>
           <h4>Task Loss</h4>
           <div>
@@ -141,29 +145,29 @@
           <h3>Running The Code</h3>    
           <hr>
           <div>
-                Now we can create a StructEDModel object with the interfaces we have just implemented, all we have left to do is to choose the model. The example code here is for both of the data sets, MNIST and Iris. The code here also generates a validation error graph and saves it.
+                Now we can create a StructEDModel object with the interfaces we have just implemented, all we have left to do is to choose the model. The example code here is for MNIST dataset. The code here also generates a validation error graph and saves it.
                   <br><br>
                   Here is a snippet of such code (the complete code can be found at the package repository under tutorials-code folder):
                   <br><br>
             <div>
-              <pre class="prettyprint">        
-        /* MNIST DATA  */
-        Logger.info("MNIST data example.");
+              <pre class="prettyprint">                     
+        Logger.info("Loading MNIST dataset.");
 
-        // parameters
+        // === PARAMETERS === //
         // &ltthe path to the mnist train data&gt
-        String trainPath = "data/db/MNIST/train.txt"; 
+        String trainPath = "data/MNIST/train.txt"; 
         // &ltthe path to the mnist test data&gt
-        String testPath = "data/db/MNIST/test.data.txt"; 
+        String testPath = "data/MNIST/test.data.txt"; 
         // &ltthe path to the mnist validation data&gt
-        String valPath = "data/db/MNIST/val.data.txt"; 
+        String valPath = "data/MNIST/val.data.txt"; 
         int epochNum = 1;
         int readerType = 0;
         int isAvg = 1;
         int numExamples2Display = 3;
         int numOfClasses = 10;
         int maxFeatures = 784;
-        Reader reader = getReader(readerType);        
+        Reader reader = getReader(readerType);
+        // ================== //
 
         // load the data
         InstancesContainer mnistTrainInstances = reader.readData(trainPath, Consts.SPACE, 
@@ -174,56 +178,63 @@
                 Consts.COLON_SPLITTER);
         if (mnistTrainInstances.getSize() == 0) return;
 
-        /* SVM MODEL */
+        // ======= SVM ====== //
         // init the first weight vector
         Vector W = new Vector() {{put(0, 0.0);}}; 
-        // model parameters (in svm - eta(learning rate) and lambda (regularization))
+        // model parameters
         ArrayList&ltDouble&gt arguments = new ArrayList&ltDouble&gt() {{add(0.1);add(0.1);}}; 
 
         // build the model
         StructEDModel mnist_model = new StructEDModel(W, new SVM(), new TaskLossMultiClass(),
-                new InferenceMultiClass(numOfClasses), null, 
-                new FeatureFunctionsSparse(numOfClasses, maxFeatures), arguments);
+                new InferenceMultiClassOld(numOfClasses), null, 
+                        new FeatureFunctionsSparse(numOfClasses, maxFeatures), arguments);
         // train
         mnist_model.train(mnistTrainInstances, null, mnistDevelopInstances, epochNum, isAvg);
         // predict
         mnist_model.predict(mnistTestInstances, null, numExamples2Display);
-
-        /* plot the error on the validation set
-         the true flag indicates that we saves the image to img folder in the project directory
-         if the img directory does not exists it will create it */
+        // plot the error on the validation set
+        // the true flag indicates that we saves the image to img folder in the project directory
+        // if the img directory does not exists it will create it
         mnist_model.plotValidationError(true);
-        
+              </pre>
+            </div>  
+            <br><br>
+            Another example of different model on Iris dataset:
+            <br><br>
+            <div>
+              <pre class="prettyprint">                     
+        Logger.info("Loading IRIS dataset.");
 
-
-        /* IRIS DATA */
-        // parameters
+        // ============================ IRIS DATA ============================= //
+        // === PARAMETERS === //
         // &ltthe path to the iris train data&gt
-        trainPath = "data/db/iris/iris.train.txt"; 
+        String trainPath = "data/iris/iris.train.txt"; 
         // &ltthe path to the iris test data&gt
-        testPath = "data/db/iris/iris.test.txt"; 
-        epochNum = 10;
-        isAvg = 1;
-        numExamples2Display = 3;
-        numOfClasses = 3;
-        maxFeatures = 4;        
+        String testPath = "data/iris/iris.test.txt"; 
+        int epochNum = 10;
+        int isAvg = 1;
+        int numExamples2Display = 3;
+        int numOfClasses = 3;
+        int maxFeatures = 4;
+        int readerType = 0;
+        Reader reader = getReader(readerType);
+        // ================== //
 
         // load the data
         InstancesContainer irisTrainInstances = reader.readData(trainPath, Consts.COMMA_NOTE, 
                 Consts.COLON_SPLITTER);
         InstancesContainer irisTestInstances = reader.readData(testPath, Consts.COMMA_NOTE, 
                 Consts.COLON_SPLITTER);
-        
-        /* PASSIVE AGGRESSIVE MODEL */
+        // ======= PA ====== //
         // init the first weight vector to be zeros
-        W = new Vector() {{put(0, 0.0);}};
-        // model parameters (in pa - C parameter)
-        arguments = new ArrayList&ltDouble&gt() {{add(1.0);}}; 
+        Vector W = new Vector() {{put(0, 0.0);}}; 
+        // model parameters
+        ArrayList&ltDouble&gt arguments = new ArrayList&ltDouble&gt() {{add(1.0);}}; 
 
         // build the model
         StructEDModel iris_model = new StructEDModel(W, new PassiveAggressive(), new TaskLossMultiClass(),
-                new InferenceMultiClass(numOfClasses), null, 
-                new FeatureFunctionsSparse(numOfClasses, maxFeatures), arguments);
+                new InferenceMultiClassOld(numOfClasses), null, 
+                      new FeatureFunctionsSparse(numOfClasses, maxFeatures), arguments);
         // train
         iris_model.train(irisTrainInstances, null, null, epochNum, isAvg);
         // predict
@@ -232,11 +243,11 @@
 
         // printing the predictions
         for(int i=0 ; i&ltiris_labels.size() ; i++)
-            Logger.info("Desire Label: "+irisTestInstances.getInstance(i).getLabel()+
-                ", Predicted Label: "+iris_labels.get(i).firstKey());                
-
+            Logger.info("Desire Label: "+irisTestInstances.getInstance(i).getLabel()+", Predicted Label: "+
+                iris_labels.get(i).firstKey());
+       
               </pre>
-            </div>  
+            </div>
           </div>
         </div>        
       </div>
