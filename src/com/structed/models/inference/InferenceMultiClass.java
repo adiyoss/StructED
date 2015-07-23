@@ -74,9 +74,18 @@ public class InferenceMultiClass implements IInference {
 
                 String maxLabel = "0";
                 double maxScore = scores[0];
+                if (epsilonArgMax != 0)
+                    maxScore += epsilonArgMax * classifierData.taskLoss.computeTaskLoss(String.valueOf("0"), realClass, classifierData.arguments);
+
                 for(int i=1 ; i<this.numOfClass ; i++) {
-                    if (scores[i] > maxScore) {
-                        maxScore = scores[i];
+                    double tmp = scores[i];
+
+                    if (epsilonArgMax != 0)
+                        //add the task loss
+                        tmp += epsilonArgMax * classifierData.taskLoss.computeTaskLoss(String.valueOf(i), realClass, classifierData.arguments);
+
+                    if (tmp > maxScore) {
+                        maxScore = tmp;
                         maxLabel = String.valueOf(i);
                     }
                 }
