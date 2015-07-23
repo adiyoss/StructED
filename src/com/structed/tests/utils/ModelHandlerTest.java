@@ -60,8 +60,8 @@ public class ModelHandlerTest extends TestCase {
         InstancesContainer instances;
         Reader reader =  Factory.getReader(2);
 
-        instances = reader.readData("data/tests/db/test2.txt", Consts.SPACE, Consts.COLON_SPLITTER);
-        InstancesContainer randInstances = ModelHandler.randomShuffle(reader.readData("data/tests/db/test2.txt", Consts.SPACE, Consts.COLON_SPLITTER));
+        instances = reader.readData("src/com/structed/tests/tests_data/test2.txt", Consts.SPACE, Consts.COLON_SPLITTER);
+        InstancesContainer randInstances = ModelHandler.randomShuffle(reader.readData("src/com/structed/tests/tests_data/test2.txt", Consts.SPACE, Consts.COLON_SPLITTER));
 
         // Test 1
         assertEquals("Container sizes must be equal", instances.getSize(), randInstances.getSize());

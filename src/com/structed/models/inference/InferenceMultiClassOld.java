@@ -142,5 +142,4 @@ public class InferenceMultiClassOld implements IInference {
         } else
             return predictForTrain(vector, W, realClass, classifierData ,0);
     }
-
 }

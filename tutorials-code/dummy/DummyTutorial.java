@@ -56,8 +56,8 @@ public class DummyTutorial {
         int epochNum = 3;
         int isAvg = 1;
         int numExamples2Display = 3;
-        String trainPath = "data/db/dummy/train.txt"; // <the path to the train dummy data>
-        String testPath = "data/db/dummy/test.txt"; // <the path to the test dummy data>
+        String trainPath = "data/train.txt"; // <the path to the train dummy data>
+        String testPath = "data/test.txt"; // <the path to the test dummy data>
 
         // load the data
         Reader reader = getReader(readerType);
