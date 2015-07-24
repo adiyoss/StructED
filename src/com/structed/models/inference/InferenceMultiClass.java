@@ -33,7 +33,6 @@ import com.structed.data.entities.Example;
 import com.structed.data.entities.PredictedLabels;
 import com.structed.data.entities.Vector;
 import com.structed.models.ClassifierData;
-import com.structed.utils.MathHelpers;
 import com.structed.utils.comperators.MapValueComparatorDescending;
 
 /**
@@ -105,32 +104,37 @@ public class InferenceMultiClass implements IInference {
     @Override
     public PredictedLabels predictForTest(Example vector, Vector W, String realClass, ClassifierData classifierData, int returnAll) {
         if(returnAll != Consts.ERROR_NUMBER) {
-            try {
-                PredictedLabels tree = new PredictedLabels();
-
+            try{
                 //validation
-                if (vector.sizeOfVector <= 0) {
+                if(vector.sizeOfVector<=0) {
                     Logger.error(ErrorConstants.PHI_VECTOR_DATA);
                     return null;
                 }
 
-                for (int i = 0; i < numOfClass; i++) {
-                    Example phiData = classifierData.phi.convert(vector, String.valueOf(i), classifierData.kernel);
+                PredictedLabels tree = new PredictedLabels();
 
-                    //multiple the vectors
-                    double tmp = MathHelpers.multipleVectors(W, phiData.getFeatures());
+                if(this.numOfClass > 0) {
+                    int maxFeatures = classifierData.phi.getSizeOfVector() / this.numOfClass;
+                    double[] scores = new double[this.numOfClass];
+                    for(Integer key : vector.getFeatures().keySet()){
+                        for(int i=0 ; i<this.numOfClass ; i++){
+                            Double wVal = W.get(key + i * maxFeatures);
+                            if(wVal != null)
+                                scores[i] += wVal * vector.getFeatures().get(key);
+                        }
+                    }
 
-                    //get the max value for the max classification
-                    tree.put(String.valueOf(i), tmp);
+                    for(int i=0 ; i<this.numOfClass ; i++)
+                        tree.put(String.valueOf(i), scores[i]);
+
+                    MapValueComparatorDescending vc = new MapValueComparatorDescending(tree);
+                    PredictedLabels result = new PredictedLabels(vc);
+                    result.putAll(tree);
+
+                    return result;
                 }
-
-                MapValueComparatorDescending vc = new MapValueComparatorDescending(tree);
-                PredictedLabels result = new PredictedLabels(vc);
-                result.putAll(tree);
-
-                return result;
-
-            } catch (Exception e) {
+                return null;
+            } catch (Exception e){
                 e.printStackTrace();
                 return null;
             }
