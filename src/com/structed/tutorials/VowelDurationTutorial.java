@@ -49,8 +49,8 @@ public class VowelDurationTutorial {
     public static void main(String[] args) throws Exception {
         // ============================ VOWEL DURATION DATA ============================ //
         Logger.info("Vowel Duration data example.");
-        String trainPath = "data/db/vowel/train.vowel";
-        String testPath = "data/db/vowel/test.results";
+        String trainPath = "tutorials-code/vowel/data/vowel/train.vowel";
+        String testPath = "tutorials-code/vowel/data/vowel/test.results";
 
         int epochNum = 1;
         int readerType = 2;
