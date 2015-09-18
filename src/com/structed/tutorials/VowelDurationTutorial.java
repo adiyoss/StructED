@@ -70,8 +70,8 @@ public class VowelDurationTutorial {
 
         StructEDModel vowel_model = new StructEDModel(W, new DirectLoss(), new TaskLossVowelDuration(),
                 new InferenceVowelDurationData(), null, new FeatureFunctionsVowelDuration(), arguments); // create the model
-        vowel_model.train(vowelTrainInstances, task_loss_params, null, epochNum, isAvg); // train
-        vowel_model.predict(vowelTestInstances, task_loss_params, numExamples2Display); // predict
+        vowel_model.train(vowelTrainInstances, task_loss_params, null, epochNum, isAvg, true); // train
+        vowel_model.predict(vowelTestInstances, task_loss_params, numExamples2Display, true); // predict
         // ==================================================================== //
     }
 }

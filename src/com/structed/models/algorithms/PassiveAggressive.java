@@ -82,6 +82,8 @@ public class PassiveAggressive implements IUpdateRule {
 			if(tau > cValue)
 				tau = cValue;
 
+			classifierData.verbose = String.format(", Tau = %.3f", tau);
+
             if(tau < 0)
                 Logger.error("Loss < 0!, prediction search can't get to the target label.");
 

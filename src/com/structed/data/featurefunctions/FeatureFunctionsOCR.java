@@ -26,54 +26,57 @@
 
 package com.structed.data.featurefunctions;
 
-import com.structed.models.kernels.IKernel;
-import com.structed.data.entities.Example;
 import com.structed.data.Factory;
+import com.structed.data.entities.Example;
 import com.structed.data.entities.Vector;
+import com.structed.models.kernels.IKernel;
 
-public class FeatureFunctionsSparse implements IFeatureFunctions {
+/**
+ * This class implements the feature functions for the OCR task
+ * Created by yossiadi on 8/2/15.
+ */
+public class FeatureFunctionsOCR implements IFeatureFunctions {
 
-    // data members
-    private int maxFeatures;
-    private int numOfClasses;
+    // 16*8*26 (image size for all characters) + 26*26 (all the english characters pairs)
     private int sizeOfVector;
+    final int numOfCharacters = 27;
+    // default value image size
+    private int maxFeatures = 128;
 
-    /**
-     * Constructor
-     * @param numOfClasses - the number target of classes
-     * @param maxNumFeatures - the number of features
-     */
-    public FeatureFunctionsSparse(int numOfClasses, int maxNumFeatures){
-        this.numOfClasses = numOfClasses;
+    public FeatureFunctionsOCR(int maxNumFeatures){
         this.maxFeatures = maxNumFeatures;
-        this.sizeOfVector = this.maxFeatures*this.numOfClasses;
+        // 16*8*26 (image size for all characters) + 26*26 (all the english characters pairs)
+        this.sizeOfVector = this.maxFeatures*this.numOfCharacters + (this.numOfCharacters*this.numOfCharacters);
     }
 
-	@Override
-	public Example convert(Example vector, String label, IKernel kernel) {
+    @Override
+    public Example convert(Example vector, String label, IKernel kernel) {
         try{
             //parse the label
-            int intLabel = Integer.parseInt(label);
+            char prevChar = label.charAt(0);
+            char currChar = label.charAt(1);
+            int currCharIdx = currChar - '0';
+
             Example newVector = Factory.getExample(0);
             newVector.sizeOfVector = sizeOfVector;
             Vector tmpVector = new Vector();
 
             //run the phi function
             for(Integer feature : vector.getFeatures().keySet())
-                tmpVector.put(feature+intLabel*maxFeatures,vector.getFeatures().get(feature));
+                tmpVector.put(feature+currCharIdx*maxFeatures,vector.getFeatures().get(feature));
 
+            // expand the vector size of needed
             if(kernel !=null)
                 tmpVector = kernel.convertVector(tmpVector, vector.sizeOfVector);
-
+            // populate the new example with the feature functions
             newVector.setFeatures(tmpVector);
-
             return newVector;
 
         } catch (Exception e){
             e.printStackTrace();
             return null;
         }
-	}
+    }
 
     @Override
     public int getSizeOfVector() {

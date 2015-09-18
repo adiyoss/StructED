@@ -77,7 +77,7 @@ public class StructEDModel implements Serializable{
      * @param isAvg - an indicator whether or not to average the weights
      * @throws Exception
      */
-    public void train(InstancesContainer trainInstances, ArrayList<Double> task_loss_params, InstancesContainer developInstances, int epoch, int isAvg) throws Exception {
+    public void train(InstancesContainer trainInstances, ArrayList<Double> task_loss_params, InstancesContainer developInstances, int epoch, int isAvg, boolean verbose) throws Exception {
         //#############################################################################//
         //================================TRAIN========================================//
         //#############################################################################//
@@ -106,7 +106,7 @@ public class StructEDModel implements Serializable{
 
             //train the algorithm
             if (classifier == null) throw new AssertionError();
-            W = classifier.train(W, trainInstances, task_loss_params, developInstances, isAvg);
+            W = classifier.train(W, trainInstances, task_loss_params, developInstances, isAvg, verbose);
             if(W == null)
                 return;
         }
@@ -130,7 +130,7 @@ public class StructEDModel implements Serializable{
      * @param numPredictions2Return - the number of examples to return in the scores
      * @return ArrayList<PredictedLabels> - return the predicted labels as array
      */
-    public ArrayList<PredictedLabels> predict(InstancesContainer instances, ArrayList<Double> task_loss_params, int numPredictions2Return){
+    public ArrayList<PredictedLabels> predict(InstancesContainer instances, ArrayList<Double> task_loss_params, int numPredictions2Return, boolean verbose){
         Logger.info("");
         Logger.infoTime("Start Predicting:");
         Logger.time();
@@ -147,10 +147,12 @@ public class StructEDModel implements Serializable{
             String y = x.getLabel();
             cumulative_loss += classifier.classifierData.taskLoss.computeTaskLoss(y, y_hat, task_loss_params);
             scores.add(score);
+            if(verbose)
+                Logger.info("file = "+x.path+", Y = "+y+", Y_Hat = "+y_hat);
         }
         cumulative_loss /= (double) (instances.getSize());
         Logger.info("Cumulative task loss: " + (cumulative_loss));
-
+        Logger.info("");
         return scores;
     }
 

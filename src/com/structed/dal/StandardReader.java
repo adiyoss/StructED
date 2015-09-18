@@ -62,7 +62,7 @@ public class StandardReader implements Reader{
     @Override
     public InstancesContainer readData(String path, String dataSpliter, String valueSpliter)
     {
-        ArrayList<ArrayList<String>> data = readFile(path,dataSpliter);
+        ArrayList<ArrayList<String>> data = readFile(path, dataSpliter);
         ArrayList<Example> vectors = new ArrayList<Example>();
 
         for(int i=0 ; i<data.size() ; i++)
@@ -78,6 +78,7 @@ public class StandardReader implements Reader{
             vector.setLabel(data.get(i).get(0));
             vector.sizeOfVector = data.get(i).size()-1;
             vectors.add(vector);
+            vector.path = path;
         }
 
         InstancesContainer instances = Factory.getInstanceContainer(0);

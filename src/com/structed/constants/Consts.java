@@ -67,4 +67,7 @@ public class Consts {
 
     // KERNEL DEFAULT PARAMETERS
     public static double SIGMA = 1;
+
+    //OCR
+    public static final String END_NOTE = "$";
 }
