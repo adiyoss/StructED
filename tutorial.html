@@ -98,7 +98,7 @@
                       <li>Run the code as we implemented it:</li>
                       In order to run the tutorials you can simply run the bash script in any of the tutorials directories in our <a href="https://github.com/adiyoss/StructED" target="blank">GitHub</a> repository. The tutorials can be found under the tutorials-code directory under dummy folder. <br><br>
                       <li>Write the code yourself:</li>      
-                      We should setup our development environment first. Open a java project and add the StructED jar file to your build path (it can be found under the bin directory at StructED repository). You can download all StructED source codes and jar files from <a href="https://github.com/adiyoss/StructED" target="blank">GitHub.</a>              
+                      We should setup our development environment first. Open a Java project and add the StructED jar file to your build path (it can be found under the bin directory at StructED repository). You can download all StructED source codes and jar files from <a href="https://github.com/adiyoss/StructED" target="blank">GitHub.</a>              
                     </ol>                                 
                     Now let's begin!
                     <br>
@@ -136,7 +136,7 @@
                     </p>
                     In words, the loss will be the max between zero to the difference between the predicted signals length to its actual length and we minus epsilon. This means that we allow the classifier to be mistaken by at most epsilon.
                     <br><br>
-                    For this we create new java class inside that implements the ITaskLoss interface. The code for the implementation of this class is attached to this tutorial.<br><br>
+                    For this we create new Java class inside that implements the ITaskLoss interface. The code for the implementation of this class is attached to this tutorial.<br><br>
 
                     <h4>Inference</h4>
                     Now we turn to define our inference functions. Every inference class should implement the IInference interface. <br>
@@ -162,7 +162,7 @@
                       \end{equation}
                     </p>   
 
-                    For this we create new java class inside the com.structed.models.inference package, this class should implement the IInference interface. The code for the implementation of this class is attached to this tutorial or can be found at the tutorial folder.
+                    For this we create new Java class inside the com.structed.models.inference package, this class should implement the IInference interface. The code for the implementation of this class is attached to this tutorial or can be found at the tutorial folder.
                     <br><br>                    
 
                     <h4>Feature Functions</h4>
@@ -178,10 +178,10 @@
                     </ol>
                     We expect that the value of the above feature functions will be high when we reach the true start time and end time, and low otherwise.
                     <br><br>
-                    For this we create new java class inside the com.structed.data.featureFunctions package, this class should implement the IFeatureFunctions interface. The code for the implementation of this class is attached to this tutorial or can be found at the tutorial folder.
+                    For this we create new Java class inside the com.structed.data.featureFunctions package, this class should implement the IFeatureFunctions interface. The code for the implementation of this class is attached to this tutorial or can be found at the tutorial folder.
                     <h4>Storing the train/test examples</h4>
                     <div>
-                      StructED uses an InstanceContainer class to store its examples, the instance container contains the data/labels and pathes for all the examples. Each example is stored in a data structure called Example1D. We implmented a standared reader for this cases, when using StructED to different tasks one can either use one of our standard readers or to implement a new one.
+                      StructED uses an InstanceContainer class to store its examples, the instance container contains the data/labels and paths for all the examples. Each example is stored in a data structure called Example1D. We implemented a standard reader for this cases, when using StructED to different tasks one can either use one of our standard readers or to implement a new one.
                     </div>
                   </div>                
               </div>
