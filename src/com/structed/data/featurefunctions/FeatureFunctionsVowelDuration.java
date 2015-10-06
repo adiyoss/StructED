@@ -39,25 +39,19 @@ import jsc.distributions.Gamma;
 
 public class FeatureFunctionsVowelDuration implements IFeatureFunctions {
 
-    int sizeOfVector = 116;
-    final int win_size_1 = 1;
-    final int small_offset = 1;
+    int sizeOfVector = 42;
+    final int offset_10 = 2;
     final int offset_20 = 4;
-    final int offset_30 = 6;
-    final int offset_40 = 8;
-    final int offset_50 = 10;
-    final int offset_200 = 40;
-    final int offset_180 = 36;
-    final int offset_160 = 32;
+
     final int win_size_5 = 1;
     final int win_size_10 = 2;
     final int win_size_15 = 3;
     final int win_size_20 = 4;
+    final int win_size_25 = 5;
     final int win_size_30 = 6;
     final int win_size_40 = 8;
     final int win_size_50 = 10;
-    final double NORMALIZE = 0.01;
-    final double NORMALIZE_BIG = 0.001;
+    final double NORMALIZE = 0.05;
 
     final int SHORT_TERM_ENERGY = 0;
     final int TOTAL_ENERGY = 1;
@@ -70,17 +64,11 @@ public class FeatureFunctionsVowelDuration implements IFeatureFunctions {
     final int ZERO_CROSSING = 8;
     final int IS_VOWEL = 9;
     final int IS_NAZAL = 10;
-    final int IS_GLIDE = 11;
-    final int IS_SIL = 12;
     final int SUM_VOWELS = 13;
-    final int SUM_NAZALS = 14;
-    final int SUM_GLIDES = 15;
     final int MFCC_1 = 16;
     final int MFCC_2 = 17;
     final int MFCC_3 = 18;
     final int MFCC_4 = 19;
-    final int F_1 = 20;
-    final int F_2 = 21;
 
     @Override
     //return null on error
@@ -88,7 +76,6 @@ public class FeatureFunctionsVowelDuration implements IFeatureFunctions {
 
         try{
             Example newExample = Factory.getExample(0);
-            newExample.sizeOfVector = sizeOfVector;
 
             String labelValues[] = label.split(Consts.CLASSIFICATION_SPLITTER);
             Vector phiFeatures = new Vector();
@@ -104,61 +91,78 @@ public class FeatureFunctionsVowelDuration implements IFeatureFunctions {
                 int loc=0;
 
                 //====Short Term Energy====//
-                phiFeatures.put(loc, calculateDiff(example, win_size_10, end, SHORT_TERM_ENERGY));//short term energy, end location - 30 window
+                phiFeatures.put(loc, calculateDiff(example, win_size_15, start, SHORT_TERM_ENERGY));//short term energy, start location - 20 window
+                loc++;
+                phiFeatures.put(loc, calculateDiff(example, win_size_20, start, SHORT_TERM_ENERGY));//short term energy, start location - 30 window
+                loc++;
+                phiFeatures.put(loc, calculateDiff(example, win_size_25, start, SHORT_TERM_ENERGY));//short term energy, start location - 30 window
+                loc++;
+
+                phiFeatures.put(loc, calculateDiff(example, win_size_15, end, SHORT_TERM_ENERGY));//short term energy, end location - 30 window
                 loc++;
                 phiFeatures.put(loc, calculateDiff(example, win_size_20, end, SHORT_TERM_ENERGY));//short term energy, end location - 30 window
                 loc++;
 
                 //====Total Energy====//
-                phiFeatures.put(loc, calculateDiff(example, win_size_10, start, TOTAL_ENERGY));//total energy, start location - 20 window
+                phiFeatures.put(loc, Math.abs(calculateDiff(example, win_size_40, start, TOTAL_ENERGY)));//total energy, start location - 20 window
                 loc++;
-                phiFeatures.put(loc, calculateDiff(example, win_size_15, start, TOTAL_ENERGY));//total energy, start location - 30 window
+                phiFeatures.put(loc, Math.abs(calculateDiff(example, win_size_50, start, TOTAL_ENERGY)));//total energy, start location - 30 window
                 loc++;
-                phiFeatures.put(loc, Math.abs(calculateDiff(example, win_size_10, end, TOTAL_ENERGY)));//total energy, start location - 20 window
+                // offsets
+                phiFeatures.put(loc, Math.abs(calculateDiff(example, win_size_40, start - offset_10, TOTAL_ENERGY)));//total energy, start location - 20 window
                 loc++;
-                phiFeatures.put(loc, Math.abs(calculateDiff(example, win_size_20, end, TOTAL_ENERGY)));//total energy, start location - 30 window
-                loc++;
-                phiFeatures.put(loc, calculateDiff(example, win_size_10, end - offset_50, TOTAL_ENERGY));//total energy, start location - 30 window
-                loc++;
-                phiFeatures.put(loc, calculateDiff(example, win_size_20, end - offset_50, TOTAL_ENERGY));//total energy, start location - 30 window
+                phiFeatures.put(loc, Math.abs(calculateDiff(example, win_size_50, start - offset_20, TOTAL_ENERGY)));//total energy, start location - 30 window
                 loc++;
 
+                phiFeatures.put(loc, Math.abs(calculateDiff(example, win_size_40, end, TOTAL_ENERGY)));//total energy, start location - 30 window
+                loc++;
+                phiFeatures.put(loc, Math.abs(calculateDiff(example, win_size_50, end, TOTAL_ENERGY)));//total energy, start location - 30 window
+                loc++;
+
+
                 //====Low Energy====//
-                phiFeatures.put(loc, calculateDiff(example, win_size_10, start, LOW_ENERGY));//low energy, start location - 20 window
+                phiFeatures.put(loc, calculateDiff(example, win_size_30, start, LOW_ENERGY));//low energy, start location - 30 window
                 loc++;
-                phiFeatures.put(loc, calculateDiff(example, win_size_20, start, LOW_ENERGY));//low energy, start location - 30 window
+                phiFeatures.put(loc, calculateDiff(example, win_size_40, start, LOW_ENERGY));//low energy, start location - 30 window
                 loc++;
-                phiFeatures.put(loc, calculateDiff(example, win_size_30, start, LOW_ENERGY));//low energy, start location - 40 window
+                phiFeatures.put(loc, calculateDiff(example, win_size_50, start, LOW_ENERGY));//low energy, start location - 40 window
                 loc++;
-                phiFeatures.put(loc, calculateDiff(example, win_size_10, end, LOW_ENERGY));//low energy, end location - 20 window
+                // offsets
+                phiFeatures.put(loc, Math.abs(calculateDiff(example, win_size_40, start - offset_10, LOW_ENERGY)));//total energy, start location - 20 window
                 loc++;
-                phiFeatures.put(loc, calculateDiff(example, win_size_20, end, LOW_ENERGY));//low energy, end location - 20 window
+                phiFeatures.put(loc, Math.abs(calculateDiff(example, win_size_50, start - offset_20, LOW_ENERGY)));//total energy, start location - 30 window
                 loc++;
-                phiFeatures.put(loc, calculateDiff(example, win_size_30, end, LOW_ENERGY));//low energy, end location - 30 window
+
+                phiFeatures.put(loc, calculateDiff(example, win_size_40, end, LOW_ENERGY));//low energy, end location - 20 window
+                loc++;
+                phiFeatures.put(loc, calculateDiff(example, win_size_50, end, LOW_ENERGY));//low energy, end location - 30 window
                 loc++;
 
                 //====High Energy====//
-                phiFeatures.put(loc, Math.abs(calculateDiff(example, win_size_10, end, HIGH_ENERGY)));//high energy, end location - 20 window
+                phiFeatures.put(loc, Math.abs(calculateDiff(example, win_size_40, start, HIGH_ENERGY)));//high energy, end location - 30 window
                 loc++;
-                phiFeatures.put(loc, Math.abs(calculateDiff(example, win_size_20, end, HIGH_ENERGY)));//high energy, end location - 30 window
+                phiFeatures.put(loc, Math.abs(calculateDiff(example, win_size_50, start, HIGH_ENERGY)));//high energy, end location - 30 window
                 loc++;
-                phiFeatures.put(loc, calculateDiff(example, win_size_10, end - offset_50, HIGH_ENERGY));//total energy, start location - 30 window
+                // offsets
+                phiFeatures.put(loc, Math.abs(calculateDiff(example, win_size_40, start - offset_10, HIGH_ENERGY)));//total energy, start location - 20 window
                 loc++;
-                phiFeatures.put(loc, calculateDiff(example, win_size_20, end - offset_50, HIGH_ENERGY));//total energy, start location - 30 window
+                phiFeatures.put(loc, Math.abs(calculateDiff(example, win_size_50, start - offset_20, HIGH_ENERGY)));//total energy, start location - 30 window
+                loc++;
+
+                phiFeatures.put(loc, Math.abs(calculateDiff(example, win_size_40, end, HIGH_ENERGY)));//high energy, end location - 30 window
+                loc++;
+                phiFeatures.put(loc, Math.abs(calculateDiff(example, win_size_50, end, HIGH_ENERGY)));//high energy, end location - 30 window
                 loc++;
 
                 //====Wiener Entropy====//
-                phiFeatures.put(loc, calculateDiff(example, win_size_10, start, WIENER_ENTROPY));//wiener entropy, start location - 20 window
+                phiFeatures.put(loc, Math.abs(calculateDiff(example, win_size_40, start, WIENER_ENTROPY)));//wiener entropy, start location - 30 window
                 loc++;
-                phiFeatures.put(loc, calculateDiff(example, win_size_20, start, WIENER_ENTROPY));//wiener entropy, start location - 30 window
+                phiFeatures.put(loc, Math.abs(calculateDiff(example, win_size_50, start, WIENER_ENTROPY)));//wiener entropy, start location - 30 window
                 loc++;
-                phiFeatures.put(loc, Math.abs(calculateDiff(example, win_size_10, end, WIENER_ENTROPY)));//wiener entropy, start location - 20 window
+
+                phiFeatures.put(loc, Math.abs(calculateDiff(example, win_size_40, end, WIENER_ENTROPY)));//wiener entropy, start location - 30 window
                 loc++;
-                phiFeatures.put(loc, Math.abs(calculateDiff(example, win_size_20, end, WIENER_ENTROPY)));//wiener entropy, start location - 30 window
-                loc++;
-                phiFeatures.put(loc, calculateDiff(example, win_size_10, end - offset_50, WIENER_ENTROPY));//total energy, start location - 30 window
-                loc++;
-                phiFeatures.put(loc, calculateDiff(example, win_size_20, end - offset_50, WIENER_ENTROPY));//total energy, start location - 30 window
+                phiFeatures.put(loc, Math.abs(calculateDiff(example, win_size_50, end, WIENER_ENTROPY)));//wiener entropy, start location - 30 window
                 loc++;
 
                 //===========Auto Correlation==========//
@@ -168,201 +172,165 @@ public class FeatureFunctionsVowelDuration implements IFeatureFunctions {
                 loc++;
                 phiFeatures.put(loc, calculateDiff(example, win_size_15, start, AUTO_CORRELATION));//auto correlation, start location - 15 window
                 loc++;
+                phiFeatures.put(loc, calculateDiff(example, win_size_20, start, AUTO_CORRELATION));//auto correlation, start location - 15 window
+                loc++;
+                phiFeatures.put(loc, calculateDiff(example, win_size_25, start, AUTO_CORRELATION));//auto correlation, start location - 15 window
+                loc++;
 
                 //==========Difference 5 and 15 frames from start=========//
                 //====Pitch====//
-                phiFeatures.put(loc, calculateDiff(example, win_size_10, start, PITCH));//pitch, start location - 20 window
+                phiFeatures.put(loc, calculateDiff(example, win_size_40, start, PITCH));//pitch, start location - 20 window
                 loc++;
-                phiFeatures.put(loc, calculateDiff(example, win_size_20, start, PITCH));//pitch, start location - 30 window
+                phiFeatures.put(loc, calculateDiff(example, win_size_50, start, PITCH));//pitch, start location - 30 window
                 loc++;
-                phiFeatures.put(loc, calculateDiff(example, win_size_10, end, PITCH));//pitch, start location - 20 window
+                phiFeatures.put(loc, calculateDiff(example, win_size_40, end, PITCH));//pitch, start location - 20 window
                 loc++;
-                phiFeatures.put(loc, calculateDiff(example, win_size_20, end, PITCH));//pitch, start location - 30 window
+                phiFeatures.put(loc, calculateDiff(example, win_size_50, end, PITCH));//pitch, start location - 30 window
                 loc++;
 
                 //====Voicing====//
-                phiFeatures.put(loc, calculateDiff(example, win_size_10, start, VOICING));//voicing, start location - 15 window
+                phiFeatures.put(loc, calculateDiff(example, win_size_40, start, VOICING));//voicing, start location - 15 window
                 loc++;
-                phiFeatures.put(loc, calculateDiff(example, win_size_20, start, VOICING));//voicing, start location - 20 window
+                phiFeatures.put(loc, calculateDiff(example, win_size_50, start, VOICING));//voicing, start location - 20 window
                 loc++;
-                phiFeatures.put(loc, calculateDiff(example, win_size_20, start, VOICING));//voicing, start location - 30 window
+
+                phiFeatures.put(loc, calculateDiff(example, win_size_40, end, VOICING));//voicing, end location - 30 window
                 loc++;
-                phiFeatures.put(loc, calculateDiff(example, win_size_10, end, VOICING));//voicing, end location - 30 window
-                loc++;
-                phiFeatures.put(loc, calculateDiff(example, win_size_20, end, VOICING));//voicing, end location - 30 window
+                phiFeatures.put(loc, calculateDiff(example, win_size_50, end, VOICING));//voicing, end location - 30 window
                 loc++;
 
                 //====Zero-Crossing====//
-                phiFeatures.put(loc, calculateDiff(example, win_size_20, start, ZERO_CROSSING));//zero-crossing, start location - 20 window
+                phiFeatures.put(loc, calculateDiff(example, win_size_40, start, ZERO_CROSSING));//zero-crossing, start location - 20 window
                 loc++;
-                phiFeatures.put(loc, calculateDiff(example, win_size_30, start, ZERO_CROSSING));//zero-crossing, start location - 30 window
+                phiFeatures.put(loc, calculateDiff(example, win_size_50, start, ZERO_CROSSING));//zero-crossing, start location - 30 window
                 loc++;
-                phiFeatures.put(loc, calculateDiff(example, win_size_20, end, ZERO_CROSSING));//zero-crossing, end location - 20 window
+                phiFeatures.put(loc, Math.abs(calculateDiff(example, win_size_40, end, ZERO_CROSSING)));//zero-crossing, end location - 20 window
                 loc++;
-                phiFeatures.put(loc, calculateDiff(example, win_size_30, end, ZERO_CROSSING));//zero-crossing, end location - 30 window
+                phiFeatures.put(loc, Math.abs(calculateDiff(example, win_size_50, end, ZERO_CROSSING)));//zero-crossing, end location - 30 window
                 loc++;
 
                 //=================Phoneme-Classifier==================//
                 //====VOWELS - INDICATOR====//
-                phiFeatures.put(loc, calculateDiff(example, win_size_10, start, IS_VOWEL));
-                loc++;
-                phiFeatures.put(loc, calculateDiff(example, win_size_20, start, IS_VOWEL));
-                loc++;
                 phiFeatures.put(loc, calculateDiff(example, win_size_30, start, IS_VOWEL));
                 loc++;
+                phiFeatures.put(loc, calculateDiff(example, win_size_40, start, IS_VOWEL));
+                loc++;
+                phiFeatures.put(loc, calculateDiff(example, win_size_50, start, IS_VOWEL));
+                loc++;
 
-                phiFeatures.put(loc, calculateDiff(example, win_size_10, end, IS_VOWEL));
-                loc++;
-                phiFeatures.put(loc, calculateDiff(example, win_size_20, end, IS_VOWEL));
-                loc++;
+
                 phiFeatures.put(loc, calculateDiff(example, win_size_30, end, IS_VOWEL));
                 loc++;
                 phiFeatures.put(loc, calculateDiff(example, win_size_40, end, IS_VOWEL));
                 loc++;
+                phiFeatures.put(loc, calculateDiff(example, win_size_50, end, IS_VOWEL));
+                loc++;
 
                 //====NASAL - INDICATOR====//
-                phiFeatures.put(loc, calculateDiff(example, win_size_10, start, IS_NAZAL));
+                phiFeatures.put(loc, calculateDiff(example, win_size_40, end, IS_NAZAL));
                 loc++;
-                phiFeatures.put(loc, calculateDiff(example, win_size_20, start, IS_NAZAL));
-                loc++;
-                phiFeatures.put(loc, calculateDiff(example, win_size_10, end, IS_NAZAL));
-                loc++;
-                phiFeatures.put(loc, calculateDiff(example, win_size_20, end, IS_NAZAL));
-                loc++;
-
-                //====GLIDE - INDICATOR====//
-                phiFeatures.put(loc, calculateDiff(example, win_size_10, start, IS_GLIDE));
-                loc++;
-                phiFeatures.put(loc, calculateDiff(example, win_size_20, start, IS_GLIDE));
-                loc++;
-                phiFeatures.put(loc, calculateDiff(example, win_size_10, end, IS_GLIDE));
-                loc++;
-                phiFeatures.put(loc, calculateDiff(example, win_size_20, end, IS_GLIDE));
-                loc++;
-
-                //====SIL - INDICATOR====//
-                phiFeatures.put(loc, calculateDiff(example, win_size_10, start, IS_SIL));
-                loc++;
-                phiFeatures.put(loc, calculateDiff(example, win_size_20, start, IS_SIL));
-                loc++;
-
-                phiFeatures.put(loc, calculateDiff(example, win_size_10, end, IS_SIL));
-                loc++;
-                phiFeatures.put(loc, calculateDiff(example, win_size_20, end, IS_SIL));
-                loc++;
-
-                phiFeatures.put(loc, calculateDiff(example, win_size_10, end - offset_50, IS_SIL));
-                loc++;
-                phiFeatures.put(loc, calculateDiff(example, win_size_20, end - offset_50, IS_SIL));
-                loc++;
-                phiFeatures.put(loc, calculateDiff(example, win_size_30, end - offset_50, IS_SIL));
+                phiFeatures.put(loc, calculateDiff(example, win_size_50, end, IS_NAZAL));
                 loc++;
 
                 //====VOWELS - SUM DIVIDE BY SUM ALL====//
-                phiFeatures.put(loc, calculateDiff(example, win_size_10, start, SUM_VOWELS));
-                loc++;
-                phiFeatures.put(loc, calculateDiff(example, win_size_20, start, SUM_VOWELS));
-                loc++;
                 phiFeatures.put(loc, calculateDiff(example, win_size_30, start, SUM_VOWELS));
                 loc++;
-                phiFeatures.put(loc, calculateDiff(example, win_size_10, end, SUM_VOWELS));
+                phiFeatures.put(loc, calculateDiff(example, win_size_40, start, SUM_VOWELS));
                 loc++;
-                phiFeatures.put(loc, calculateDiff(example, win_size_20, end, SUM_VOWELS));
+                phiFeatures.put(loc, calculateDiff(example, win_size_50, start, SUM_VOWELS));
                 loc++;
+
                 phiFeatures.put(loc, calculateDiff(example, win_size_30, end, SUM_VOWELS));
                 loc++;
-
-                //====NAZAL - SUM DIVIDE BY SUM ALL====//
-                phiFeatures.put(loc, calculateDiff(example, win_size_10, start, SUM_NAZALS));
+                phiFeatures.put(loc, calculateDiff(example, win_size_40, end, SUM_VOWELS));
                 loc++;
-                phiFeatures.put(loc, calculateDiff(example, win_size_20, start, SUM_NAZALS));
-                loc++;
-                phiFeatures.put(loc, calculateDiff(example, win_size_30, start, SUM_NAZALS));
-                loc++;
-                phiFeatures.put(loc, calculateDiff(example, win_size_10, end, SUM_NAZALS));
-                loc++;
-                phiFeatures.put(loc, calculateDiff(example, win_size_20, end, SUM_NAZALS));
-                loc++;
-                phiFeatures.put(loc, calculateDiff(example, win_size_30, end, SUM_NAZALS));
+                phiFeatures.put(loc, calculateDiff(example, win_size_50, end, SUM_VOWELS));
                 loc++;
 
-                //====GLIDE - SUM DIVIDE BY SUM ALL====//
-                phiFeatures.put(loc, calculateDiff(example, win_size_10, start, SUM_GLIDES));
+                //==== DELTA ====//
+                // MFCC_1
+                phiFeatures.put(loc, calculateDiff(example, win_size_15, start, MFCC_1));
                 loc++;
-                phiFeatures.put(loc, calculateDiff(example, win_size_20, start, SUM_GLIDES));
+                phiFeatures.put(loc, calculateDiff(example, win_size_50, start, MFCC_1));
                 loc++;
-                phiFeatures.put(loc, calculateDiff(example, win_size_30, start, SUM_GLIDES));
+                phiFeatures.put(loc, calculateDiff(example, win_size_15, end, MFCC_1));
                 loc++;
-                phiFeatures.put(loc, calculateDiff(example, win_size_10, end, SUM_GLIDES));
-                loc++;
-                phiFeatures.put(loc, calculateDiff(example, win_size_20, end, SUM_GLIDES));
-                loc++;
-                phiFeatures.put(loc, calculateDiff(example, win_size_30, end, SUM_GLIDES));
+                phiFeatures.put(loc, calculateDiff(example, win_size_50, end, MFCC_1));
                 loc++;
 
-                //======F1======//
-                phiFeatures.put(loc, calculateDiff(example, win_size_20, start, F_1));//F1, end location - 20 window
+                // MFCC_2
+                phiFeatures.put(loc, calculateDiff(example, win_size_15, start, MFCC_2));
                 loc++;
-                phiFeatures.put(loc, calculateDiff(example, win_size_30, start, F_1));//F1, end location - 20 window
+                phiFeatures.put(loc, calculateDiff(example, win_size_50, start, MFCC_2));
                 loc++;
-
-                phiFeatures.put(loc, calculateDiff(example, win_size_20, end, F_1));//F1, end location - 20 window
+                phiFeatures.put(loc, calculateDiff(example, win_size_15, end, MFCC_2));
                 loc++;
-                phiFeatures.put(loc, calculateDiff(example, win_size_30, end, F_1));//F1, end location - 20 window
-                loc++;
-
-                //======F2======//
-                phiFeatures.put(loc, calculateDiff(example, win_size_20, start, F_2));//F2, end location - 20 window
-                loc++;
-                phiFeatures.put(loc, calculateDiff(example, win_size_30, start, F_2));//F2, end location - 20 window
+                phiFeatures.put(loc, calculateDiff(example, win_size_50, end, MFCC_2));
                 loc++;
 
-                phiFeatures.put(loc, calculateDiff(example, win_size_20, end, F_2));//F2, end location - 20 window
+                // MFCC_3
+                phiFeatures.put(loc, calculateDiff(example, win_size_15, start, MFCC_3));
                 loc++;
-                phiFeatures.put(loc, calculateDiff(example, win_size_30, end, F_2));//F2, end location - 20 window
+                phiFeatures.put(loc, calculateDiff(example, win_size_50, start, MFCC_3));
+                loc++;
+                phiFeatures.put(loc, calculateDiff(example, win_size_15, end, MFCC_3));
+                loc++;
+                phiFeatures.put(loc, calculateDiff(example, win_size_50, end, MFCC_3));
+                loc++;
+
+                // MFCC_4
+                phiFeatures.put(loc, calculateDiff(example, win_size_15, start, MFCC_4));
+                loc++;
+                phiFeatures.put(loc, calculateDiff(example, win_size_50, start, MFCC_4));
+                loc++;
+                phiFeatures.put(loc, calculateDiff(example, win_size_15, end, MFCC_4));
+                loc++;
+                phiFeatures.put(loc, calculateDiff(example, win_size_50, end, MFCC_4));
                 loc++;
 
                 //==============Mean value from start to end==============//
                 //true means prev the start point, false means after the end point
-                phiFeatures.put(loc, calculateMean(example, start, end, SHORT_TERM_ENERGY, win_size_30, true));//Mean of short-term energy
+                phiFeatures.put(loc, calculateMean(example, start, end, SHORT_TERM_ENERGY, win_size_50, true));//Mean of short-term energy
                 loc++;
-                phiFeatures.put(loc, calculateMean(example, start, end, SHORT_TERM_ENERGY, win_size_30, false));//Mean of short-term energy
+                phiFeatures.put(loc, calculateMean(example, start, end, SHORT_TERM_ENERGY, win_size_50, false));//Mean of short-term energy
                 loc++;
-                phiFeatures.put(loc, calculateMean(example, start, end, LOW_ENERGY, win_size_30, true));//Mean of low energy
+                phiFeatures.put(loc, calculateMean(example, start, end, TOTAL_ENERGY, win_size_50, true));//Mean of low energy
                 loc++;
-                phiFeatures.put(loc, calculateMean(example, start, end, LOW_ENERGY, win_size_30, false));//Mean of low energy
+                phiFeatures.put(loc, calculateMean(example, start, end, TOTAL_ENERGY, win_size_50, false));//Mean of low energy
                 loc++;
-                phiFeatures.put(loc, calculateMean(example, start, end, WIENER_ENTROPY, win_size_30, true));//Mean of wiener entropy
+                phiFeatures.put(loc, calculateMean(example, start, end, HIGH_ENERGY, win_size_50, true));//Mean of low energy
                 loc++;
-                phiFeatures.put(loc, calculateMean(example, start, end, WIENER_ENTROPY, win_size_30, false));//Mean of wiener entropy
+                phiFeatures.put(loc, calculateMean(example, start, end, HIGH_ENERGY, win_size_50, false));//Mean of low energy
                 loc++;
-                phiFeatures.put(loc, calculateMean(example, start, end, VOICING, win_size_30, true));//Mean of voicing
+                phiFeatures.put(loc, calculateMean(example, start, end, LOW_ENERGY, win_size_50, true));//Mean of low energy
                 loc++;
-                phiFeatures.put(loc, calculateMean(example, start, end, VOICING, win_size_30, false));//Mean of voicing
+                phiFeatures.put(loc, calculateMean(example, start, end, LOW_ENERGY, win_size_50, false));//Mean of low energy
                 loc++;
-                phiFeatures.put(loc, calculateMean(example, start, end, ZERO_CROSSING, win_size_30, true));//Mean of zero-crossing
+                phiFeatures.put(loc, calculateMean(example, start, end, VOICING, win_size_50, true));//Mean of voicing
                 loc++;
-                phiFeatures.put(loc, calculateMean(example, start, end, ZERO_CROSSING, win_size_30, false));//Mean of zero-crossing
+                phiFeatures.put(loc, calculateMean(example, start, end, VOICING, win_size_50, false));//Mean of voicing
                 loc++;
-                phiFeatures.put(loc, calculateMean(example, start, end, IS_VOWEL, win_size_50, true));
+                phiFeatures.put(loc, calculateMean(example, start, end, ZERO_CROSSING, win_size_50, true));//Mean of zero-crossing
                 loc++;
-                phiFeatures.put(loc, calculateMean(example, start, end, IS_VOWEL, win_size_30, false));
-                loc++;
-                phiFeatures.put(loc, calculateMean(example, start, end, IS_NAZAL, win_size_20, true));
-                loc++;
-                phiFeatures.put(loc, calculateMean(example, start, end, IS_NAZAL, win_size_20, false));
-                loc++;
-                phiFeatures.put(loc, calculateMean(example, start, end, IS_GLIDE, win_size_20, true));
-                loc++;
-                phiFeatures.put(loc, calculateMean(example, start, end, IS_GLIDE, win_size_20, false));
+                phiFeatures.put(loc, calculateMean(example, start, end, ZERO_CROSSING, win_size_50, false));//Mean of zero-crossing
                 loc++;
                 phiFeatures.put(loc, calculateMean(example, start, end, SUM_VOWELS, win_size_50, true));
                 loc++;
-                phiFeatures.put(loc, calculateMean(example, start, end, SUM_VOWELS, win_size_30, false));
+                phiFeatures.put(loc, calculateMean(example, start, end, SUM_VOWELS, win_size_50, false));
                 loc++;
 
-                //==============MFCC Feature Function==============//
-                //=====================START=======================//
+                // ==== MAX FUNCTION ==== //
+                phiFeatures.put(loc, example.getFeatures2D().get(start).get(TOTAL_ENERGY));
+                loc++;
+                phiFeatures.put(loc, example.getFeatures2D().get(start).get(LOW_ENERGY));
+                loc++;
+                phiFeatures.put(loc, example.getFeatures2D().get(start).get(HIGH_ENERGY));
+                loc++;
+                phiFeatures.put(loc, example.getFeatures2D().get(start).get(AUTO_CORRELATION));
+                loc++;
+
+                //============== Delta MFCC Feature Function==============//
+                //======================= START ==========================//
                 phiFeatures.put(loc, NORMALIZE *example.getFeatures2D().get(start).get(MFCC_1));
                 loc++;
                 phiFeatures.put(loc, NORMALIZE *example.getFeatures2D().get(start).get(MFCC_2));
@@ -390,14 +358,13 @@ public class FeatureFunctionsVowelDuration implements IFeatureFunctions {
                 double scale = variance/Consts.MEAN_VOWEL_LENGTH;
                 Gamma gamma = new Gamma(shape, scale);
                 double vowelLength = end - start;
-                phiFeatures.put(loc,gamma.pdf(vowelLength)/gamma.pdf(Consts.MAX_VOWEL_GAMMA));
+                phiFeatures.put(loc,gamma.pdf(vowelLength)/gamma.pdf(Consts.MAX_VOWEL_LENGTH));
                 loc++;
 
                 //===============Gaussian Distribution Over The Vowel Length==============//
                 double numerator = -Math.pow((vowelLength - Consts.MEAN_VOWEL_LENGTH),2);
                 double denominator = 2*Math.pow(Consts.STD_VOWEL_LENGTH,2);
                 phiFeatures.put(loc,Math.exp(numerator/denominator));
-                loc++;
 
                 newExample.setFeatures(phiFeatures);
                 return newExample;
@@ -419,7 +386,7 @@ public class FeatureFunctionsVowelDuration implements IFeatureFunctions {
     //**********************************FEATURE FUNCTIONS***************************************//
     //******************************************************************************************//
     //calculate the average difference of featureNumber win_size before and after location
-    public double calculateDiff(Example example, int win_size, int location, int featureNumber)
+    private double calculateDiff(Example example, int win_size, int location, int featureNumber)
     {
         try {
             double preVal;
@@ -452,48 +419,10 @@ public class FeatureFunctionsVowelDuration implements IFeatureFunctions {
         }
     }
 
-    //calculate the average difference of featureNumber win_size before and after location
-    public double calculateDiff(Example example, int win_size, int location, int featureNumberNumerator, int featureNumberDenominator)
-    {
-        try {
-            double preVal;
-            //get the cumulative values of featureNumberNumerator and featureNumberDenominator
-            double startValNum = CacheVowelData.getCumulativeValue(example, location - win_size, featureNumberNumerator);
-            double startValDen = CacheVowelData.getCumulativeValue(example, location - win_size, featureNumberDenominator);
-            double endValNum = CacheVowelData.getCumulativeValue(example, location, featureNumberNumerator);
-            double endValDen = CacheVowelData.getCumulativeValue(example, location, featureNumberDenominator);
-
-            Double startVal = startValNum / startValDen;
-            Double endVal = endValNum / endValDen;
-            preVal = endVal - startVal;
-            preVal /= win_size;
-
-            double afterVal;
-            //get the cumulative values of featureNumber
-            startVal = endVal;
-            endValNum = CacheVowelData.getCumulativeValue(example, location + win_size, featureNumberNumerator);
-            endValDen = CacheVowelData.getCumulativeValue(example, location + win_size, featureNumberDenominator);
-            endVal = endValNum / endValDen;
-            afterVal = endVal - startVal;
-            afterVal /= win_size;
-
-            Double value = afterVal - preVal;
-            if(value.isNaN())
-                value = 0.0;
-
-            //return the diff
-            return value;
-
-        } catch (Exception e){
-            Logger.error("Error in function: calculateDiff, feature number numerator: " + featureNumberNumerator + ", feature number denominator: "+featureNumberDenominator+", example: " + example.path);
-            return 0;
-        }
-    }
-
     //calculate the avg value from start till end of featureNumber
     //if isPrev equals true then create mean difference from start
     //else create mean difference from end
-    public double calculateMean(Example example, int start, int end, int featureNumber, int win_size, boolean isPrev)
+    private double calculateMean(Example example, int start, int end, int featureNumber, int win_size, boolean isPrev)
     {
         try {
             double avg;
@@ -536,123 +465,5 @@ public class FeatureFunctionsVowelDuration implements IFeatureFunctions {
             return 0;
         }
     }
-
-    public double calculateMeanNoDifference(Example example, int start, int end, int featureNumber)
-    {
-        double avg;
-        int counter = end - start;
-
-        //get the cumulative values of featureNumber
-        double startVal = CacheVowelData.getCumulativeValue(example,start,featureNumber);
-        double endVal = CacheVowelData.getCumulativeValue(example,end,featureNumber);
-
-        //computer the mean
-        avg = endVal-startVal;
-        avg /= counter;
-
-        return avg;
-    }
-
-    //calculate the variance from start till end of featureNumber
-    //if isPrev equals true then create variance difference from start
-    //else create variance difference from end
-    public double calculateVariance(Example example, int start, int end, int featureNumber, int win_size, boolean isPrev)
-    {
-        try{
-            double mean = calculateMeanNoDifference(example, start, end, featureNumber);
-            double var = 0;
-
-            int counter = 0;
-            for (int i = start; i < end; i++) {
-                var += Math.pow(example.getFeatures2D().get(i).get(featureNumber) - mean, 2);
-                counter++;
-            }
-            var /= counter;
-
-            if (isPrev) {
-                double mean_prev = calculateMeanNoDifference(example, start - win_size, start, featureNumber);
-                double var_prev = 0;
-                int counter_prev = 0;
-                for (int i = start - win_size; i < start; i++) {
-                    var_prev += Math.pow(example.getFeatures2D().get(i).get(featureNumber) - mean_prev, 2);
-                    counter_prev++;
-                }
-                var_prev /= counter_prev;
-                return var - var_prev;
-            } else {
-                double mean_prevStart = calculateMeanNoDifference(example, end, end + win_size, featureNumber);
-                double var_prevStart = 0;
-                int counter_prev = 0;
-                for (int i = end; i < end + win_size; i++) {
-                    var_prevStart += Math.pow(example.getFeatures2D().get(i).get(featureNumber) - mean_prevStart, 2);
-                    counter_prev++;
-                }
-                var_prevStart /= counter_prev;
-                return var - var_prevStart;
-            }
-        } catch (Exception e){
-            Logger.error("Exception in calculate variance, "+example.path+", "+featureNumber);
-            e.printStackTrace();
-            return 0;
-        }
-    }
-
-    //calculate the average difference between each two samples from start to end
-    public double calculateInnerDifference(Example example, int start, int end, int featureNumber, int win_size, boolean isPrev) throws Exception
-    {
-        try {
-            Double avgDiff = 0.0;
-            int counter = 0;
-
-            for (int i = start + 1; i < end; i++) {
-                avgDiff += Math.abs(example.getFeatures2D().get(i).get(featureNumber) - example.getFeatures2D().get(i - 1).get(featureNumber));
-                counter++;
-            }
-            avgDiff /= counter;
-
-            if (isPrev) {
-                Double avgDiff_prev = 0.0;
-                int counter_prev = 0;
-                for (int i = start - win_size + 1; i < start; i++) {
-                    avgDiff_prev += Math.abs(example.getFeatures2D().get(i).get(featureNumber) - example.getFeatures2D().get(i - 1).get(featureNumber));
-                    counter_prev++;
-                }
-                avgDiff_prev /= counter_prev;
-                return (avgDiff - avgDiff_prev);
-            } else {
-                Double avgDiff_prev = 0.0;
-                int counter_prev = 0;
-                for (int i = end + 1; i < end + win_size; i++) {
-                    avgDiff_prev += Math.abs(example.getFeatures2D().get(i).get(featureNumber) - example.getFeatures2D().get(i - 1).get(featureNumber));
-                    counter_prev++;
-                }
-                avgDiff_prev /= counter_prev;
-                return (avgDiff - avgDiff_prev);
-            }
-        } catch (Exception e){
-            Logger.error("Exception in calculate Inner difference, "+example.path+", "+featureNumber);
-            e.printStackTrace();
-            return 0;
-        }
-    }
-
-    //finds the max value from start to end of feature number
-    public double findMax(Example example, int start, int end, int featureNumber) throws Exception
-    {
-        double max = 0;
-        boolean isFirst = true;
-
-        for(int i=start ; i<end ; i++) {
-            if(isFirst){
-                max = example.getFeatures2D().get(i).get(featureNumber);
-                isFirst = false;
-                continue;
-            }
-            if(max < example.getFeatures2D().get(i).get(featureNumber))
-                max = example.getFeatures2D().get(i).get(featureNumber);
-        }
-        return max;
-    }
-    //******************************************************************************************//
     //******************************************************************************************//
 }

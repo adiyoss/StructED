@@ -34,13 +34,16 @@ import com.structed.data.entities.PredictedLabels;
 import com.structed.data.entities.Vector;
 import com.structed.data.Logger;
 import com.structed.utils.MathHelpers;
+import com.structed.utils.comperators.MapValueComparatorAscending;
+import com.structed.utils.comperators.MapValueComparatorDescending;
+
+import java.util.TreeMap;
 
 /**
  * Vowel Duration inference example
  */
 public class InferenceVowelDurationData implements IInference {
 
-    @Override
     //predict function
     //argmax(yS,yE) (W*Phi(Xi,yS,yE)) + Task Loss
     //this function assumes that the argument vector has already been converted to phi vector
@@ -99,9 +102,45 @@ public class InferenceVowelDurationData implements IInference {
         }
     }
 
-    @Override
-    public PredictedLabels predictForTest(Example vector, Vector W, String realClass, ClassifierData classifierData, int returnAll)
-    {
-        return predictForTrain(vector, W, realClass, classifierData ,0);
+    public PredictedLabels predictForTest(Example vector, Vector W, String realClass, ClassifierData classifierData, int returnAll) {
+        switch (returnAll) {
+            case 0:
+                return predictForTrain(vector, W, realClass, classifierData, 0.0);
+            case 1:
+                try {
+                    TreeMap<String, Double> tree = new TreeMap<String, Double>();
+
+                    //validation
+                    if (vector.sizeOfVector <= 0) {
+                        Logger.error(ErrorConstants.PHI_VECTOR_DATA);
+                        return null;
+                    }
+
+                    //loop over all the classifications of this specific example
+                    for (int i = Consts.MIN_GAP_START; i < vector.sizeOfVector - (Consts.MIN_GAP_END); i++) {
+                        for (int j = i + Consts.MIN_VOWEL; j < i + Consts.MAX_VOWEL; j++) {
+                            if (j > vector.sizeOfVector - (Consts.MIN_GAP_END))
+                                break;
+
+                            Example phiData = classifierData.phi.convert(vector, (i + 1) + Consts.CLASSIFICATION_SPLITTER + (j + 1), classifierData.kernel);
+                            //multiple the vectors
+                            double tmp = MathHelpers.multipleVectors(W, phiData.getFeatures());
+                            tree.put((i + 1) + Consts.CLASSIFICATION_SPLITTER + (j + 1), tmp);
+                        }
+                    }
+
+                    MapValueComparatorDescending vc = new MapValueComparatorDescending(tree);
+                    PredictedLabels result = new PredictedLabels(vc);
+                    result.putAll(tree);
+
+                    return result;
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return null;
+                }
+            default:
+                return predictForTrain(vector, W, realClass, classifierData, 0.0);
+        }
     }
 }

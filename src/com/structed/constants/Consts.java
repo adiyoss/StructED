@@ -52,8 +52,8 @@ public class Consts {
     public static final int MIN_GAP_END = 10;
 
     public static final double MEAN_VOWEL_LENGTH = 41.787; //pre calculated from the training set
-    public static final double MAX_VOWEL_GAMMA = 38; //pre calculated from the training set
     public static final double STD_VOWEL_LENGTH = 12.918; //pre calculated from the training set
+    public static final double MAX_VOWEL_LENGTH = 38; //pre calculated from the training set
 
     // MODELS NUMBER OF PARAMETERS
     public static final int PA_PARAMS_SIZE = 1; //The number params 4 PA
