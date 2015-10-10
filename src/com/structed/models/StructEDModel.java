@@ -45,6 +45,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * Created by yossiadi on 6/28/15.
+ *
  */
 
 public class StructEDModel implements Serializable{
@@ -53,6 +54,7 @@ public class StructEDModel implements Serializable{
     private Classifier classifier;
     private Vector W;
     private double cumulative_loss = 0;
+    private boolean isShuffle;
 
     // C'tor
     public StructEDModel(Vector init_weights, IUpdateRule updateRule, ITaskLoss taskLoss, IInference inference,
@@ -66,6 +68,21 @@ public class StructEDModel implements Serializable{
         classifier.classifierData.kernel = kernel;
         classifier.classifierData.phi = phi;
         W = init_weights;
+        this.isShuffle = true;
+    }
+    // override constructor to support enable/disable shuffling
+    public StructEDModel(Vector init_weights, IUpdateRule updateRule, ITaskLoss taskLoss, IInference inference,
+                         IKernel kernel, IFeatureFunctions phi, ArrayList<Double> args, boolean isShuffle){
+        classifier = new Classifier();
+        classifier.classifierData = new ClassifierData();
+        updateRule.init(args);
+        classifier.classifierData.updateRule = updateRule;
+        classifier.classifierData.taskLoss = taskLoss;
+        classifier.classifierData.inference = inference;
+        classifier.classifierData.kernel = kernel;
+        classifier.classifierData.phi = phi;
+        W = init_weights;
+        this.isShuffle = isShuffle;
     }
 
     /**
@@ -100,9 +117,9 @@ public class StructEDModel implements Serializable{
             Logger.info("==================================");
             Logger.info("");
             //===================================//
-
-            //preform random shuffle for the next epoch
-            trainInstances = ModelHandler.randomShuffle(trainInstances);
+            if(isShuffle)
+                //preform random shuffle for the next epoch
+                trainInstances = ModelHandler.randomShuffle(trainInstances);
 
             //train the algorithm
             if (classifier == null) throw new AssertionError();
