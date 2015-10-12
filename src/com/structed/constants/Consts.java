@@ -63,7 +63,8 @@ public class Consts {
     public static final int RL_PARAMS_SIZE = 2; //The number params 4 Ramp Loss
     public static final int PL_PARAMS_SIZE = 6; //The number params 4 Probit Loss
     public static final int SP_PARAMS_SIZE = 0; //The number params 0 Perceptron
-    public static final int ORBIT_PARAMS_SIZE = 2; //The number params 4 SVM
+    public static final int ORBIT_PARAMS_SIZE = 2; //The number params 4 orbit
+    public static final int MULTICLASS_REGECT_SIZE = 4; //The number params 4 multiclass regect
 
     // KERNEL DEFAULT PARAMETERS
     public static double SIGMA = 1;
