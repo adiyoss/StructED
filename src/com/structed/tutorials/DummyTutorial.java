@@ -56,8 +56,8 @@ public class DummyTutorial {
         int epochNum = 3;
         int isAvg = 1;
         int numExamples2Display = 3;
-        String trainPath = "data/db/dummy/train.txt";
-        String testPath = "data/db/dummy/test.txt";
+        String trainPath = "tutorials-code/dummy/data/train.txt";
+        String testPath = "tutorials-code/dummy/data/test.txt";
 
         // load the data
         Reader reader = getReader(readerType);
@@ -72,13 +72,8 @@ public class DummyTutorial {
 
         StructEDModel dummy_model = new StructEDModel(W, new PassiveAggressive(), new TaskLossDummyData(),
                 new InferenceDummyData(), null, new FeatureFunctionsDummy(), arguments); // create the model
-        dummy_model.train(dummyTrainInstances, task_loss_params, null, epochNum, isAvg); // train
-        ArrayList<PredictedLabels> labels = dummy_model.predict(dummyTestInstances, task_loss_params, numExamples2Display); // predict
-
-        // print the prediction
-        for(int i=0 ; i<dummyTestInstances.getSize() ; i++)
-            Logger.info("Y = "+dummyTestInstances.getInstance(i).getLabel()+", Y_HAT = "+labels.get(i).firstKey());
-        Logger.info("");
+        dummy_model.train(dummyTrainInstances, task_loss_params, null, epochNum, isAvg, true); // train
+        dummy_model.predict(dummyTestInstances, task_loss_params, numExamples2Display, true); // predict
 
         // ======= CRF ====== //
         W = new Vector() {{put(0, 0.0);}}; // init the first weight vector
@@ -86,8 +81,8 @@ public class DummyTutorial {
 
         StructEDModel dummy_model_crf = new StructEDModel(W, new CRF(), new TaskLossDummyData(),
                 new InferenceDummyData(), null, new FeatureFunctionsDummy(), arguments); // create the model
-        dummy_model_crf.train(dummyTrainInstances, task_loss_params, null, epochNum, isAvg); // train
-        labels = dummy_model_crf.predict(dummyTestInstances, task_loss_params, numExamples2Display); // predict
+        dummy_model_crf.train(dummyTrainInstances, task_loss_params, null, epochNum, isAvg, true); // train
+        ArrayList<PredictedLabels> labels = dummy_model_crf.predict(dummyTestInstances, task_loss_params, numExamples2Display, false); // predict
 
         // print the prediction
         for(int i=0 ; i<dummyTestInstances.getSize() ; i++)

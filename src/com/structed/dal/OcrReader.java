@@ -26,6 +26,7 @@
 
 package com.structed.dal;
 
+import com.structed.constants.Consts;
 import com.structed.data.Factory;
 import com.structed.data.InstancesContainer;
 import com.structed.data.Logger;
@@ -50,7 +51,7 @@ public class OcrReader extends StandardReader implements Reader {
         int startFeature = 5;
         ArrayList<Example> instances = new ArrayList<Example>();
         ArrayList<Vector> exampleFeatures = new ArrayList<Vector>();
-        String label = "";
+        String label = Consts.END_NOTE;
 
         for (ArrayList<String> aData : data) {
             String currChar = (aData.get(1)); // the char label is placed at the index number 1
@@ -69,9 +70,10 @@ public class OcrReader extends StandardReader implements Reader {
                 // create 2D example
                 Example example = Factory.getExample(1);
                 example.setFeatures2D((ArrayList<Vector>) exampleFeatures.clone());
+                label += Consts.END_NOTE;
                 example.setLabel(label);
                 instances.add(example);
-                label = "";
+                label = Consts.END_NOTE;
                 exampleFeatures.clear();
             }
         }

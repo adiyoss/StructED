@@ -47,5 +47,5 @@ public class ClassifierData {
     public IFeatureFunctions phi;
     public List<Double> arguments;
     public int iteration = 0;
-
+    public String verbose = "";
 }

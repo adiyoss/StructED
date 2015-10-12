@@ -49,7 +49,7 @@ public class Logger {
      * @param message - the message to be written
      */
     public static void info(String message){
-        System.out.println(message);
+        System.out.print(System.getProperty(Consts.NEW_LINE) + message);
     }
 
     /**
@@ -62,7 +62,7 @@ public class Logger {
         Date date = new Date();
         if(message.isEmpty() || message.equals(""))
             message = "None,";
-        System.out.println(message+" "+dateFormat.format(date));
+        System.out.print(System.getProperty(Consts.NEW_LINE) + message + " " + dateFormat.format(date));
     }
 
     /**
@@ -72,7 +72,7 @@ public class Logger {
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         //get current date time with Date()
         Date date = new Date();
-        System.out.println(dateFormat.format(date));
+        System.out.print(System.getProperty(Consts.NEW_LINE)  + dateFormat.format(date));
     }
 
     /**
@@ -84,7 +84,7 @@ public class Logger {
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         //get current date time with Date()
         Date date = new Date();
-        System.out.println(msg+example+", "+dateFormat.format(date));
+        System.out.print(System.getProperty(Consts.NEW_LINE) + msg+example+", "+dateFormat.format(date));
     }
 
     /**
@@ -130,7 +130,7 @@ public class Logger {
     }
 
     /**
-     * clean the log firectory
+     * clean the log directory
      */
     public static void clean(){
         File dir = new File(directory);

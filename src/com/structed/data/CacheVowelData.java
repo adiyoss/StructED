@@ -50,7 +50,7 @@ public class CacheVowelData {
     {
         double res = 0;
         if(frameIndex <= 0)
-            res = cache.get(example.hashCode()).get(frameIndex).get(0);
+            res = cache.get(example.hashCode()).get(0).get(featureNumber);
         else if(frameIndex >= cache.get(example.hashCode()).size())
             res = cache.get(example.hashCode()).get(cache.get(example.hashCode()).size()-1).get(featureNumber);
         else if(cache.containsKey(example.hashCode()))

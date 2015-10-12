@@ -55,7 +55,7 @@ public class FeatureFunctionsSparse implements IFeatureFunctions {
             //parse the label
             int intLabel = Integer.parseInt(label);
             Example newVector = Factory.getExample(0);
-            newVector.sizeOfVector = maxFeatures;
+            newVector.sizeOfVector = sizeOfVector;
             Vector tmpVector = new Vector();
 
             //run the phi function

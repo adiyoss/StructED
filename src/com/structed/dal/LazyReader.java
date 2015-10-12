@@ -40,7 +40,7 @@ import java.util.ArrayList;
  * This class reads the examples on demand
  * It gets as input a file with the paths to all the data and reads each example by the algorithm's demand
  */
-public class LazyReader extends StandardReader implements Reader {
+public class LazyReader extends StandardReader {
 
     /**
      * a Lazy reader, it reads only the paths to the data and not the data itself

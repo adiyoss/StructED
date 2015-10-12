@@ -79,9 +79,9 @@ public class MulticlassMNIST {
         StructEDModel mnist_model = new StructEDModel(W, new SVM(), new TaskLossMultiClass(),
                 new InferenceMultiClassOld(numOfClasses), null, new FeatureFunctionsSparse(numOfClasses, maxFeatures), arguments);
         // train
-        mnist_model.train(mnistTrainInstances, null, mnistDevelopInstances, epochNum, isAvg);
+        mnist_model.train(mnistTrainInstances, null, mnistDevelopInstances, epochNum, isAvg, true);
         // predict
-        mnist_model.predict(mnistTestInstances, null, numExamples2Display);
+        mnist_model.predict(mnistTestInstances, null, numExamples2Display, true);
         // plot the error on the validation set
         // the true flag indicates that we saves the image to img folder in the project directory
         // if the img directory does not exists it will create it
