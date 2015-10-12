@@ -34,7 +34,7 @@ import com.structed.data.entities.PredictedLabels;
 import com.structed.data.entities.Vector;
 import com.structed.data.featurefunctions.FeatureFunctionsSparse;
 import com.structed.models.StructEDModel;
-import com.structed.models.algorithms.MulticlassRegect;
+import com.structed.models.algorithms.MultiClassReject;
 import com.structed.models.inference.InferenceMultiClass;
 import com.structed.models.loss.TaskLossMultiClass;
 
@@ -101,7 +101,7 @@ public class RejectMultiClass {
         double p = 0.4;
         arguments = new ArrayList<Double>() {{add(0.1); add(0.1); add(2.0); add(0.4);}}; // model parameters
         double th = Math.log(beta*p/(1-p));
-        StructEDModel iris_model = new StructEDModel(W, new MulticlassRegect(), new TaskLossMultiClass(),
+        StructEDModel iris_model = new StructEDModel(W, new MultiClassReject(), new TaskLossMultiClass(),
                 new InferenceMultiClass(numOfClasses), null, new FeatureFunctionsSparse(numOfClasses, maxFeatures), arguments); // create the model
         iris_model.train(irisTrainInstances, null, null, epochNum, isAvg, true); // train
         ArrayList<PredictedLabels> labels = iris_model.predict(irisTestInstances, null, numExamples2Display, true); // predict
