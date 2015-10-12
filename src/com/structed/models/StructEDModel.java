@@ -227,7 +227,6 @@ public class StructEDModel implements Serializable{
     public void setInference(IInference inference){
         this.classifier.classifierData.inference = inference;
     }
-    public void setFeatureFunctions(IFeatureFunctions phi){
-        this.classifier.classifierData.phi = phi;
-    }
+    public void setFeatureFunctions(IFeatureFunctions phi){ this.classifier.classifierData.phi = phi; }
+    public void setReShuffle(boolean isShuffle) { this.isShuffle = isShuffle; }
 }
