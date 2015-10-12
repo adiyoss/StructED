@@ -73,8 +73,8 @@ public class AlgorithmsTests extends TestCase{
         task_loss_params = new ArrayList<Double>(){{add(0.0);}}; // task loss parameters
         StructEDModel pa_model = new StructEDModel(W, new PassiveAggressive(), new TaskLossDummyData(),
                 new InferenceDummyData(), null, new FeatureFunctionsDummy(), arguments); // create the model
-        pa_model.train(dummyTrainInstances, task_loss_params, null, epochNum, isAvg); // train
-        pa_model.predict(dummyTestInstances, task_loss_params, numExamples2Display); // predict
+        pa_model.train(dummyTrainInstances, task_loss_params, null, epochNum, isAvg, false); // train
+        pa_model.predict(dummyTestInstances, task_loss_params, numExamples2Display, false); // predict
         assertEquals("PA test, Loss should be 0", 0.0, pa_model.getCumulative_loss());
         // =================================== //
 
@@ -84,8 +84,8 @@ public class AlgorithmsTests extends TestCase{
 
         StructEDModel svm_model = new StructEDModel(W, new SVM(), new TaskLossDummyData(),
                 new InferenceDummyData(), null, new FeatureFunctionsDummy(), arguments); // create the model
-        svm_model.train(dummyTrainInstances, task_loss_params, null, epochNum, isAvg); // train
-        svm_model.predict(dummyTestInstances, task_loss_params, numExamples2Display); // predict
+        svm_model.train(dummyTrainInstances, task_loss_params, null, epochNum, isAvg, false); // train
+        svm_model.predict(dummyTestInstances, task_loss_params, numExamples2Display, false); // predict
         assertEquals("SVM test, Loss should be 0", 0.0, svm_model.getCumulative_loss());
         // ==================================================================== //
 
@@ -94,8 +94,8 @@ public class AlgorithmsTests extends TestCase{
         arguments = new ArrayList<Double>(){{add(0.5);add(-1.6);}}; // model parameters
         StructEDModel dl_model = new StructEDModel(W, new DirectLoss(), new TaskLossDummyData(),
                 new InferenceDummyData(), null, new FeatureFunctionsDummy(), arguments); // create the model
-        dl_model.train(dummyTrainInstances, task_loss_params, null, epochNum, isAvg); // train
-        dl_model.predict(dummyTestInstances, task_loss_params, numExamples2Display); // predict
+        dl_model.train(dummyTrainInstances, task_loss_params, null, epochNum, isAvg, false); // train
+        dl_model.predict(dummyTestInstances, task_loss_params, numExamples2Display, false); // predict
         assertEquals("DL  test, Loss should be 0", 0.0, dl_model.getCumulative_loss());
         // ==================================================================== //
 
@@ -112,8 +112,8 @@ public class AlgorithmsTests extends TestCase{
         arguments = new ArrayList<Double>(){{add(0.1);add(0.8);add(800.0);add(1.0);add(0.0);add(0.2);}}; // model parameters
         StructEDModel pl_model = new StructEDModel(W, new ProbitLoss(), new TaskLossDummyData(),
                 new InferenceDummyData(), null, new FeatureFunctionsDummy(), arguments); // create the model
-        pl_model.train(dummyTrainInstances, task_loss_params, null, epochNum, isAvg); // train
-        pl_model.predict(dummyTestInstances, task_loss_params, numExamples2Display); // predict
+        pl_model.train(dummyTrainInstances, task_loss_params, null, epochNum, isAvg, false); // train
+        pl_model.predict(dummyTestInstances, task_loss_params, numExamples2Display, false); // predict
         assertTrue("PL  test, Loss should be less then 2.0", pl_model.getCumulative_loss() <= 2.0);
         // ==================================================================== //
 
@@ -122,8 +122,8 @@ public class AlgorithmsTests extends TestCase{
         arguments = new ArrayList<Double>(){{add(0.1);add(0.01);}}; // model parameters
         StructEDModel ol_model = new StructEDModel(W, new OrbitLoss(), new TaskLossDummyData(),
                 new InferenceDummyData(), null, new FeatureFunctionsDummy(), arguments); // create the model
-        ol_model.train(dummyTrainInstances, task_loss_params, null, epochNum, isAvg); // train
-        ol_model.predict(dummyTestInstances, task_loss_params, numExamples2Display); // predict
+        ol_model.train(dummyTrainInstances, task_loss_params, null, epochNum, isAvg, false); // train
+        ol_model.predict(dummyTestInstances, task_loss_params, numExamples2Display, false); // predict
         assertEquals("OL  test, Loss should be 0", 0.0, ol_model.getCumulative_loss());
         // ==================================================================== //
 
@@ -132,8 +132,8 @@ public class AlgorithmsTests extends TestCase{
         arguments = new ArrayList<Double>(){{add(0.1);add(0.1);}}; // model parameters
         StructEDModel crf_model = new StructEDModel(W, new CRF(), new TaskLossDummyData(),
                 new InferenceDummyData(), null, new FeatureFunctionsDummy(), arguments); // create the model
-        crf_model.train(dummyTrainInstances, task_loss_params, null, epochNum, isAvg); // train
-        crf_model.predict(dummyTestInstances, task_loss_params, numExamples2Display); // predict
+        crf_model.train(dummyTrainInstances, task_loss_params, null, epochNum, isAvg, false); // train
+        crf_model.predict(dummyTestInstances, task_loss_params, numExamples2Display, false); // predict
         assertEquals("CRF test, Loss should be 0", 0.0, crf_model.getCumulative_loss());
         // ==================================================================== //
     }

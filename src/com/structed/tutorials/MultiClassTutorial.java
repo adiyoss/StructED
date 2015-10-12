@@ -73,12 +73,12 @@ public class MultiClassTutorial {
 
         // ======= SVM ====== //
         Vector W = new Vector() {{put(0, 0.0);}}; // init the first weight vector
-        ArrayList<Double> arguments = new ArrayList<Double>() {{add(0.1);add(0.1);}}; // model parameters
+        ArrayList<Double> arguments = new ArrayList<Double>() {{add(1.0);}}; // model parameters
 
-        StructEDModel mnist_model = new StructEDModel(W, new SVM(), new TaskLossMultiClass(),
+        StructEDModel mnist_model = new StructEDModel(W, new PassiveAggressive(), new TaskLossMultiClass(),
                 new InferenceMultiClass(numOfClasses), null, new FeatureFunctionsSparse(numOfClasses, maxFeatures), arguments); // create the model
-        mnist_model.train(mnistTrainInstances, null, mnistDevelopInstances, epochNum, isAvg); // train
-        mnist_model.predict(mnistTestInstances, null, numExamples2Display); // predict
+        mnist_model.train(mnistTrainInstances, null, mnistDevelopInstances, epochNum, isAvg, true); // train
+        mnist_model.predict(mnistTestInstances, null, numExamples2Display, false); // predict
         mnist_model.plotValidationError(false); // plot the error on the validation set
         //==================================================================== //
 
@@ -98,16 +98,12 @@ public class MultiClassTutorial {
         InstancesContainer irisTestInstances = reader.readData(testPath, Consts.COMMA_NOTE, Consts.COLON_SPLITTER);
         // ======= SVM ====== //
         W = new Vector() {{put(0, 0.0);}}; // init the first weight vector to be zeros
-        arguments = new ArrayList<Double>() {{add(1.0);}}; // model parameters
+        arguments = new ArrayList<Double>() {{add(0.3); add(0.01);}}; // model parameters
 
-        StructEDModel iris_model = new StructEDModel(W, new PassiveAggressive(), new TaskLossMultiClass(),
+        StructEDModel iris_model = new StructEDModel(W, new SVM(), new TaskLossMultiClass(),
                 new InferenceMultiClass(numOfClasses), null, new FeatureFunctionsSparse(numOfClasses, maxFeatures), arguments); // create the model
-        iris_model.train(irisTrainInstances, null, null, epochNum, isAvg); // train
-        ArrayList<PredictedLabels> iris_labels = iris_model.predict(irisTestInstances, null, numExamples2Display); // predict
-
-        // printing the predictions
-        for(int i=0 ; i<iris_labels.size() ; i++)
-            Logger.info("Desire Label: "+irisTestInstances.getInstance(i).getLabel()+", Predicted Label: "+iris_labels.get(i).firstKey());
+        iris_model.train(irisTrainInstances, null, null, epochNum, isAvg, true); // train
+        iris_model.predict(irisTestInstances, null, numExamples2Display, true); // predict
         // ==================================================================== //
     }
 }

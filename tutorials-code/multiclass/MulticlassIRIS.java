@@ -76,9 +76,9 @@ public class MulticlassIRIS {
         StructEDModel iris_model = new StructEDModel(W, new PassiveAggressive(), new TaskLossMultiClass(),
                 new InferenceMultiClassOld(numOfClasses), null, new FeatureFunctionsSparse(numOfClasses, maxFeatures), arguments);
         // train
-        iris_model.train(irisTrainInstances, null, null, epochNum, isAvg);
+        iris_model.train(irisTrainInstances, null, null, epochNum, isAvg, true);
         // predict
-        ArrayList<PredictedLabels> iris_labels = iris_model.predict(irisTestInstances, null, numExamples2Display);
+        ArrayList<PredictedLabels> iris_labels = iris_model.predict(irisTestInstances, null, numExamples2Display, true);
 
         // printing the predictions
         for(int i=0 ; i<iris_labels.size() ; i++)

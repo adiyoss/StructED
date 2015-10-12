@@ -74,16 +74,23 @@ public class CRF implements IUpdateRule {
             //the parameter 1 at the end is used to get all the predicted labels and not only the max one
             //it can be anything but -1 = Consts.ERROR_NUMBER
             PredictedLabels predictMap = classifierData.inference.predictForTest(example,currentWeights,example.getLabel(),classifierData,1);
+			int k = -10;
+			double maxVal = predictMap.firstEntry().getValue();
 
-			for(Map.Entry<String, Double> entry : predictMap.entrySet())
-				denominator += Math.pow(Math.E,(entry.getValue()));
+			for(Map.Entry<String, Double> entry : predictMap.entrySet()) {
+				// keep the computation numerically stable
+				double z = entry.getValue() - maxVal;
+				if (z >= k)
+					denominator += Math.pow(Math.E, (z));
+			}
 
             Vector probExpectation = new Vector();
 			boolean isFirst = true;
 
 			for(Map.Entry<String, Double> entry : predictMap.entrySet())
 			{
-				double prob = Math.pow(Math.E,(entry.getValue()));
+				// keep the computation numerically stable
+				double prob = (entry.getValue() - maxVal) < k ? 0 : Math.pow(Math.E,(entry.getValue() - maxVal));
 				prob = prob/denominator;
 				if(isFirst){
 					isFirst = false;

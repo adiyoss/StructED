@@ -57,7 +57,7 @@ public class Classifier{
      * @return the final model's weights
      * @throws Exception
      */
-	public Vector train(Vector W, InstancesContainer trainInstances, List<Double> params, InstancesContainer developInstances, int isAvg) throws Exception
+	public Vector train(Vector W, InstancesContainer trainInstances, List<Double> params, InstancesContainer developInstances, int isAvg, boolean verbose) throws Exception
 	{
         //validation
         if(trainInstances == null){
@@ -109,6 +109,7 @@ public class Classifier{
 
 			//update W
 			W = classifierData.updateRule.update(W, x_train, classifierData);
+            output += classifierData.verbose;
 			if(W == null)
 				return null;
 
@@ -129,7 +130,8 @@ public class Classifier{
             CacheVowelData.clearCacheValues();
             //===================================//
 
-            Logger.progressMessage(output);
+            if(verbose)
+                Logger.progressMessage(output);
 		}
 
         if(developInstances != null)

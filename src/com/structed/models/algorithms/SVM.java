@@ -43,8 +43,8 @@ import com.structed.utils.MathHelpers;
 public class SVM implements IUpdateRule {
 
     //data members
-    double lambda;
     double eta;
+    double lambda;
 
     @Override
     public void init(ArrayList<Double> args) {

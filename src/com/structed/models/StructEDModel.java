@@ -45,6 +45,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * Created by yossiadi on 6/28/15.
+ *
  */
 
 public class StructEDModel implements Serializable{
@@ -53,6 +54,7 @@ public class StructEDModel implements Serializable{
     private Classifier classifier;
     private Vector W;
     private double cumulative_loss = 0;
+    private boolean isShuffle;
 
     // C'tor
     public StructEDModel(Vector init_weights, IUpdateRule updateRule, ITaskLoss taskLoss, IInference inference,
@@ -66,6 +68,21 @@ public class StructEDModel implements Serializable{
         classifier.classifierData.kernel = kernel;
         classifier.classifierData.phi = phi;
         W = init_weights;
+        this.isShuffle = true;
+    }
+    // override constructor to support enable/disable shuffling
+    public StructEDModel(Vector init_weights, IUpdateRule updateRule, ITaskLoss taskLoss, IInference inference,
+                         IKernel kernel, IFeatureFunctions phi, ArrayList<Double> args, boolean isShuffle){
+        classifier = new Classifier();
+        classifier.classifierData = new ClassifierData();
+        updateRule.init(args);
+        classifier.classifierData.updateRule = updateRule;
+        classifier.classifierData.taskLoss = taskLoss;
+        classifier.classifierData.inference = inference;
+        classifier.classifierData.kernel = kernel;
+        classifier.classifierData.phi = phi;
+        W = init_weights;
+        this.isShuffle = isShuffle;
     }
 
     /**
@@ -77,7 +94,7 @@ public class StructEDModel implements Serializable{
      * @param isAvg - an indicator whether or not to average the weights
      * @throws Exception
      */
-    public void train(InstancesContainer trainInstances, ArrayList<Double> task_loss_params, InstancesContainer developInstances, int epoch, int isAvg) throws Exception {
+    public void train(InstancesContainer trainInstances, ArrayList<Double> task_loss_params, InstancesContainer developInstances, int epoch, int isAvg, boolean verbose) throws Exception {
         //#############################################################################//
         //================================TRAIN========================================//
         //#############################################################################//
@@ -100,13 +117,13 @@ public class StructEDModel implements Serializable{
             Logger.info("==================================");
             Logger.info("");
             //===================================//
-
-            //preform random shuffle for the next epoch
-            trainInstances = ModelHandler.randomShuffle(trainInstances);
+            if(isShuffle)
+                //preform random shuffle for the next epoch
+                trainInstances = ModelHandler.randomShuffle(trainInstances);
 
             //train the algorithm
             if (classifier == null) throw new AssertionError();
-            W = classifier.train(W, trainInstances, task_loss_params, developInstances, isAvg);
+            W = classifier.train(W, trainInstances, task_loss_params, developInstances, isAvg, verbose);
             if(W == null)
                 return;
         }
@@ -130,7 +147,7 @@ public class StructEDModel implements Serializable{
      * @param numPredictions2Return - the number of examples to return in the scores
      * @return ArrayList<PredictedLabels> - return the predicted labels as array
      */
-    public ArrayList<PredictedLabels> predict(InstancesContainer instances, ArrayList<Double> task_loss_params, int numPredictions2Return){
+    public ArrayList<PredictedLabels> predict(InstancesContainer instances, ArrayList<Double> task_loss_params, int numPredictions2Return, boolean verbose){
         Logger.info("");
         Logger.infoTime("Start Predicting:");
         Logger.time();
@@ -147,10 +164,12 @@ public class StructEDModel implements Serializable{
             String y = x.getLabel();
             cumulative_loss += classifier.classifierData.taskLoss.computeTaskLoss(y, y_hat, task_loss_params);
             scores.add(score);
+            if(verbose)
+                Logger.info("file = "+x.path+", Y = "+y+", Y_Hat = "+y_hat);
         }
         cumulative_loss /= (double) (instances.getSize());
         Logger.info("Cumulative task loss: " + (cumulative_loss));
-
+        Logger.info("");
         return scores;
     }
 
@@ -208,7 +227,6 @@ public class StructEDModel implements Serializable{
     public void setInference(IInference inference){
         this.classifier.classifierData.inference = inference;
     }
-    public void setFeatureFunctions(IFeatureFunctions phi){
-        this.classifier.classifierData.phi = phi;
-    }
+    public void setFeatureFunctions(IFeatureFunctions phi){ this.classifier.classifierData.phi = phi; }
+    public void setReShuffle(boolean isShuffle) { this.isShuffle = isShuffle; }
 }

@@ -63,8 +63,6 @@ public class OrbitLoss implements IUpdateRule {
     public Vector update(Vector currentWeights, Example example, ClassifierData classifierData) {
 
         try{
-            double algorithmIteration = classifierData.iteration;
-
             //get the prediction
             String prediction;
 
@@ -90,9 +88,8 @@ public class OrbitLoss implements IUpdateRule {
             // update the weights
             Vector firstArgument = MathHelpers.mulScalarWithVectors(currentWeights, coefficientFirstArgument);
             Vector secondArgument = MathHelpers.mulScalarWithVectors(phiDifference, newEta*loss);
-            Vector result = MathHelpers.add2Vectors(firstArgument, secondArgument);
 
-            return result;
+            return MathHelpers.add2Vectors(firstArgument, secondArgument);
 
         } catch (Exception e) {
             e.printStackTrace();

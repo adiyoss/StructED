@@ -79,9 +79,9 @@ public class SaveLoad {
         StructEDModel dummy_model = new StructEDModel(W, new PassiveAggressive(), new TaskLossDummyData(),
                 new InferenceDummyData(), null, new FeatureFunctionsDummy(), arguments);
         // train
-        dummy_model.train(dummyTrainInstances, task_loss_params, null, epochNum, isAvg);
+        dummy_model.train(dummyTrainInstances, task_loss_params, null, epochNum, isAvg, false);
         // predict
-        ArrayList<PredictedLabels> labels = dummy_model.predict(dummyTestInstances, task_loss_params, numExamples2Display);
+        ArrayList<PredictedLabels> labels = dummy_model.predict(dummyTestInstances, task_loss_params, numExamples2Display, false);
 
         // print the prediction
         for(int i=0 ; i<dummyTestInstances.getSize() ; i++)
@@ -96,9 +96,9 @@ public class SaveLoad {
         StructEDModel dummy_model_crf = new StructEDModel(W, new CRF(), new TaskLossDummyData(),
                 new InferenceDummyData(), null, new FeatureFunctionsDummy(), arguments);
         // train
-        dummy_model_crf.train(dummyTrainInstances, task_loss_params, null, epochNum, isAvg);
+        dummy_model_crf.train(dummyTrainInstances, task_loss_params, null, epochNum, isAvg, false);
         // predict
-        labels = dummy_model_crf.predict(dummyTestInstances, task_loss_params, numExamples2Display);
+        labels = dummy_model_crf.predict(dummyTestInstances, task_loss_params, numExamples2Display, false);
 
         // print the prediction
         for(int i=0 ; i<dummyTestInstances.getSize() ; i++)
@@ -124,7 +124,7 @@ public class SaveLoad {
         // load the saved model
         loaded_model.loadModel("dummy.model");
         // predict
-        loaded_model.predict(dummyTestInstances, task_loss_params, numExamples2Display);
+        loaded_model.predict(dummyTestInstances, task_loss_params, numExamples2Display, false);
 
         // print the prediction
         for(int i=0 ; i<dummyTestInstances.getSize() ; i++)

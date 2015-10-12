@@ -81,9 +81,8 @@ public class RampLoss implements IUpdateRule {
             //perform the update
             Vector lossArg = MathHelpers.mulScalarWithVectors(rampLoss, newEta);
             Vector newWeights = MathHelpers.mulScalarWithVectors(currentWeights, 1-lambda*newEta);
-            Vector W_Next = MathHelpers.add2Vectors(newWeights, lossArg);
-			
-			return W_Next;
+
+            return MathHelpers.add2Vectors(newWeights, lossArg);
 			
 		} catch (Exception e) {
 			e.printStackTrace();

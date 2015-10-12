@@ -61,8 +61,8 @@ public class APITest {
         int epochNum = 3;
         int isAvg = 1;
         int numExamples2Display = 3;
-        String trainPath = "data/db/dummy/train.txt";
-        String testPath = "data/db/dummy/test.txt";
+        String trainPath = "tutorials-code/dummy/data/train.txt";
+        String testPath = "tutorials-code/dummy/data/test.txt";
 
         // load the data
         Reader reader = getReader(readerType);
@@ -77,8 +77,8 @@ public class APITest {
 
         StructEDModel dummy_model = new StructEDModel(W, new PassiveAggressive(), new TaskLossDummyData(),
                 new InferenceDummyData(), null, new FeatureFunctionsDummy(), arguments); // create the model
-        dummy_model.train(dummyTrainInstances, task_loss_params, null, epochNum, isAvg); // train
-        ArrayList<PredictedLabels> labels = dummy_model.predict(dummyTestInstances, task_loss_params, numExamples2Display); // predict
+        dummy_model.train(dummyTrainInstances, task_loss_params, null, epochNum, isAvg, true); // train
+        ArrayList<PredictedLabels> labels = dummy_model.predict(dummyTestInstances, task_loss_params, numExamples2Display, true); // predict
 
         // print the prediction
         for(int i=0 ; i<dummyTestInstances.getSize() ; i++)
@@ -91,40 +91,13 @@ public class APITest {
 
         StructEDModel dummy_model_crf = new StructEDModel(W, new CRF(), new TaskLossDummyData(),
                 new InferenceDummyData(), null, new FeatureFunctionsDummy(), arguments); // create the model
-        dummy_model_crf.train(dummyTrainInstances, task_loss_params, null, epochNum, isAvg); // train
-        labels = dummy_model_crf.predict(dummyTestInstances, task_loss_params, numExamples2Display); // predict
+        dummy_model_crf.train(dummyTrainInstances, task_loss_params, null, epochNum, isAvg, true); // train
+        labels = dummy_model_crf.predict(dummyTestInstances, task_loss_params, numExamples2Display, true); // predict
 
         // print the prediction
         for(int i=0 ; i<dummyTestInstances.getSize() ; i++)
             Logger.info("Y = "+dummyTestInstances.getInstance(i).getLabel()+", Y_HAT = "+labels.get(i).firstKey());
         Logger.info("");
-        // ==================================================================== //
-
-
-        // ============================ MNIST DATA ============================ //
-        Logger.info("MNIST data example.");
-        trainPath = "data/db/MNIST/train.txt";
-        testPath = "data/db/MNIST/test.data.txt";
-        String valPath = "data/db/MNIST/val.data.txt";
-        epochNum = 1;
-        int numOfClasses = 10;
-        int maxFeatures = 784;
-
-        // load the data
-        InstancesContainer mnistTrainInstances = reader.readData(trainPath, Consts.SPACE, Consts.COLON_SPLITTER);
-        InstancesContainer mnistDevelopInstances = reader.readData(valPath, Consts.SPACE, Consts.COLON_SPLITTER);
-        InstancesContainer mnistTestInstances = reader.readData(testPath, Consts.SPACE, Consts.COLON_SPLITTER);
-        if ( mnistTrainInstances.getSize() == 0 ) return;
-
-        // ======= SVM ====== //
-        W = new Vector() {{put(0, 0.0);}}; // init the first weight vector
-        arguments = new ArrayList<Double>(){{add(0.1); add(0.1);}}; // model parameters
-
-        StructEDModel mnist_model = new StructEDModel(W, new SVM(), new TaskLossMultiClass(),
-                new InferenceMultiClassOld(numOfClasses), null, new FeatureFunctionsSparse(numOfClasses, maxFeatures), arguments); // create the model
-        mnist_model.train(mnistTrainInstances, task_loss_params, mnistDevelopInstances, epochNum, isAvg); // train
-        mnist_model.predict(mnistTestInstances, null, numExamples2Display); // predict
-        mnist_model.plotValidationError(false); // plot the error on the validation set
         // ==================================================================== //
 
 
@@ -138,7 +111,7 @@ public class APITest {
         StructEDModel loaded_model = new StructEDModel(null, new PassiveAggressive(), new TaskLossDummyData(),
                 new InferenceDummyData(), null, new FeatureFunctionsDummy(), arguments); // create the model
         loaded_model.loadModel("dummy.model"); // load the saved model
-        loaded_model.predict(dummyTestInstances, task_loss_params, numExamples2Display); // predict
+        loaded_model.predict(dummyTestInstances, task_loss_params, numExamples2Display, true); // predict
 
         // print the prediction
         for(int i=0 ; i<dummyTestInstances.getSize() ; i++)
