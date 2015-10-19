@@ -35,6 +35,7 @@ import com.structed.data.entities.Vector;
 import com.structed.data.featurefunctions.FeatureFunctionsSparse;
 import com.structed.models.StructEDModel;
 import com.structed.models.algorithms.MultiClassReject;
+import com.structed.models.algorithms.SVM;
 import com.structed.models.inference.InferenceMultiClass;
 import com.structed.models.loss.TaskLossMultiClass;
 
@@ -55,66 +56,59 @@ public class RejectMultiClass {
         String testPath = "tutorials-code/multiclass/data/MNIST/test.data.txt";
         String valPath = "tutorials-code/multiclass/data/MNIST/val.data.txt";
 
-        int epochNum = 1;
+        int epochNum = 100;
         int readerType = 0;
         int isAvg = 1;
         int numExamples2Display = 3;
         int numOfClasses = 10;
         int maxFeatures = 784;
+        Vector W = new Vector();
+        ArrayList<Double> arguments;
+        StructEDModel mnist_model;
         Reader reader = getReader(readerType);
         // ================== //
 
         // load the data
-//        InstancesContainer mnistTrainInstances = reader.readData(trainPath, Consts.SPACE, Consts.COLON_SPLITTER);
-//        InstancesContainer mnistDevelopInstances = reader.readData(valPath, Consts.SPACE, Consts.COLON_SPLITTER);
-//        InstancesContainer mnistTestInstances = reader.readData(testPath, Consts.SPACE, Consts.COLON_SPLITTER);
-//        if (mnistTrainInstances.getSize() == 0) return;
+        InstancesContainer mnistTrainInstances = reader.readData(trainPath, Consts.SPACE, Consts.COLON_SPLITTER);
+        InstancesContainer mnistDevelopInstances = reader.readData(valPath, Consts.SPACE, Consts.COLON_SPLITTER);
+        InstancesContainer mnistTestInstances = reader.readData(testPath, Consts.SPACE, Consts.COLON_SPLITTER);
+        if (mnistTrainInstances.getSize() == 0) return;
 
-//        // ======= SVM ====== //
-        Vector W = new Vector() {{put(0, 0.0);}}; // init the first weight vector
-        ArrayList<Double> arguments = new ArrayList<Double>() {{add(1.0);}}; // model parameters
-//
-//        StructEDModel mnist_model = new StructEDModel(W, new PassiveAggressive(), new TaskLossMultiClass(),
+//        // ======= SSVM ====== //
+//        W = new Vector(){{put(0, 0.0);}}; // init the first weight vector
+//        arguments = new ArrayList<Double>() {{add(0.1); add(0.1);}}; // model parameters
+//        mnist_model = new StructEDModel(W, new SVM(), new TaskLossMultiClass(),
 //                new InferenceMultiClass(numOfClasses), null, new FeatureFunctionsSparse(numOfClasses, maxFeatures), arguments); // create the model
-//        mnist_model.train(mnistTrainInstances, null, mnistDevelopInstances, epochNum, isAvg, true); // train
+//        mnist_model.train(mnistTrainInstances, null, null, epochNum, isAvg, true); // train
 //        mnist_model.predict(mnistTestInstances, null, numExamples2Display, false); // predict
 //        mnist_model.plotValidationError(false); // plot the error on the validation set
-//        //==================================================================== //
 
-        // ============================ IRIS DATA ============================= //
-        // === PARAMETERS === //
-        trainPath = "tutorials-code/multiclass/data/iris/iris.train.txt";
-        testPath = "tutorials-code/multiclass/data/iris/iris.test.txt";
-        epochNum = 1;
-        isAvg = 1;
-        numExamples2Display = 3;
-        numOfClasses = 3;
-        maxFeatures = 4;
-        // ================== //
-
-        // load the data
-        InstancesContainer irisTrainInstances = reader.readData(trainPath, Consts.COMMA_NOTE, Consts.COLON_SPLITTER);
-        InstancesContainer irisTestInstances = reader.readData(testPath, Consts.COMMA_NOTE, Consts.COLON_SPLITTER);
-        // ======= SVM ====== //
-        W = new Vector() {{put(0, 0.0);}}; // init the first weight vector to be zeros
-        double beta = 2.0;
-        double p = 0.4;
-        arguments = new ArrayList<Double>() {{add(0.1); add(0.1); add(2.0); add(0.4);}}; // model parameters
+        final double beta = 1000000000.0;
+        final double p = 0.3;
         double th = Math.log(beta*p/(1-p));
-        StructEDModel iris_model = new StructEDModel(W, new MultiClassReject(), new TaskLossMultiClass(),
-                new InferenceMultiClass(numOfClasses), null, new FeatureFunctionsSparse(numOfClasses, maxFeatures), arguments); // create the model
-        iris_model.train(irisTrainInstances, null, null, epochNum, isAvg, true); // train
-        ArrayList<PredictedLabels> labels = iris_model.predict(irisTestInstances, null, numExamples2Display, true); // predict
 
-        Logger.info("Th: "+th);
-        for(int i=0 ; i<irisTestInstances.getSize() ; i++){
-            Logger.info("Y = "+irisTestInstances.getInstance(i).getLabel());
-            Logger.info("Y_HAT = "+labels.get(i).firstKey());
-            Logger.info("Confidence = "+labels.get(i).firstEntry().getValue());
+        // ======= MULTI-CLASS REJECT ====== //
+        // init the first weight vector
+        for (int i=0 ; i<numOfClasses*maxFeatures; i++)
+            W.put(i, 0.0);
+        arguments = new ArrayList<Double>() {{add(0.15); add(0.1); add(beta); add(p);}}; // model parameters
+
+        mnist_model = new StructEDModel(W, new MultiClassReject(), new TaskLossMultiClass(),
+                new InferenceMultiClass(numOfClasses), null, new FeatureFunctionsSparse(numOfClasses, maxFeatures), arguments); // create the model
+        mnist_model.train(mnistTrainInstances, null, null, epochNum, isAvg, true); // train
+        ArrayList<PredictedLabels> labels  = mnist_model.predict(mnistTestInstances, null, numExamples2Display, false); // predict
+        mnist_model.plotValidationError(false); // plot the error on the validation set
+
+//        Logger.info("Th: " + th);
+//        for(int i=0 ; i<mnistTestInstances.getSize() ; i++){
+//            String output = "Y = "+mnistTestInstances.getInstance(i).getLabel();
+//            output += ", Y_HAT = "+labels.get(i).firstKey();
+//            output += ", Confidence = "+labels.get(i).firstEntry().getValue();
 //            if(labels.get(i).firstEntry().getValue() < th)
-//                Logger.info("Reject.");
-        }
-        Logger.info("");
-        // ==================================================================== //
+//                output += ", Reject.";
+//            Logger.info(output);
+//        }
+//        Logger.info("");
+        //==================================================================== //
     }
 }

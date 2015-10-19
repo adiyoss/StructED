@@ -35,6 +35,7 @@ import com.structed.models.ClassifierData;
 import com.structed.utils.MathHelpers;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * Created by yossiadi on 10/12/15.
@@ -51,6 +52,7 @@ public class MultiClassReject implements IUpdateRule {
     double threshold_1; // ln(p*beta/(1-p))
     double threshold_2; // ln(beta)
     final double logConst = 0.5* threshold_2 - Math.log(0.5);
+    final double ZERO = 0.000000000000000001;
 
     @Override
     public void init(ArrayList<Double> args) {
@@ -76,7 +78,7 @@ public class MultiClassReject implements IUpdateRule {
         Vector newW = MathHelpers.mulScalarWithVectors(currentWeights, (1 - newEta * lambda));
 
         if(f < threshold_1)
-            newW = MathHelpers.addScalar2Vectors(newW, eta*(1-p));
+            newW = MathHelpers.add2Vectors(newW, MathHelpers.mulScalarWithVectors(phiRealLabel.getFeatures(), eta*(1-p)));
         else if(f >= threshold_1 && f < threshold_2)
             newW = MathHelpers.add2Vectors(newW, MathHelpers.mulScalarWithVectors(phiRealLabel.getFeatures(), eta * beta / (beta + Math.exp(f))));
         else {
@@ -84,6 +86,22 @@ public class MultiClassReject implements IUpdateRule {
             if (l > 0)
                 newW = MathHelpers.add2Vectors(newW, MathHelpers.mulScalarWithVectors(phiRealLabel.getFeatures(), eta / 2 ));
         }
+
+        // normalize w using z-score
+        //mean
+        double mean = 0, std = 0;
+        for (Double val: newW.values())
+            mean += val;
+        mean /= newW.size();
+        //std
+        for(Double val :newW.values())
+            std += (mean-val)*(mean-val);
+        std /= Math.sqrt(newW.size());
+        if (std < ZERO)
+            std = 1.0;
+
+        for (Map.Entry<Integer, Double> entry : newW.entrySet())
+            newW.put(entry.getKey(), (entry.getValue() - mean) / std);
 
         return newW;
     }
