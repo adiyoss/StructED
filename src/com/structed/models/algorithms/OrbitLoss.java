@@ -85,9 +85,13 @@ public class OrbitLoss implements IUpdateRule {
             double newEta = eta;
             double coefficientFirstArgument = (1-(lambda*newEta));
 
+            // adding the exp
+            double exp_coeff = Math.exp( -1*Math.pow(MathHelpers.multipleVectors(currentWeights, phiDifference), 2));
+            classifierData.plot_array.add(exp_coeff);
+
             // update the weights
             Vector firstArgument = MathHelpers.mulScalarWithVectors(currentWeights, coefficientFirstArgument);
-            Vector secondArgument = MathHelpers.mulScalarWithVectors(phiDifference, newEta*loss);
+            Vector secondArgument = MathHelpers.mulScalarWithVectors(phiDifference, exp_coeff*newEta*loss);
 
             return MathHelpers.add2Vectors(firstArgument, secondArgument);
 

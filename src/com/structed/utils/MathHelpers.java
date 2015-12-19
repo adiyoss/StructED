@@ -192,4 +192,12 @@ public class MathHelpers {
     public static double sigmoid(double x) {
         return (1/( 1 + Math.pow(Math.E,(-1*x))));
     }
+
+    public static double norm2(Vector v){
+        double norm = 0.0;
+        for(Integer key : v.keySet()){
+            norm += v.get(key) * v.get(key);
+        }
+        return norm;
+    }
 }

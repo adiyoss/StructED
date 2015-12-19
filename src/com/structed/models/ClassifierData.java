@@ -32,6 +32,7 @@ import com.structed.models.inference.IInference;
 import com.structed.models.loss.ITaskLoss;
 import com.structed.data.featurefunctions.IFeatureFunctions;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -48,4 +49,5 @@ public class ClassifierData {
     public List<Double> arguments;
     public int iteration = 0;
     public String verbose = "";
+    public ArrayList<Double> plot_array = new ArrayList<Double>(); // this array is used to plot specific issues in the algorithm
 }

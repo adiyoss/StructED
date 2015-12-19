@@ -28,6 +28,8 @@ package com.structed.tutorials;
 
 import com.structed.constants.Consts;
 import com.structed.dal.Reader;
+import com.structed.dal.Writer;
+import com.structed.data.Factory;
 import com.structed.data.InstancesContainer;
 import com.structed.data.Logger;
 import com.structed.data.entities.Vector;
@@ -37,6 +39,8 @@ import com.structed.models.algorithms.*;
 import com.structed.models.inference.InferenceVowelDurationData;
 import com.structed.models.loss.TaskLossVowelDuration;
 
+import javax.security.auth.login.LoginException;
+import javax.swing.text.html.parser.Entity;
 import java.io.File;
 import java.util.ArrayList;
 
@@ -90,75 +94,6 @@ public class VowelDurationTutorial {
 
         Logger.info("");
         Logger.info("===============================");
-        Logger.info("============= SSVM ============");
-        Logger.info("");
-        // ======= SSVM ====== //
-        W = new Vector() {{put(0, 0.0);}}; // init the first weight vector
-        arguments = new ArrayList<Double>() {{add(0.1);add(0.01);}}; // model parameters
-        vowel_model = new StructEDModel(W, new SVM(), new TaskLossVowelDuration(),
-                new InferenceVowelDurationData(), null, new FeatureFunctionsVowelDuration(), arguments); // create the model
-        vowel_model.train(vowelTrainInstances, task_loss_params, null, epochNum, isAvg, true); // train
-        vowel_model.predict(vowelTestInstances, task_loss_params, numExamples2Display, true); // predict
-        vowel_model.saveModel("models/ssvm.vowel.model");
-
-        Logger.info("");
-        Logger.info("===============================");
-        Logger.info("============= PA ============");
-        Logger.info("");
-        // ======= PA ====== //
-        W = new Vector() {{put(0, 0.0);}}; // init the first weight vector
-        arguments = new ArrayList<Double>() {{add(0.5);}}; // model parameters
-        vowel_model = new StructEDModel(W, new PassiveAggressive(), new TaskLossVowelDuration(),
-                new InferenceVowelDurationData(), null, new FeatureFunctionsVowelDuration(), arguments, false); // create the model
-        vowel_model.train(vowelTrainInstances, task_loss_params, null, epochNum, isAvg, true); // train
-        vowel_model.predict(vowelTestInstances, task_loss_params, numExamples2Display, true); // predict
-        vowel_model.saveModel("models/pa.vowel.model");
-
-        Logger.info("");
-        Logger.info("===============================");
-        Logger.info("============= CRF ============");
-        Logger.info("");
-        // ======= CRF ====== //
-        W = new Vector() {{put(0, 0.0);}}; // init the first weight vector
-        arguments = new ArrayList<Double>() {{add(0.1); add(0.1);}}; // model parameters
-        vowel_model = new StructEDModel(W, new CRF(), new TaskLossVowelDuration(),
-                new InferenceVowelDurationData(), null, new FeatureFunctionsVowelDuration(), arguments, false); // create the model
-        vowel_model.train(vowelTrainInstances, task_loss_params, null, epochNum, isAvg, true); // train
-        vowel_model.predict(vowelTestInstances, task_loss_params, numExamples2Display, true); // predict
-        vowel_model.saveModel("models/crf.vowel.model");
-
-        Logger.info("");
-        Logger.info("===============================");
-        Logger.info("============= DLM ============");
-        Logger.info("");
-        // ======= DIRECT LOSS ====== //
-        W = new Vector() {{put(0, 0.0);}}; // init the first weight vector
-        arguments = new ArrayList<Double>() {{add(0.01);add(-2.45);}}; // model parameters
-        vowel_model = new StructEDModel(W, new DirectLoss(), new TaskLossVowelDuration(),
-                new InferenceVowelDurationData(), null, new FeatureFunctionsVowelDuration(), arguments, false); // create the model
-        vowel_model.loadModel("models/pa.vowel.model");
-        vowel_model.train(vowelTrainInstances, task_loss_params, null, epochNum, isAvg, true); // train
-        vowel_model.predict(vowelTestInstances, task_loss_params, numExamples2Display, true); // predict
-        vowel_model.saveModel("models/dlm.vowel.model");
-        // ==================================================================== //
-
-        Logger.info("");
-        Logger.info("===============================");
-        Logger.info("============= RAMP ============");
-        Logger.info("");
-        // ======= RAMP LOSS ====== //
-        W = new Vector() {{put(0, 0.0);}}; // init the first weight vector
-        arguments = new ArrayList<Double>() {{add(0.01);add(0.01);}}; // model parameters
-        vowel_model = new StructEDModel(W, new RampLoss(), new TaskLossVowelDuration(),
-                new InferenceVowelDurationData(), null, new FeatureFunctionsVowelDuration(), arguments, false); // create the model
-        vowel_model.loadModel("models/pa.vowel.model");
-        vowel_model.train(vowelTrainInstances, task_loss_params, null, epochNum, isAvg, true); // train
-        vowel_model.predict(vowelTestInstances, task_loss_params, numExamples2Display, true); // predict
-        vowel_model.saveModel("models/ramp.vowel.model");
-        // ==================================================================== //
-
-        Logger.info("");
-        Logger.info("===============================");
         Logger.info("============= ORBIT ============");
         Logger.info("");
         // ======= ORBIT LOSS ====== //
@@ -170,18 +105,12 @@ public class VowelDurationTutorial {
         vowel_model.train(vowelTrainInstances, task_loss_params, null, epochNum, isAvg, true); // train
         vowel_model.predict(vowelTestInstances, task_loss_params, numExamples2Display, true); // predict
         vowel_model.saveModel("models/orbit.vowel.model");
-        // ==================================================================== //
 
-        // ======= PROBIT LOSS ====== //
-        W = new Vector() {{put(0, 0.0);}}; // init the first weight vector
-        arguments = new ArrayList<Double>() {{add(0.1);add(0.1);add(50.0);
-            add(0.0);add(0.0);add(1.0);}}; // model parameters
-        vowel_model = new StructEDModel(W, new ProbitLoss(), new TaskLossVowelDuration(),
-                new InferenceVowelDurationData(), null, new FeatureFunctionsVowelDuration(), arguments); // create the model
-        vowel_model.loadModel("models/pa.vowel.model");
-        vowel_model.train(vowelTrainInstances, task_loss_params, null, epochNum, isAvg, true); // train
-        vowel_model.predict(vowelTestInstances, task_loss_params, numExamples2Display, true); // predict
-        vowel_model.saveModel("models/probit.vowel.model");
+        ArrayList<String> data = new ArrayList<String>();
+        for(Double val :vowel_model.getClassifier().classifierData.plot_array)
+            data.add(String.valueOf(val));
+        Writer wrt = Factory.getWriter(0);
+        wrt.writeData2File("vals.txt", data, true);
         // ==================================================================== //
     }
 }

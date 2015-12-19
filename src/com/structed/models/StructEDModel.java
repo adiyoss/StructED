@@ -185,6 +185,16 @@ public class StructEDModel implements Serializable{
     }
 
     /**
+     * Plotting the values that were stored in the plot_array inside the ClassifierData object
+     */
+    public void plotValues(){
+        if(classifier.classifierData.plot_array != null && classifier.classifierData.plot_array.size() != 0) {
+            Graph graph = new Graph();
+            graph.drawGraph(classifier.classifierData.plot_array, false);
+        }
+    }
+
+    /**
      * save the model, notice: we save only the weight vector, the rest of the configuration should be predefined
      * @param path - the path to save the model
      * @throws IOException
@@ -214,6 +224,7 @@ public class StructEDModel implements Serializable{
         return this.W;
     }
     public double getCumulative_loss() {return cumulative_loss;}
+    public Classifier getClassifier() {return this.classifier;}
 
     public void setUpdateRule(IUpdateRule updateRule){
         this.classifier.classifierData.updateRule = updateRule;
