@@ -104,8 +104,110 @@
               Now let's begin!
               <br><br>
           </div>
+        
+          </div>
+          <h4>Task Loss</h4>
+          <div>
+              In order to add new loss/cost function one needs to implement the ITaskLoss interface. For this tutorial we implemented a 0/1 loss for every letter in a given word sequences: <br>
+              <p class="text-center">              
+                \begin{equation}
+                \label{eq:loss}
+                  \ell (y,\hat{y}) = \frac{\sum_{i=1}^m{\mathcal{1}\!\left[y_i \ne \hat{y_i}\right]}}{m}
+                \end{equation}   
+              </p><br>
+              In other words, the loss is the average character error for the whole word. The loss will be one if y is not equal to $\hat{y}$ in every letter in the word, and zero when they are the same. <br>
+            The code for the loss function can be found at src.com.structed.models.loss.TaskLossCER.java on StructED GitHub repository.
+              <br><br>                          
+          </div>
+          <h4>Inference</h4>
+          <div>
+            The inference for this task involves some dynamic programing in order to get the best sequence of words. The inference procedure we implemented is the same as in: <a href="http://papers.nips.cc/paper/2397-max-margin-markov-networks.pdf">Max-Margin Markov Networks by Ben Tasker et al.</a> <br>
+            The code for the inference procedure can be found at src.com.structed.models.inference.InferenceOCR.java on StructED GitHub repository.
+          </div>
+          <h4>Feature Functions</h4>
+          <div>
+            The feature functions we use are the same as in <a href="http://papers.nips.cc/paper/2397-max-margin-markov-networks.pdf">Max-Margin Markov Networks by Ben Tasker et al.</a> <br>
+            We use the image values with additional indicator feature for the previous letter. <br>
+            The code for the feature functions can be found at src.com.structed.data.featurefunctions.FeatureFunctionsOCR.java on StructED GitHub repository.
+          </div>
+          
+          <h3>Running The Code</h3>    
+          <hr>
+          <div>
+                Now we can create a StructEDModel object with the interfaces we have just implemented, all we have left to do is to choose the model. In this example code we were inspired by PyStruct package, and compared between the multi-class approach (classify for each letter without paying attention to the previous one) and the structured approach (with a special feature for the previous letter). 
+                  <br><br>
+                  Here is a snippet of such code (the complete code can be found at the package repository under tutorials-code folder):
+                  <br><br>
+            <div>
+              <pre class="prettyprint">                     
+        // ===================== MULTI CLASS ===================== //
+       Logger.info("================= Multi-class version =================");
+       Logger.info("Loading data...");
+       // === LOADING DATA === //
+       InstancesContainer ocrAllInstancesMulti = reader.readDataMultiClass(dataPath, Consts.TAB, 
+                Consts.COLON_SPLITTER);
+       InstancesContainer ocrTrainInstancesMulti = getFold(ocrAllInstancesMulti, 1, true);
+       InstancesContainer ocrTestInstancesMulti = getFold(ocrAllInstancesMulti, 1, false);
+       if (ocrTrainInstancesMulti.getSize() == 0) return;
+       // ==================== //
 
-          <h4>TODO...</h4>
+       W = new Vector() {{put(0, 0.0);}}; // init the first weight vector
+       arguments = new ArrayList<Double>() {{add(500.0);}}; // model parameters
+
+       // ======= PA MULTI-CLASS MODEL ====== //
+       // create the model
+       StructEDModel ocr_model_multi_class = new StructEDModel(W, new PassiveAggressive(), 
+                new TaskLossMultiClass(), new InferenceMultiClass(Char2Idx.char2id.size()-1), null, 
+                new FeatureFunctionsSparse(Char2Idx.char2id.size()-1, maxFeatures), arguments); 
+       ocr_model_multi_class.train(ocrTrainInstancesMulti, null, null, epochNum, isAvg, true); // train
+       ocr_model_multi_class.predict(ocrTestInstancesMulti, null, 1, false); // predict
+       // ======================================================= //
+
+        // ====================== STRUCTURED ===================== //
+        Logger.info("================= Structured version =================");
+        // === LOADING DATA === //
+        InstancesContainer ocrAllInstances = reader.readData(dataPath, Consts.TAB, 
+                Consts.COLON_SPLITTER);
+        InstancesContainer ocrTrainInstancesStruct = getFold(ocrAllInstances, 1, true);
+        InstancesContainer ocrTestInstancesStruct = getFold(ocrAllInstances, 1, false);
+        if (ocrTrainInstancesStruct.getSize() == 0) return;
+        // ==================== //
+
+        // ======= PA STRUCTURED MODEL ====== //
+        W = new Vector() {{put(0, 0.0);}}; // init the first weight vector
+        arguments = new ArrayList<Double>() {{add(15.0);}}; // model parameters
+
+        StructEDModel ocr_model = new StructEDModel(W, new PassiveAggressive(), 
+                new TaskLossCER(), new InferenceOCR(), null, 
+                new FeatureFunctionsOCR(maxFeatures), arguments); // create the model
+        ocr_model.train(ocrTrainInstancesStruct, null, null, epochNum, isAvg, true); // train
+        ocr_model.predict(ocrTestInstancesStruct, null, 1, false); // predict        
+        Graph g = new Graph();
+        g.drawHeatMap(ocr_model, start_transition_characters, nam_of_characters);
+        // ======================================================= //
+              </pre>
+            </div>  
+            <br><br>                      
+            <div>
+              <div class="row-fluid">
+                <hr>
+                After running the code the results suppose to be around: <br>
+                Multi-class: 0.29% error rate<br>
+                Structured: 0.22% error rate<br>
+                <hr>
+              </div>
+              <div class="row">
+                <div class="col-md-7">
+                In addition we generated a plot of the previous letter feature. We can consider this feature as a character transition matrix, the probability for two letter to appear one after the other.
+                </div>
+                <div class="col-md-5">
+                  <img src="img/heat_map.png" class="img-responsive pull-right" alt="Characters Transition Matrix">
+                </div>
+              </div>  
+            </div>                    
+            <div>            
+            </div>
+          </div>
         </div>        
       </div>
     </div> <!-- /container -->    
