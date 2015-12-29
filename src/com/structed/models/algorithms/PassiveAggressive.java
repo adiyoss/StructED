@@ -88,7 +88,7 @@ public class PassiveAggressive implements IUpdateRule {
 			if(tau > cValue)
 				tau = cValue;
 
-			classifierData.verbose = String.format(", Tau = %.3f, loss = %.3f, denominator = %.3f", tau, taskLossValue, denominator);
+			classifierData.verbose = String.format(", Tau = %.3f", tau);
 
             if(tau < 0) {
 				Logger.error("Y: "+example.getLabel()+" ,Y_hat: "+prediction);

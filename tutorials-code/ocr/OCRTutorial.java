@@ -24,7 +24,7 @@
  * THE SOFTWARE.
  */
 
-package com.structed.tutorials;
+package com.tutorials;
 
 import com.structed.constants.Char2Idx;
 import com.structed.constants.Consts;
@@ -58,9 +58,9 @@ public class OCRTutorial {
         Logger.info("OCR data example.");
 
         // === PARAMETERS === //
-        String dataPath = "tutorials-code/ocr/data/all.letter.data";
+        String dataPath = "data/all.letter.data";
 
-        int epochNum = 5;
+        int epochNum = 3;
         int readerType = 3;
         int isAvg = 1;
         int maxFeatures = 128;
@@ -73,25 +73,25 @@ public class OCRTutorial {
         ArrayList<Double> arguments;
         // ================== //
 
-        // ===================== MULTI CLASS ===================== //
-        Logger.info("================= Multi-class version =================");
-        Logger.info("Loading data...");
-        // === LOADING DATA === //
-        InstancesContainer ocrAllInstancesMulti = reader.readDataMultiClass(dataPath, Consts.TAB, Consts.COLON_SPLITTER);
-        InstancesContainer ocrTrainInstancesMulti = getFold(ocrAllInstancesMulti, 1, true);
-        InstancesContainer ocrTestInstancesMulti = getFold(ocrAllInstancesMulti, 1, false);
-        if (ocrTrainInstancesMulti.getSize() == 0) return;
-        // ==================== //
+       // ===================== MULTI CLASS ===================== //
+       Logger.info("================= Multi-class version =================");
+       Logger.info("Loading data...");
+       // === LOADING DATA === //
+       InstancesContainer ocrAllInstancesMulti = reader.readDataMultiClass(dataPath, Consts.TAB, Consts.COLON_SPLITTER);
+       InstancesContainer ocrTrainInstancesMulti = getFold(ocrAllInstancesMulti, 1, true);
+       InstancesContainer ocrTestInstancesMulti = getFold(ocrAllInstancesMulti, 1, false);
+       if (ocrTrainInstancesMulti.getSize() == 0) return;
+       // ==================== //
 
-        W = new Vector() {{put(0, 0.0);}}; // init the first weight vector
-        arguments = new ArrayList<Double>() {{add(500.0);}}; // model parameters
+       W = new Vector() {{put(0, 0.0);}}; // init the first weight vector
+       arguments = new ArrayList<Double>() {{add(500.0);}}; // model parameters
 
-        // ======= PA MULTI-CLASS MODEL ====== //
-        StructEDModel ocr_model_multi_class = new StructEDModel(W, new PassiveAggressive(), new TaskLossMultiClass(),
-                new InferenceMultiClass(Char2Idx.char2id.size()-1), null, new FeatureFunctionsSparse(Char2Idx.char2id.size()-1, maxFeatures), arguments); // create the model
-        ocr_model_multi_class.train(ocrTrainInstancesMulti, null, null, epochNum, isAvg, true); // train
-        ocr_model_multi_class.predict(ocrTestInstancesMulti, null, 1, false); // predict
-        // ======================================================= //
+       // ======= PA MULTI-CLASS MODEL ====== //
+       StructEDModel ocr_model_multi_class = new StructEDModel(W, new PassiveAggressive(), new TaskLossMultiClass(),
+               new InferenceMultiClass(Char2Idx.char2id.size()-1), null, new FeatureFunctionsSparse(Char2Idx.char2id.size()-1, maxFeatures), arguments); // create the model
+       ocr_model_multi_class.train(ocrTrainInstancesMulti, null, null, epochNum, isAvg, true); // train
+       ocr_model_multi_class.predict(ocrTestInstancesMulti, null, 1, false); // predict
+       // ======================================================= //
 
         // ====================== STRUCTURED ===================== //
         Logger.info("================= Structured version =================");
@@ -109,7 +109,7 @@ public class OCRTutorial {
         StructEDModel ocr_model = new StructEDModel(W, new PassiveAggressive(), new TaskLossCER(),
                 new InferenceOCR(), null, new FeatureFunctionsOCR(maxFeatures), arguments); // create the model
         ocr_model.train(ocrTrainInstancesStruct, null, null, epochNum, isAvg, true); // train
-        ocr_model.predict(ocrTestInstancesStruct, null, 1, false); // predict
+        ocr_model.predict(ocrTestInstancesStruct, null, 1, false); // predict        
         Graph g = new Graph();
         g.drawHeatMap(ocr_model, start_transition_characters, nam_of_characters);
         // ======================================================= //

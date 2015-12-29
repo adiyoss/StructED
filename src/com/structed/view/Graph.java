@@ -53,6 +53,7 @@ public class Graph {
     final String SERIES_NAME = "y(x)";
     final String IMG_PATH = "img/validation_error";
     final String HIT_MAP_PATH = "img/heat_map.png";
+    final String IMG_DIR = "img/";
 
 
     /**
@@ -81,7 +82,7 @@ public class Graph {
                 Logger.info("Saving image: " + IMG_PATH);
                 Logger.info("=========================");
 
-                File imgDir = new File("img/");
+                File imgDir = new File(IMG_DIR);
                 // if the directory does not exist, create it
                 if (!imgDir.exists()) {
                     Logger.info("creating directory: img/");
@@ -125,17 +126,26 @@ public class Graph {
                 data[i][j] = w.containsKey(start + i*jumps + j) ? w.get(start + i*jumps + j) : 0.0;
             }
         }
-
-        // Step 1: Create our heat map chart using our data.
+        
         HeatChart map = new HeatChart(data);
 
-        // Step 2: Customise the chart.
         map.setTitle("Characters Transition Parameters");
         map.setXValues(eng_chars);
         map.setYValues(eng_chars);
         map.getChartImage();
 
-        // Step 3: Output the chart to a file.
-        map.saveToFile(new File(HIT_MAP_PATH));
+        File imgDir = new File(IMG_DIR);
+        boolean result = true;
+        // if the directory does not exist, create it
+        if (!imgDir.exists()) {
+            Logger.info("creating directory: img/");
+            try {
+                result = imgDir.mkdir();
+            } catch (SecurityException se) {
+                Logger.error("There is no permission to write the error image.");
+            }
+        }
+        if (result)
+            map.saveToFile(new File(HIT_MAP_PATH));
     }
 }
