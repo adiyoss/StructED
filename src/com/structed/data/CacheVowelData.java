@@ -40,11 +40,11 @@ public class CacheVowelData {
     private static HashMap<Integer, ArrayList<ArrayList<Double>>> cache = new HashMap<Integer, ArrayList<ArrayList<Double>>>();
 
     /**
-     * get the cumulative value of example of feature
-     * @param example
-     * @param frameIndex
-     * @param featureNumber
-     * @return
+     * get the cumulative value for a given feature from a given example
+     * @param example the example to calculate the features for
+     * @param frameIndex get the cumulative value until this index
+     * @param featureNumber the feature number to get the cumulative data for
+     * @return the cumulative value
      */
     public static double getCumulativeValue(Example example, int frameIndex, int featureNumber)
     {
@@ -61,7 +61,7 @@ public class CacheVowelData {
 
     /**
      * update the cache for the given example
-     * @param example
+     * @param example a given example to cache
      */
     public static void updateCache(Example example)
     {

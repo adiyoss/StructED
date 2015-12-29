@@ -32,6 +32,7 @@ import java.util.List;
 
 /**
  * Vowel Duration Task Loss example
+ * The implementation is: max{0, |ys - ys'| - epsilon} + max{0, |ye - ye'| - epsilon}
  */
 public class TaskLossVowelDuration implements ITaskLoss {
 

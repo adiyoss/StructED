@@ -35,6 +35,7 @@ public abstract class Example {
 
     public String path;
     private String label;
+    private int fold;
     public int sizeOfVector;
 
 	//C'tor
@@ -58,4 +59,7 @@ public abstract class Example {
     public void setLabel(String label) {
         this.label = label;
     }
+
+    public int getFold() { return fold; }
+    public void setFold(int fold) { this.fold = fold; }
 }

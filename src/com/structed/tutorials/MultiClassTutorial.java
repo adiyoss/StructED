@@ -45,7 +45,7 @@ import static com.structed.data.Factory.getReader;
 
 /**
  * Created by yossiadi on 6/29/15.
- * Tutorial about the multiclass classifications using MNIST and Iris datasets
+ * Tutorial about the multi-class classifications using MNIST and Iris datasets
  */
 public class MultiClassTutorial {
     public static void main(String[] args) throws Exception {
@@ -67,8 +67,8 @@ public class MultiClassTutorial {
 
         // load the data
         InstancesContainer mnistTrainInstances = reader.readData(trainPath, Consts.SPACE, Consts.COLON_SPLITTER);
-        InstancesContainer mnistDevelopInstances = reader.readData(valPath, Consts.SPACE, Consts.COLON_SPLITTER);
         InstancesContainer mnistTestInstances = reader.readData(testPath, Consts.SPACE, Consts.COLON_SPLITTER);
+        InstancesContainer mnistDevelopInstances = reader.readData(valPath, Consts.SPACE, Consts.COLON_SPLITTER);
         if (mnistTrainInstances.getSize() == 0) return;
 
         // ======= SVM ====== //

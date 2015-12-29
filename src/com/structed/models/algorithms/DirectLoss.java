@@ -57,6 +57,13 @@ public class DirectLoss implements IUpdateRule {
         this.epsilonArgMax = args.get(1);
     }
 
+    /**
+     * Implementation of the update rule
+     * @param currentWeights - the current weights
+     * @param example - a single example
+     * @param classifierData - all the additional data that needed such as: loss function, inference, etc.
+     * @return the new set of weights
+     */
     @Override
 	//the first cell of the arguments attribute would be the eta value
 	//the second cell of the arguments attribute would be the epsilon for the argmax

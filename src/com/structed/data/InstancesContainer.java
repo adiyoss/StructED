@@ -77,7 +77,11 @@ public class InstancesContainer {
         this.size = paths.size();
     }
 
+
     public int getSize() {
-        return size;
+        if(this.size != 0)
+            return this.size;
+        this.size = (instances.size() != 0) ? instances.size() : paths.size();
+        return this.size;
     }
 }

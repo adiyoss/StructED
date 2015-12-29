@@ -5,3 +5,4 @@ StructED_Package-github.iml
 .DS_Store
 api/
 tutorials-code/vowel/data/vowel/jordana/
+*.model

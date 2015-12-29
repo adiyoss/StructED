@@ -26,10 +26,13 @@
 
 package com.structed.data.featurefunctions;
 
+import com.structed.constants.Char2Idx;
+import com.structed.constants.Consts;
 import com.structed.data.Factory;
 import com.structed.data.entities.Example;
 import com.structed.data.entities.Vector;
 import com.structed.models.kernels.IKernel;
+import com.sun.xml.internal.xsom.impl.Const;
 
 /**
  * This class implements the feature functions for the OCR task
@@ -37,37 +40,60 @@ import com.structed.models.kernels.IKernel;
  */
 public class FeatureFunctionsOCR implements IFeatureFunctions {
 
-    // 16*8*26 (image size for all characters) + 26*26 (all the english characters pairs)
+    // 16*8*26 (image size for all characters) + 27*(27) (all the english characters pairs plus the start character)
     private int sizeOfVector;
-    final int numOfCharacters = 27;
+    final int numOfCharacters = Char2Idx.char2id.size() - 1;
     // default value image size
-    private int maxFeatures = 128;
+    private int maxFeatures = 128; // 16*8 index - [0 - 127]
+    private int startPrevWordIdx = this.maxFeatures*this.numOfCharacters;
 
     public FeatureFunctionsOCR(int maxNumFeatures){
         this.maxFeatures = maxNumFeatures;
-        // 16*8*26 (image size for all characters) + 26*26 (all the english characters pairs)
-        this.sizeOfVector = this.maxFeatures*this.numOfCharacters + (this.numOfCharacters*this.numOfCharacters);
+        // 16*8*26 (image size for all characters) + 27*27 (all the english characters pairs)
+        this.sizeOfVector = this.startPrevWordIdx + ((this.numOfCharacters+1)*(this.numOfCharacters+1));
     }
 
     @Override
     public Example convert(Example vector, String label, IKernel kernel) {
         try{
-            //parse the label
-            char prevChar = label.charAt(0);
-            char currChar = label.charAt(1);
-            int currCharIdx = currChar - '0';
-
+            double indicator_val = 0.01;
             Example newVector = Factory.getExample(0);
             newVector.sizeOfVector = sizeOfVector;
             Vector tmpVector = new Vector();
 
-            //run the phi function
-            for(Integer feature : vector.getFeatures().keySet())
-                tmpVector.put(feature+currCharIdx*maxFeatures,vector.getFeatures().get(feature));
+            // loop over the word characters
+            for (int i=0 ; i<label.length()-1 ; i++) {
+                //parse the label
+                char prevChar = label.charAt(i);
+                char currChar = label.charAt(i+1);
+                // avoid the last character
+                if (currChar == Char2Idx.id2char.get(0))
+                    continue;
+
+                int prevCharIdx = Char2Idx.char2id.get(prevChar) - 1; // avoid $ sign
+                int currCharIdx = Char2Idx.char2id.get(currChar) - 1; // avoid $ sign
+
+                //run the phi function - multi-class
+                for (Integer feature : vector.getFeatures2D().get(i).keySet()) {
+                    int key = feature + currCharIdx * maxFeatures;
+                    if (!tmpVector.containsKey(feature + currCharIdx * maxFeatures))
+                        tmpVector.put(key, vector.getFeatures2D().get(i).get(feature));
+                    else
+                        tmpVector.put(key, tmpVector.get(key) + vector.getFeatures2D().get(i).get(feature));
+                }
+
+                // indicator for the previous character
+                int key = this.startPrevWordIdx + (prevCharIdx+1) * this.numOfCharacters + (currCharIdx);
+                if (!tmpVector.containsKey(key))
+                    tmpVector.put(key, indicator_val);
+                else
+                    tmpVector.put(key, tmpVector.get(key) + indicator_val);
+            }
 
             // expand the vector size of needed
             if(kernel !=null)
                 tmpVector = kernel.convertVector(tmpVector, vector.sizeOfVector);
+
             // populate the new example with the feature functions
             newVector.setFeatures(tmpVector);
             return newVector;

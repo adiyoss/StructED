@@ -66,6 +66,13 @@ public class ProbitLoss implements IUpdateRule {
         this.stDev = args.get(5);
     }
 
+    /**
+     * Implementation of the update rule
+     * @param currentWeights - the current weights
+     * @param example - a single example
+     * @param classifierData - all the additional data that needed such as: loss function, inference, etc.
+     * @return the new set of weights
+     */
 	@Override
 	//eta would be at the first cell
 	//lambda would be at the second cell
