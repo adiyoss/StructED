@@ -75,7 +75,7 @@ public class OrbitLoss implements IUpdateRule {
 
             //if there's a problem with the predict return the previous weights
             try{
-                prediction = classifierData.inference.predictForTrain(example,currentWeights,example.getLabel(),classifierData,1).firstKey();
+                prediction = classifierData.inference.predictForTest(example,currentWeights,example.getLabel(),classifierData,1).firstKey();
             } catch (Exception e){
                 return currentWeights;
             }

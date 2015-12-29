@@ -108,7 +108,7 @@ public class ProbitLoss implements IUpdateRule {
 				//W+EpsilonVector
                 Vector U = MathHelpers.add2Vectors(currentWeights, epsilonVector);
                 //get the noisy prediction
-				String noisyPrediction = classifierData.inference.predictForTrain(example, U, example.getLabel(), classifierData, 1).firstKey();
+				String noisyPrediction = classifierData.inference.predictForTest(example, U, example.getLabel(), classifierData, 1).firstKey();
 				//calculate loss
                 double taskLossValue = classifierData.taskLoss.computeTaskLoss(example.getLabel(), noisyPrediction, classifierData.arguments);
 				//update the expectation
