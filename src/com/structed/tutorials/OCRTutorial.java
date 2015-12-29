@@ -40,7 +40,7 @@ import com.structed.models.StructEDModel;
 import com.structed.models.algorithms.PassiveAggressive;
 import com.structed.models.inference.InferenceMultiClass;
 import com.structed.models.inference.InferenceOCR;
-import com.structed.models.loss.TaskLossCER;
+import com.structed.models.loss.TaskLossOCR;
 import com.structed.models.loss.TaskLossMultiClass;
 import com.structed.view.Graph;
 import java.util.ArrayList;
@@ -106,7 +106,7 @@ public class OCRTutorial {
         W = new Vector() {{put(0, 0.0);}}; // init the first weight vector
         arguments = new ArrayList<Double>() {{add(15.0);}}; // model parameters
 
-        StructEDModel ocr_model = new StructEDModel(W, new PassiveAggressive(), new TaskLossCER(),
+        StructEDModel ocr_model = new StructEDModel(W, new PassiveAggressive(), new TaskLossOCR(),
                 new InferenceOCR(), null, new FeatureFunctionsOCR(maxFeatures), arguments); // create the model
         ocr_model.train(ocrTrainInstancesStruct, null, null, epochNum, isAvg, true); // train
         ocr_model.predict(ocrTestInstancesStruct, null, 1, false); // predict
