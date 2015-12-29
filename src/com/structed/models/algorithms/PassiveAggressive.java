@@ -55,6 +55,13 @@ public class PassiveAggressive implements IUpdateRule {
         this.cValue = args.get(0);
     }
 
+	/**
+	 * Implementation of the update rule
+	 * @param currentWeights - the current weights
+	 * @param example - a single example
+	 * @param classifierData - all the additional data that needed such as: loss function, inference, etc.
+	 * @return the new set of weights
+	 */
     @Override
 	//the first cell of the arguments attribute would be the C value
 	public Vector update(Vector currentWeights, Example example, ClassifierData classifierData) {

@@ -52,6 +52,10 @@ public class Logger {
         System.out.print(System.getProperty(Consts.NEW_LINE) + message);
     }
 
+    /**
+     * Write the message into the standard output without new line at the end
+     * @param message - the message to be written
+     */
     public static void info_no_new_line(String message){
         System.out.print(message);
     }

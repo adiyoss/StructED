@@ -26,9 +26,6 @@
 
 package com.structed.view;
 
-/**
- * Created by yossiadi on 5/11/15.
- */
 
 import com.structed.data.Logger;
 import com.structed.data.entities.Vector;
@@ -45,6 +42,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 /**
+ * Created by yossiadi on 5/11/15.
  * Graph object
  */
 public class Graph {
@@ -54,7 +52,7 @@ public class Graph {
     final String X_TITLE = "Y";
     final String SERIES_NAME = "y(x)";
     final String IMG_PATH = "img/validation_error";
-    final String HIT_MAP_PATH = "img/hitmap.png";
+    final String HIT_MAP_PATH = "img/heat_map.png";
 
 
     /**
@@ -107,7 +105,15 @@ public class Graph {
     }
 
 
-    public void drawHeatMap(StructEDModel model, int start, int jumps, boolean save) throws IOException {
+    /**
+     * Draw heat map - used in the OCR tutorial
+     * This function saves the heat map under: img/heat_map.png
+     * @param model - the trained model
+     * @param start - the index from where to start and build the heat map
+     * @param jumps - the row size of the matrix
+     * @throws IOException
+     */
+    public void drawHeatMap(StructEDModel model, int start, int jumps) throws IOException {
 
         Vector w = model.getWeights();
         double[][] data = new double[jumps][jumps];
@@ -129,8 +135,7 @@ public class Graph {
         map.setYValues(eng_chars);
         map.getChartImage();
 
-        if(save)
-            // Step 3: Output the chart to a file.
-            map.saveToFile(new File(HIT_MAP_PATH));
+        // Step 3: Output the chart to a file.
+        map.saveToFile(new File(HIT_MAP_PATH));
     }
 }

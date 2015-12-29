@@ -30,7 +30,7 @@ import java.util.HashMap;
 
 /**
  * Created by yossiadi on 20/12/2015.
- *
+ * This class converts between english character to its index and vice verse
  */
 public class Char2Idx {
     final static public HashMap<Character, Integer> char2id = new HashMap<Character, Integer>(){

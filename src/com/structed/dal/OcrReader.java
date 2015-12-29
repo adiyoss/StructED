@@ -42,6 +42,14 @@ import java.util.ArrayList;
 
 public class OcrReader extends StandardReader implements Reader {
 
+    /**
+     * Reads the data for the OCR task, this reader parse the data that given in the same format as in: http://ai.stanford.edu/~btaskar/ocr/
+     * Each example will contain a matrix where each row is an image of some character and the label will be the word
+     * @param path the path to the data
+     * @param dataSpliter the splitter between the data values
+     * @param valueSpliter the separator between the index of the feature to the feature value
+     * @return all the data examples
+     */
     @Override
     public InstancesContainer readData(String path, String dataSpliter, String valueSpliter) {
         int fold_id = 5;
@@ -88,6 +96,15 @@ public class OcrReader extends StandardReader implements Reader {
         return container;
     }
 
+    /**
+     * Reads the data for the OCR task, this reader parse the data that given in the same format as in: http://ai.stanford.edu/~btaskar/ocr/
+     * Each example will contain a vector (image) of some character and the label will single character
+     * This reader returns a data set for multi-class classification
+     * @param path the path to the data
+     * @param dataSpliter the splitter between the data values
+     * @param valueSpliter the separator between the index of the feature to the feature value
+     * @return all the data examples
+     */
     public InstancesContainer readDataMultiClass(String path, String dataSpliter, String valueSpliter) {
         int fold_id = 5;
         int startFeature = 6;
@@ -122,49 +139,4 @@ public class OcrReader extends StandardReader implements Reader {
         container.setInstances(instances);
         return container;
     }
-
-
-//    public InstancesContainer readAllDataAll(String path, String dataSpliter, String valueSpliter){
-//        int fold_id = 5;
-//        int startFeature = 6;
-//        int img_size = 128; //16*8
-//        // reads the data
-//        ArrayList<ArrayList<String>> data = readFile(path, dataSpliter);
-//        // create an Instance Container
-//        InstancesContainer container = Factory.getInstanceContainer(0);
-//        ArrayList<Example> instances = new ArrayList<Example>();
-//        ArrayList<Vector> exampleFeatures = new ArrayList<Vector>();
-//        String label = Consts.END_NOTE;
-//
-//        for (ArrayList<String> aData : data) {
-//            String currChar = (aData.get(1)); // the char label is placed at the index number 1
-//            Vector vec = new Vector();
-//            boolean isLastCher = (aData.get(2).equalsIgnoreCase("-1"));
-//
-//            int fold = Integer.valueOf(aData.get(fold_id));
-//            // the features starts from index 6
-//            for (int j = startFeature; j < aData.size(); j++)
-//                if (!aData.get(j).equals("0"))
-//                    vec.put(j - startFeature, Double.valueOf(aData.get(j))/img_size);
-//
-//            // adding the current row and label
-//            exampleFeatures.add(vec);
-//            label += currChar;
-//            if (isLastCher) {
-//                // create 2D example
-//                Example2DOCR example = (Example2DOCR) Factory.getExample(2);
-//                example.setFeatures2D((ArrayList<Vector>) exampleFeatures.clone());
-//                label += Consts.END_NOTE;
-//                example.setLabel(label);
-//                instances.add(example);
-//                label = Consts.END_NOTE;
-//                exampleFeatures.clear();
-//                example.sizeOfVector = example.getFeatures2D().size();
-//                example.setFold(fold);
-//            }
-//        }
-//
-//        container.setInstances(instances);
-//        return container;
-//    }
 }

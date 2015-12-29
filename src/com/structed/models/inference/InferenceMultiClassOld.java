@@ -37,7 +37,7 @@ import com.structed.utils.comperators.MapValueComparatorDescending;
 import com.structed.utils.MathHelpers;
 
 /**
- * Multi class inference
+ * Multi class inference - slower version
  */
 public class InferenceMultiClassOld implements IInference {
 

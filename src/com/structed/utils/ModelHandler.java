@@ -41,6 +41,13 @@ import java.util.*;
  */
 public class ModelHandler {
 
+    /**
+     * Set weights for a model from a given file
+     * This function either sets the new vector to be zeros or reads the data from a given path
+     * @param type - if this parameter is set to be 0 than the returned vector will be zeros, if 1 than it will populate the vector with the file's data
+     * @param path - the path to the file that contains the vecotr's data
+     * @return the new vector
+     */
     public static Vector setWeights(int type, String path) {
 
         Vector W = new Vector();

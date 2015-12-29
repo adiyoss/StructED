@@ -29,7 +29,7 @@ package com.structed.models.loss;
 import java.util.List;
 
 /**
- * Computing Character Error Rate loss function
+ * Computing Character Error Rate (CER) loss function for the OCR task
  * Created by yossiadi on 7/18/15.
  */
 public class TaskLossCER implements ITaskLoss {

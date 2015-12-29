@@ -31,6 +31,11 @@ import com.structed.dal.LazyReader;
 
 import java.io.File;
 
+/**
+ * Lazy instance container that loads the examples by demand
+ * The standard container loads all the data, this container gets as input all the paths to the raw data and loads it when needed
+ *
+ */
 public class LazyInstancesContainer extends InstancesContainer{
 
     LazyReader reader = new LazyReader();

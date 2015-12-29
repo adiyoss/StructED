@@ -41,8 +41,8 @@ import java.util.ArrayList;
 
 
 /**
+ * An inference for the OCR task as described here: http://papers.nips.cc/paper/2397-max-margin-markov-networks.pdf
  * Created by yossiadi on 19/12/2015.
- *
  */
 public class InferenceOCR implements IInference {
 
