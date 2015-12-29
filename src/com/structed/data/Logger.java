@@ -52,6 +52,10 @@ public class Logger {
         System.out.print(System.getProperty(Consts.NEW_LINE) + message);
     }
 
+    public static void info_no_new_line(String message){
+        System.out.print(message);
+    }
+
     /**
      * Write the message into the standard output with the data and time attached
      * @param message - the message to be written

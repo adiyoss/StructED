@@ -26,10 +26,10 @@
 
 package com.structed.dal;
 
+import com.structed.constants.Char2Idx;
 import com.structed.constants.Consts;
 import com.structed.data.Factory;
 import com.structed.data.InstancesContainer;
-import com.structed.data.Logger;
 import com.structed.data.entities.Example;
 import com.structed.data.entities.Vector;
 
@@ -44,11 +44,14 @@ public class OcrReader extends StandardReader implements Reader {
 
     @Override
     public InstancesContainer readData(String path, String dataSpliter, String valueSpliter) {
+        int fold_id = 5;
+        int startFeature = 6;
+        int img_size = 128; //16*8
+
         // reads the data
         ArrayList<ArrayList<String>> data = readFile(path, dataSpliter);
         // create an Instance Container
         InstancesContainer container = Factory.getInstanceContainer(0);
-        int startFeature = 5;
         ArrayList<Example> instances = new ArrayList<Example>();
         ArrayList<Vector> exampleFeatures = new ArrayList<Vector>();
         String label = Consts.END_NOTE;
@@ -58,10 +61,11 @@ public class OcrReader extends StandardReader implements Reader {
             Vector vec = new Vector();
             boolean isLastCher = (aData.get(2).equalsIgnoreCase("-1"));
 
-            // the features starts from index 5
+            int fold = Integer.valueOf(aData.get(fold_id));
+            // the features starts from index 6
             for (int j = startFeature; j < aData.size(); j++)
                 if (!aData.get(j).equals("0"))
-                    vec.put(j - startFeature, Double.valueOf(aData.get(j)));
+                    vec.put(j - startFeature, Double.valueOf(aData.get(j))/img_size);
 
             // adding the current row and label
             exampleFeatures.add(vec);
@@ -75,10 +79,92 @@ public class OcrReader extends StandardReader implements Reader {
                 instances.add(example);
                 label = Consts.END_NOTE;
                 exampleFeatures.clear();
+                example.sizeOfVector = example.getFeatures2D().size();
+                example.setFold(fold);
             }
         }
 
         container.setInstances(instances);
         return container;
     }
+
+    public InstancesContainer readDataMultiClass(String path, String dataSpliter, String valueSpliter) {
+        int fold_id = 5;
+        int startFeature = 6;
+        int img_size = 128; //16*8
+
+        // reads the data
+        ArrayList<ArrayList<String>> data = readFile(path, dataSpliter);
+        // create an Instance Container
+        InstancesContainer container = Factory.getInstanceContainer(0);
+
+        ArrayList<Example> instances = new ArrayList<Example>();
+
+        for (ArrayList<String> aData : data) {
+            String currChar = (aData.get(1)); // the char label is placed at the index number 1
+            Vector vec = new Vector();
+
+            int fold = Integer.valueOf(aData.get(fold_id));
+            // the features starts from index 6
+            for (int j = startFeature; j < aData.size(); j++)
+                if (!aData.get(j).equals("0"))
+                    vec.put(j - startFeature, Double.valueOf(aData.get(j))/img_size);
+
+            Example example = Factory.getExample(0);
+            example.setFeatures(vec);
+            example.setLabel(Integer.toString(Char2Idx.char2id.get(currChar.charAt(0))-1));
+            example.sizeOfVector = img_size;
+            example.path = path;
+            instances.add(example);
+            example.setFold(fold);
+        }
+
+        container.setInstances(instances);
+        return container;
+    }
+
+
+//    public InstancesContainer readAllDataAll(String path, String dataSpliter, String valueSpliter){
+//        int fold_id = 5;
+//        int startFeature = 6;
+//        int img_size = 128; //16*8
+//        // reads the data
+//        ArrayList<ArrayList<String>> data = readFile(path, dataSpliter);
+//        // create an Instance Container
+//        InstancesContainer container = Factory.getInstanceContainer(0);
+//        ArrayList<Example> instances = new ArrayList<Example>();
+//        ArrayList<Vector> exampleFeatures = new ArrayList<Vector>();
+//        String label = Consts.END_NOTE;
+//
+//        for (ArrayList<String> aData : data) {
+//            String currChar = (aData.get(1)); // the char label is placed at the index number 1
+//            Vector vec = new Vector();
+//            boolean isLastCher = (aData.get(2).equalsIgnoreCase("-1"));
+//
+//            int fold = Integer.valueOf(aData.get(fold_id));
+//            // the features starts from index 6
+//            for (int j = startFeature; j < aData.size(); j++)
+//                if (!aData.get(j).equals("0"))
+//                    vec.put(j - startFeature, Double.valueOf(aData.get(j))/img_size);
+//
+//            // adding the current row and label
+//            exampleFeatures.add(vec);
+//            label += currChar;
+//            if (isLastCher) {
+//                // create 2D example
+//                Example2DOCR example = (Example2DOCR) Factory.getExample(2);
+//                example.setFeatures2D((ArrayList<Vector>) exampleFeatures.clone());
+//                label += Consts.END_NOTE;
+//                example.setLabel(label);
+//                instances.add(example);
+//                label = Consts.END_NOTE;
+//                exampleFeatures.clear();
+//                example.sizeOfVector = example.getFeatures2D().size();
+//                example.setFold(fold);
+//            }
+//        }
+//
+//        container.setInstances(instances);
+//        return container;
+//    }
 }

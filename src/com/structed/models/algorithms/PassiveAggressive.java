@@ -70,7 +70,6 @@ public class PassiveAggressive implements IUpdateRule {
             Vector phiDifference = MathHelpers.subtract2Vectors(phiRealLabel.getFeatures(), phiPrediction.getFeatures());
 			
 			double taskLossValue = classifierData.taskLoss.computeTaskLoss(prediction, example.getLabel(), classifierData.arguments);
-			
 			double multipleVectors = MathHelpers.multipleVectors(currentWeights , phiDifference);
 			double denominator = MathHelpers.multipleVectors(phiDifference, phiDifference);
 
@@ -82,10 +81,12 @@ public class PassiveAggressive implements IUpdateRule {
 			if(tau > cValue)
 				tau = cValue;
 
-			classifierData.verbose = String.format(", Tau = %.3f", tau);
+			classifierData.verbose = String.format(", Tau = %.3f, loss = %.3f, denominator = %.3f", tau, taskLossValue, denominator);
 
-            if(tau < 0)
-                Logger.error("Loss < 0!, prediction search can't get to the target label.");
+            if(tau < 0) {
+				Logger.error("Y: "+example.getLabel()+" ,Y_hat: "+prediction);
+				Logger.error("Loss < 0!, prediction search can't get to the target label.");
+			}
 
             Vector updateVector = MathHelpers.mulScalarWithVectors(phiDifference, tau);
             Vector result = MathHelpers.add2Vectors(currentWeights, updateVector);
