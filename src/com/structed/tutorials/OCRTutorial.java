@@ -63,6 +63,10 @@ public class OCRTutorial {
         int readerType = 3;
         int isAvg = 1;
         int maxFeatures = 128;
+        int start_transition_characters = 3354; // 26*128 + 26
+        int nam_of_characters = Char2Idx.char2id.size() - 1;
+
+
         OcrReader reader = (OcrReader)getReader(readerType);
         Vector W;
         ArrayList<Double> arguments;
@@ -106,7 +110,7 @@ public class OCRTutorial {
         ocr_model.train(ocrTrainInstancesStruct, null, null, epochNum, isAvg, true); // train
         ocr_model.predict(ocrTestInstancesStruct, null, 1, false); // predict
         Graph g = new Graph();
-        g.drawHeatMap(ocr_model, 3354, 26, true);
+        g.drawHeatMap(ocr_model, start_transition_characters, nam_of_characters, true);
         // ======================================================= //
     }
 
