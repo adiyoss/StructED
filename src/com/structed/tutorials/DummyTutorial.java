@@ -45,7 +45,7 @@ import static com.structed.data.Factory.getReader;
 
 /**
  * Created by yossiadi on 6/29/15.
- * Tutorial about the dummy data
+ * Models tutorial using dummy data
  */
 public class DummyTutorial {
 

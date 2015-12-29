@@ -49,6 +49,13 @@ public class Perceptron implements IUpdateRule {
             Logger.error(ErrorConstants.UPDATE_ARGUMENTS_ERROR);
     }
 
+    /**
+     * Implementation of the update rule
+     * @param currentWeights - the current weights
+     * @param example - a single example
+     * @param classifierData - all the additional data that needed such as: loss function, inference, etc.
+     * @return the new set of weights
+     */
     @Override
     // Structured Perceptron has no attributes
     public Vector update(Vector currentWeights, Example example, ClassifierData classifierData) {

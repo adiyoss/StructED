@@ -45,7 +45,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * Created by yossiadi on 6/28/15.
- *
+ * The basic model class.
  */
 
 public class StructEDModel implements Serializable{

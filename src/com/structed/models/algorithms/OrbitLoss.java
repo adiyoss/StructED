@@ -57,6 +57,13 @@ public class OrbitLoss implements IUpdateRule {
         this.lambda = args.get(1);
     }
 
+    /**
+     * Implementation of the update rule
+     * @param currentWeights - the current weights
+     * @param example - a single example
+     * @param classifierData - all the additional data that needed such as: loss function, inference, etc.
+     * @return the new set of weights
+     */
     @Override
     //in SVM the lambda value would be in the first cell of the arguments attribute
     //the second cell of the arguments attribute would be the eta

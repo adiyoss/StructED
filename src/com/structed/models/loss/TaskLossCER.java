@@ -29,7 +29,7 @@ package com.structed.models.loss;
 import java.util.List;
 
 /**
- * Computing Character Error Rate loss function
+ * Computing Character Error Rate (CER) loss function for the OCR task
  * Created by yossiadi on 7/18/15.
  */
 public class TaskLossCER implements ITaskLoss {
@@ -38,13 +38,13 @@ public class TaskLossCER implements ITaskLoss {
     public double computeTaskLoss(String predictClass, String actualClass, List<Double> params) {
 
         // get the minimum length
-        int len = (predictClass.length() < actualClass.length()) ? predictClass.length() : actualClass.length();
+        int len = ((predictClass.length() < actualClass.length()) ? predictClass.length() : actualClass.length()) - 2;
         double loss = 0.0;
 
         // compute the character error rate
         for(int i=0 ; i<len ; i++){
-            char ch_predict = predictClass.charAt(i);
-            char ch_actual = actualClass.charAt(i);
+            char ch_predict = predictClass.charAt(i+1);
+            char ch_actual = actualClass.charAt(i+1);
 
             if(ch_actual != ch_predict)
                 loss ++;

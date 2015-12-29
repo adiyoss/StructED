@@ -40,7 +40,7 @@ import com.structed.utils.comperators.MapValueComparatorDescending;
 import java.util.TreeMap;
 
 /**
- * Vowel Duration inference example
+ * Inference for the Vowel Duration Measurement task
  */
 public class InferenceVowelDurationData implements IInference {
 

@@ -37,6 +37,10 @@ import com.structed.constants.Consts;
 import com.structed.constants.ErrorConstants;
 import com.structed.data.Logger;
 
+/**
+ * Standard writer class
+ * Not really in use, but can help with writing some hash-maps for ranking tasks
+ */
 public class StandardWriter implements Writer {
 
 	public void writeHashMap2File(String path, Map<Integer, Double> data){

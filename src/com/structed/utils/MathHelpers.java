@@ -37,9 +37,9 @@ public class MathHelpers {
 
     /**
      * multiple two double vectors
-     * @param v1
-     * @param v2
-     * @return
+     * @param v1 first vector
+     * @param v2 second vector
+     * @return the result
      */
 	public static double multipleVectors(Vector v1, Vector v2)
 	{
@@ -73,9 +73,9 @@ public class MathHelpers {
 
     /**
      * add scalar to a double vector
-     * @param v1
-     * @param scalar
-     * @return
+     * @param v1 vector
+     * @param scalar scalar
+     * @return the result
      */
 	public static Vector addScalar2Vectors(Vector v1, double scalar)
 	{
@@ -95,9 +95,9 @@ public class MathHelpers {
 
     /**
      * add scalar to a double vector
-     * @param v1
-     * @param scalar
-     * @return
+     * @param v1 vector
+     * @param scalar scalar
+     * @return the result
      */
 	public static Vector mulScalarWithVectors(Vector v1, double scalar)
 	{
@@ -117,9 +117,9 @@ public class MathHelpers {
 
     /**
      * add scalar to a double vector
-     * @param v1
-     * @param v2
-     * @return
+     * @param v1 first vector
+     * @param v2 second vector
+     * @return the result
      */
 	public static Vector subtract2Vectors(Vector v1, Vector v2)
 	{
@@ -152,9 +152,9 @@ public class MathHelpers {
 
     /**
      * add scalar to a double vector
-     * @param v1
-     * @param v2
-     * @return
+     * @param v1 first vector
+     * @param v2 second vector
+     * @return the result
      */
 	public static Vector add2Vectors(Vector v1, Vector v2)
 	{
@@ -186,8 +186,8 @@ public class MathHelpers {
 
     /**
      * Preform sigmoid functions
-     * @param x
-     * @return
+     * @param x value
+     * @return the sigmoid result
      */
     public static double sigmoid(double x) {
         return (1/( 1 + Math.pow(Math.E,(-1*x))));

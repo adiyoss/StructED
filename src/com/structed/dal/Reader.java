@@ -36,7 +36,6 @@ import java.util.ArrayList;
  * 1) read the data as an two dimensional array of strings
  * 2) read the data as an Instance Container (one of the package data structure)
  */
-
 public interface Reader {
     ArrayList<ArrayList<String>> readFile(String path, String spliter);
     InstancesContainer readData(String path, String dataSpliter, String valueSpliter);

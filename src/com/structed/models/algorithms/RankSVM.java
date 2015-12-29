@@ -39,7 +39,8 @@ import java.util.ArrayList;
 import java.util.Map;
 
 /**
- * TBD
+ * A variation of the svm-rank
+ * This class was not tested yet.
  */
 public class RankSVM implements IUpdateRule {
 
@@ -57,6 +58,14 @@ public class RankSVM implements IUpdateRule {
         this.lambda = args.get(0);
         this.eta = args.get(1);
     }
+
+    /**
+     * Implementation of the update rule
+     * @param currentWeights - the current weights
+     * @param example - a single example
+     * @param classifierData - all the additional data that needed such as: loss function, inference, etc.
+     * @return the new set of weights
+     */
 
     @Override
     //in SVM the lambda value would be in the first cell of the arguments attribute

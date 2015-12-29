@@ -26,20 +26,23 @@
 
 package com.structed.view;
 
-/**
- * Created by yossiadi on 5/11/15.
- */
 
 import com.structed.data.Logger;
+import com.structed.data.entities.Vector;
+import com.structed.models.StructEDModel;
 import com.xeiam.xchart.BitmapEncoder;
 import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.QuickChart;
 import com.xeiam.xchart.SwingWrapper;
+import org.tc33.jheatchart.HeatChart;
 
+import java.awt.*;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
+ * Created by yossiadi on 5/11/15.
  * Graph object
  */
 public class Graph {
@@ -49,6 +52,9 @@ public class Graph {
     final String X_TITLE = "Y";
     final String SERIES_NAME = "y(x)";
     final String IMG_PATH = "img/validation_error";
+    final String HIT_MAP_PATH = "img/heat_map.png";
+    final String IMG_DIR = "img/";
+
 
     /**
      * Draw a graph of the loss values as a functions of the iterations
@@ -76,7 +82,7 @@ public class Graph {
                 Logger.info("Saving image: " + IMG_PATH);
                 Logger.info("=========================");
 
-                File imgDir = new File("img/");
+                File imgDir = new File(IMG_DIR);
                 // if the directory does not exist, create it
                 if (!imgDir.exists()) {
                     Logger.info("creating directory: img/");
@@ -97,5 +103,49 @@ public class Graph {
         }catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+
+    /**
+     * Draw heat map - used in the OCR tutorial
+     * This function saves the heat map under: img/heat_map.png
+     * @param model - the trained model
+     * @param start - the index from where to start and build the heat map
+     * @param jumps - the row size of the matrix
+     * @throws IOException
+     */
+    public void drawHeatMap(StructEDModel model, int start, int jumps) throws IOException {
+
+        Vector w = model.getWeights();
+        double[][] data = new double[jumps][jumps];
+        Character[] eng_chars = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r',
+                's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
+
+        for(int i = 0; i<jumps ; i++){
+            for(int j = 0; j<jumps ; j++){
+                data[i][j] = w.containsKey(start + i*jumps + j) ? w.get(start + i*jumps + j) : 0.0;
+            }
+        }
+        
+        HeatChart map = new HeatChart(data);
+
+        map.setTitle("Characters Transition Parameters");
+        map.setXValues(eng_chars);
+        map.setYValues(eng_chars);
+        map.getChartImage();
+
+        File imgDir = new File(IMG_DIR);
+        boolean result = true;
+        // if the directory does not exist, create it
+        if (!imgDir.exists()) {
+            Logger.info("creating directory: img/");
+            try {
+                result = imgDir.mkdir();
+            } catch (SecurityException se) {
+                Logger.error("There is no permission to write the error image.");
+            }
+        }
+        if (result)
+            map.saveToFile(new File(HIT_MAP_PATH));
     }
 }

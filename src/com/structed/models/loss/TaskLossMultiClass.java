@@ -29,7 +29,7 @@ package com.structed.models.loss;
 import java.util.List;
 
 /**
- * MNIST Task Loss example
+ * MNIST Task Loss example - 0/1 implementation
  */
 public class TaskLossMultiClass implements ITaskLoss {
 
