@@ -178,7 +178,7 @@
         arguments = new ArrayList<Double>() {{add(15.0);}}; // model parameters
 
         StructEDModel ocr_model = new StructEDModel(W, new PassiveAggressive(), 
-                new TaskLossCER(), new InferenceOCR(), null, 
+                new TaskLossOCR(), new InferenceOCR(), null, 
                 new FeatureFunctionsOCR(maxFeatures), arguments); // create the model
         ocr_model.train(ocrTrainInstancesStruct, null, null, epochNum, isAvg, true); // train
         ocr_model.predict(ocrTestInstancesStruct, null, 1, false); // predict        
