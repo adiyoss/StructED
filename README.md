@@ -12,7 +12,7 @@ Keywords: structured prediction, structured SVM, CRF, direct loss minimization, 
 Usage:
 In order to use StructED in your own project all you need to do is open new project and add StructED jar to your project’s build path. Documentations and more extensive usage examples can be found at: http://adiyoss.github.io/StructED/.
 
-If you likt our work please cite: 
+If you find our work useful please cite: 
 [StructED: risk minimization in structured prediction] (http://www.jmlr.org/papers/volume17/15-531/15-531.pdf)
 ```
 @article{adi2016structed,
